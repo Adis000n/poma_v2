@@ -19,3 +19,7 @@ W tabelce z pytaniami przyda się kolumna "flaga" zeby oznczyc czy pytnie zosta�
 Mam na mysli zeby po prostu jak bierze pytanie to go nie losuje czy cos tylko poprostu bierze pierwsze
 z brzegu które ma flage na false a jak juz uzyjesz pytanie to dajesz tą flage na true tylko w jakiś
 sposób bedzie trzeba zrobić jakiś przycisk do resetowanie tych flag
+
+Uzywajcie boostrapa na stronach zeby to ładnie wyglądało
+
+I zakładam ze html i css w jednym pliku
