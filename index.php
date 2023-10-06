@@ -26,7 +26,7 @@
         text-align: center;
         justify-content: center;
     }
-    li{
+    li {
         font-size: xx-large;
     }
     </style>
