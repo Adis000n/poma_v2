@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mvc_konkurs_pytania` (
   `poziom` int(11) NOT NULL,
   `img_pytania` varchar(255) NOT NULL,
   `img_odpowiedzi` varchar(255) NOT NULL,
-  `rok_uzycia` int(4) NOT NULL DEFAULT '0',
+  `uzyte` boolean,
   `media` varchar(255) NOT NULL,
   `media_typ` enum('','audio','wideo') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `mvc_konkurs_pytania` (
 --
 
 INSERT INTO `mvc_konkurs_pytania` (`id`, `kategoria`, `poziom`, `img_pytania`, 
-`img_odpowiedzi`, `rok_uzycia`, `media`, `media_typ`) VALUES
+`img_odpowiedzi`, `uzyte`, `media`, `media_typ`) VALUES
 -- (default, 'bonus', 1, 'baza/bonus/1/b1.jpg', 'baza/bonus/1/bo1.jpg', 0, '', ''),
 -- (default, 'bonus', 1, 'baza/bonus/1/b10.jpg', 'baza/bonus/1/bo10.jpg', 0, '', ''),
 -- (default, 'bonus', 1, 'baza/bonus/1/b11.jpg', 'baza/bonus/1/bo11.jpg', 0, '', ''),
@@ -138,11 +138,11 @@ INSERT INTO `mvc_konkurs_pytania` (`id`, `kategoria`, `poziom`, `img_pytania`,
 -- (default, 'chemia', 1, 'baza/chemia/1/c8.jpg', 'baza/chemia/1/co8.jpg', 0, '', ''),
 -- (default, 'chemia', 1, 'baza/chemia/1/c9.jpg', 'baza/chemia/1/co9.jpg', 0, '', ''),
 
-(default, 'chemia', 2, 'baza/chemia/2/c1.jpg', 'baza/chemia/2/co1.jpg', 0, '', ''),
-(default, 'chemia', 2, 'baza/chemia/2/c2.jpg', 'baza/chemia/2/co2.jpg', 0, '', ''),
-(default, 'chemia', 2, 'baza/chemia/2/c3.jpg', 'baza/chemia/2/co3.jpg', 0, '', ''),
-(default, 'chemia', 2, 'baza/chemia/2/c4.jpg', 'baza/chemia/2/co4.jpg', 0, '', ''),
-(default, 'chemia', 2, 'baza/chemia/2/c5.jpg', 'baza/chemia/2/co5.jpg', 0, '', ''),
+(default, 'chemia', 2, 'baza_pytania/chemia/poziom_2/c1.jpg', 'baza_pytania/chemia/poziom_2/co1.jpg', 'flase', '', ''),
+(default, 'chemia', 2, 'baza_pytania/chemia/poziom_2/c2.jpg', 'baza_pytania/chemia/poziom_2/co2.jpg', 'false', '', ''),
+(default, 'chemia', 2, 'baza_pytania/chemia/poziom_2/c3.jpg', 'baza_pytania/chemia/poziom_2/co3.jpg', 'fasle', '', ''),
+(default, 'chemia', 2, 'baza_pytania/chemia/poziom_2/c4.jpg', 'baza_pytania/chemia/poziom_2/co4.jpg', 'false', '', ''),
+(default, 'chemia', 2, 'baza_pytania/chemia/poziom_2/c5.jpg', 'baza_pytania/chemia/poziom_2/co5.jpg', 'flase', '', ''),
 -- (default, 'chemia', 2, 'baza/chemia/2/c6.jpg', 'baza/chemia/2/co6.jpg', 0, '', ''),
 -- (default, 'chemia', 2, 'baza/chemia/2/c7.jpg', 'baza/chemia/2/co7.jpg', 0, '', ''),
 -- (default, 'chemia', 2, 'baza/chemia/2/c8.jpg', 'baza/chemia/2/co8.jpg', 0, '', ''),

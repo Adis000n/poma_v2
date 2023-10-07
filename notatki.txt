@@ -1,18 +1,6 @@
 TU ZAPISUJESZ JAK JEST COS WAZNEGO DO ZROBIENIA I WOGÓLE WAZNE ZECZY DO PAMIĘTANIA
 
 
-DO ZROBIENIA:
-1. Pionki kolor do zmian zeby sie nie zlewało
-2. Baza danych i pliki do testów 
-3. Plansza zmiana?
-4. Plansz na dwie druzyny
-5. Losowa plansza - losowe miejsce na powerup
-6. Koło fortuny?
-7. Poprawa dzwięków
-8. Zmienić rok użycia (Potem wrócić do 3 lat)
-9. Naprawić czas 
-10. Naprawić kolumne statystyki
-
 NOTATKI:
 Na ten moment niewiem jak zrobimy z plikami wdeo i audio wiec to jest do ogarnięcia
 W tabelce z pytaniami przyda się kolumna "flaga" zeby oznczyc czy pytnie zostało uzyte czy nie
