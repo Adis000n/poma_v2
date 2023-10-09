@@ -20,8 +20,7 @@
         <button id='hideMe' style='color: black;'>HIDE</button>
         <input type="radio" class='pawns' name='pawn'  value='yellow'>yellow
         <input type="radio" class='pawns' name='pawn' value='green'>green
-        <input type="radio" class='pawns' name='pawn' value='red'>red
-        <input type="radio" class='pawns' name='pawn' value='blue'>blue
+
         <br>
         <button class='buttonSlider'>-</button> <input type="range" min="1" max="200" value="50"  class="slider" id="myX"><button class='buttonSlider'>+</button>
         <br>
