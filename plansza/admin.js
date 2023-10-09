@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded',function(){  //wczytanie fukcji pod
     function hideAdm(){                                   // Funkcja hideADM podczas gdy document.getElementById('hideMe').addEventListener('click',hideAdm); się spełni
         document.getElementById('ADMIN').style.display = 'none';    // Żeby nie było widać XD
     }
-    function showAdm(){ // PATRZ  document.getElementById('ShowAdm').addEventListener('click',showAdm);
+    function showAdm(){ // PATRZ  document.getElementById('ShowAdm').addEventListener('click',showAd);
         document.getElementById('ADMIN').style.display = 'block'; // żeby było widać XD
     }
     document.getElementById('hideMe').addEventListener('click',hideAdm); // ODCZYT NACIŚNIĘCIA PRZYCISKU HIDE NA PLANSZA PHP
