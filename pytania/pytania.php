@@ -32,7 +32,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.7;
+    opacity: 0.55;
     }
 
     /* Position text in the middle of the page/image */
@@ -40,7 +40,7 @@
     background-color: rgb(255,255,255); /* Fallback color */ 
     color: orangered;
     font-weight: bold;
-    border: 7px solid orangered;
+    border: 7px solid orange;
     position: absolute;
     top: 50%;
     left: 50%;
