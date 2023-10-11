@@ -12,7 +12,9 @@
     <body>
 <div id=panets>
 <!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
-<button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button>
+<button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
+<button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
+<button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> <!-- Przycisk test stanu eventstatus -->
 </div> 
 </body>
 </html>

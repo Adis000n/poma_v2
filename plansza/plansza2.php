@@ -37,7 +37,7 @@
 <input type="range" class="form-range" min="1" max="200" value="50" id="myX">
         <br>
         <!-- <p id="wartoscSuwakaX"></p> -->
-    `     <br>
+        <br>
         <label for="customRange2" class="form-label">OŚ Y</label>
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
         <br>
