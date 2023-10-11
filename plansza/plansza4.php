@@ -12,13 +12,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
-    <?php
-    // Pobieranie wartości suwaka z serwera
-    $war = 50; // Domyślna wartość dla myX
-    if (isset($_POST['myX'])) {
-        $wartoscSuwakaX = $_POST['myX'];
-    }
-    ?>
     <button id="ShowAdm" >
  
     </button>
@@ -55,14 +48,13 @@
         <label for="customRange2" class="form-label">OŚ X</label>
 <input type="range" class="form-range" name="myX"  min="1" max="200" step="1" id="myX" value="50">
         <br>
-        <p>Wartość suwaka myX: <?php echo $wartoscSuwakaX ?>
+
         </form>
              <br>
 
         <label for="customRange2" class="form-label">OŚ Y</label>
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
         <br>
-        <!-- <p>Wartość suwaka Y: <span id="wartoscSuwakaY"></span></p> -->
 
     </div>
     <style>
@@ -89,4 +81,3 @@
     </style>
 </body>
 </html>
-<!-- LINIA 11.50,56 MAJĄ BYĆ DO WYŚWIELANIA WARTOŚCI LECZ TA KURWA NIE DZIAŁA -->
