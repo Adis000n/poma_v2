@@ -8,10 +8,17 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
         <script src="admin.js"></script>
-        <!-- <script src="pokaz.js"></script> -->
+        <script src="pokaz.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
-        
+    <?php
+    // Pobieranie wartości suwaka z serwera
+    $war = 50; // Domyślna wartość dla myX
+    if (isset($_POST['myX'])) {
+        $wartoscSuwakaX = $_POST['myX'];
+    }
+    ?>
     <button id="ShowAdm" >
  
     </button>
@@ -44,11 +51,14 @@
   </label>
 </div>
         <br>
+       <form method="post">
         <label for="customRange2" class="form-label">OŚ X</label>
-<input type="range" class="form-range" min="1" max="200" value="50" id="myX">
+<input type="range" class="form-range" name="myX"  min="1" max="200" step="1" id="myX" value="50">
         <br>
-        <!-- <p id="wartoscSuwakaX"></p> -->
-    `     <br>
+        <p>Wartość suwaka myX: <?php echo $wartoscSuwakaX ?>
+        </form>
+             <br>
+
         <label for="customRange2" class="form-label">OŚ Y</label>
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
         <br>
