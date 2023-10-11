@@ -88,7 +88,7 @@ if ($result){
         margin-top: 20px !important;
         width: 30%;
         margin: auto;
-        border-radius: 15px;
+        border-radius: 20px;
     }
     #time{
         color: rgb(70,70,70);
