@@ -93,10 +93,6 @@ if ($result){
     #time{
         color: rgb(70,70,70);
     }
-
-
-
-
 </style>
 <body>
     <div class="bg-image"></div>
