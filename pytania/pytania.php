@@ -8,6 +8,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
 </head>
+<?php
+// stworzenie złączenia z bazą daych
+//tutaj jakis zakomentowany kod php był do testów i nie ma znczenia
+$con = mysqli_connect("localhost", "root","");
+// print_r($con);
+mysqli_select_db($con, "poma");
+//zapytanie o zdjęcie
+$q = "SELECT * FROM mvc_konkurs_pytania group by img_pytania desc limit 1";
+$result = mysqli_query($con, $q);
+// print_r($result);
+if ($result){
+    while($row = mysqli_fetch_array($result)){
+    // print_r($row);
+    //query jako sciezka do pytania
+    $query =  $row["img_pytania"];
+    }
+}
+// else {
+//echo "nie działa";
+//}
+?>
 <style>
         body, html {
     height: 100%;
@@ -65,8 +86,9 @@
         border: 4px solid orangered;
         color: darkorange;
         margin-top: 20px !important;
-        width: 50%;
+        width: 30%;
         margin: auto;
+        border-radius: 15px;
     }
     #time{
         color: rgb(70,70,70);
@@ -89,7 +111,8 @@
     </div>
     <hr class="border border-warning border-3 opacity-100" >
     <h1>Pytanie:</h1>
-    <img src="../baza_pytania/chemia/poziom_2/c1.jpg" width="50%">
+    <!-- wyswitlanie zdjecia pytania pobranego z bazy danych kod php do tego zaraz pod headem -->
+    <img src="../<?php echo $query ?>" width="50%">
     <h1>Poprawna odpwiedź:</h1>
     <img src="../baza_pytania/chemia/poziom_2/co1.jpg" width="20%">
     <div id="timer"><h1>Pozostały czas:</h1><h2 id="time">30</h2></div>

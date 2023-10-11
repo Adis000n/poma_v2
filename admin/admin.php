@@ -9,11 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="panets.js"></script>
 </head>
-<body>
-<div id=panets>
-<!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
-<button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button>
-</div> 
+    <body>
 
 </body>
 </html>
