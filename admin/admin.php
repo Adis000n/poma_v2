@@ -9,20 +9,6 @@
         <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
     </head>
     <body>
-        <form>
-        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
-            <button type="button" class="btn btn-primary">Chemia</button>
-            <button type="button" class="btn btn-primary">Informatyka</button>
-            <button type="button" class="btn btn-primary">Fizyka</button>
-            <button type="button" class="btn btn-primary">Matematyka</button>
-            <button type="button" class="btn btn-primary">Technika</button>
-            <button type="button" class="btn btn-primary">Niespodzianka</button>
-        </div>
-        <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
-            <button type="button" class="btn btn-primary">za 2 punkty</button>
-            <button type="button" class="btn btn-primary">za 1 punkt</button>
-        </div>
-        <div id="demo"></div></div>
-        </form>
+        
     </body>
 </html>
