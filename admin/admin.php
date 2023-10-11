@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id=panets>
-<!-- DIV OD PANELU OD STARTU KONKUSU -->
+<!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
 <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button>
 </div> 
 
