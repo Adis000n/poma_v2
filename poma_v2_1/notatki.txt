@@ -1,0 +1,13 @@
+TU ZAPISUJESZ JAK JEST COS WAZNEGO DO ZROBIENIA I WOGÓLE WAZNE ZECZY DO PAMIĘTANIA
+
+
+NOTATKI:
+Na ten moment niewiem jak zrobimy z plikami wdeo i audio wiec to jest do ogarnięcia
+W tabelce z pytaniami przyda się kolumna "flaga" zeby oznczyc czy pytnie zostało uzyte czy nie
+Mam na mysli zeby po prostu jak bierze pytanie to go nie losuje czy cos tylko poprostu bierze pierwsze
+z brzegu które ma flage na false a jak juz uzyjesz pytanie to dajesz tą flage na true tylko w jakiś
+sposób bedzie trzeba zrobić jakiś przycisk do resetowanie tych flag
+
+Uzywajcie boostrapa na stronach zeby to ładnie wyglądało
+
+I zakładam ze html i css w jednym pliku

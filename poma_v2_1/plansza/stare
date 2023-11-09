@@ -1,0 +1,156 @@
+document.addEventListener('DOMContentLoaded',function(){
+
+
+
+class pawn{
+    constructor(id){
+        this.item = document.getElementsByClassName(id)[0]
+        this.item.style.display = 'block';
+        this.arr = [];
+        this.iteration = 0;
+        this.arrInString ='';
+    }
+    
+    updatePosX(valX){
+        this.x = valX/2;
+        this.roundPos()
+        this.draw();
+    }
+    updatePosY(valY){
+        this.y = valY/2;
+        this.roundPos()
+        this.draw()
+    }
+    testPosX(valX){
+        this.x = valX;
+        this.roundPos()
+        this.draw();
+    }
+    testPosY(valY){
+        this.y = valY;
+        this.roundPos()
+        this.draw()
+    }
+    draw(){
+        this.roundPos()
+        this.item.style.left = String(this.x)+'%';
+        this.item.style.top = String(this.y)+'%';
+    }
+    addToArr(x,y){
+        this.roundPos()
+        this.arr[this.iteration]=[String(x),String(y)];
+        this.iteration+=1
+        console.log(this.x,this.y);
+    }
+    exportArr(){
+        for(var r=0;r<this.arr.length;r+=1){
+            this.arrInString+='['+String(this.arr[r])+'], ';
+        }
+        console.log(this.arrInString.substring(0,this.arrInString.length-2));
+    }
+    xButton(move){
+        this.x+=move;
+        this.draw()
+    }
+    yButton(move){
+        this.y+=move;
+        this.draw()
+    }
+
+    roundPos(){
+        this.x = Math.round(this.x*100)/100
+        this.y = Math.round(this.y*100)/100
+    }
+
+}
+    
+// pawn1 = new pawn('blue')
+// pawn1.updatePos(10,10)
+
+
+for(var i=0;i<4;i+=1){
+    document.getElementsByClassName('pawns')[i].addEventListener('click',changePawn);
+}
+document.getElementById('myX').addEventListener('mouseup',changeX);
+document.getElementById('myY').addEventListener('mouseup',changeY);
+document.getElementsByClassName('admBt')[0].addEventListener('click',UpdateArr);
+document.getElementsByClassName('admBt')[1].addEventListener('click',Export);
+
+
+function changePawn(e){
+    console.log(e.target.value);
+    activePawn = new pawn(e.target.value);
+    activePawn.item.style.transition = 'none';
+}
+
+function changeX(e){
+    activePawn.updatePosX(e.target.value);
+}
+function changeY(e){
+    activePawn.updatePosY(e.target.value);
+}
+
+function UpdateArr(e){
+    activePawn.addToArr(activePawn.x,activePawn.y)
+}
+function Export(e){
+    activePawn.exportArr();
+}
+function xbut(val){
+    activePawn.xButton(val);
+}
+function ybut(val){
+    activePawn.yButton(val);
+}
+
+
+
+document.getElementById('TEST').addEventListener('click',runTest)
+
+document.getElementsByClassName('buttonSlider')[0].addEventListener('click',()=>{
+    activePawn.xButton(-0.2);
+})
+document.getElementsByClassName('buttonSlider')[1].addEventListener('click',()=>{
+    activePawn.xButton(0.2);
+})
+document.getElementsByClassName('buttonSlider')[2].addEventListener('click',()=>{
+    activePawn.yButton(-0.2);
+})
+document.getElementsByClassName('buttonSlider')[3].addEventListener('click',()=>{
+    activePawn.yButton(0.2);
+})
+
+
+pos = 0;
+function runTest(){
+    pawn1 = new pawn('yellow');
+    pawn2 = new pawn('green');
+    pawn3 = new pawn('red');
+    pawn4 = new pawn('blue');
+    pawn1.testPosX(positions[0][pos][0]);
+    pawn1.testPosY(positions[0][pos][1]);
+    pawn2.testPosX(positions[1][pos][0]);
+    pawn2.testPosY(positions[1][pos][1]);
+    pawn3.testPosX(positions[2][pos][0]);
+    pawn3.testPosY(positions[2][pos][1]);
+    pawn4.testPosX(positions[3][pos][0]);
+    pawn4.testPosY(positions[3][pos][1]);
+    pos==positions[0].length-1? pos=0:pos+=1;
+    // pos+=1;
+}
+
+
+
+
+
+
+function hideAdm(){
+    document.getElementById('ADMIN').style.display = 'none';
+}
+function showAdm(){
+    document.getElementById('ADMIN').style.display = 'block';
+}
+document.getElementById('hideMe').addEventListener('click',hideAdm);
+document.getElementById('ShowAdm').addEventListener('click',showAdm);
+
+});
