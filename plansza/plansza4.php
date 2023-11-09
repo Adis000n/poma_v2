@@ -111,7 +111,7 @@
     background-image: url('../grafika/gear100.png');
         }
       body{
-        background-image:url('../grafika/pseudoplansza.png') ; 
+        background-image:url('../grafika/board.jpg') ;
 
       }
       #team1{
