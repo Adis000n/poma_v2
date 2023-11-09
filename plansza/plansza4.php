@@ -9,13 +9,14 @@
         <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
         <script src="admin.js"></script>
         <script src="pokaz.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>\
+        <script src="pozycje.js"></script>
     </head>
     <body>
     <button id="ShowAdm" >
  
     </button>
-
+    <!-- POCZĄTEK PANELU ADMINA -->
     <div id='ADMIN'>
     <button id="test" type="button" class="btn btn-dark">TEST</button>
     <button id="hideMe" type="button" class="btn btn-dark">SCHOWAJ</button>
@@ -57,6 +58,29 @@
         <br>
 
     </div>
+    <!-- KOŃCZY SIĘ PANEL ADMINA -->
+    <div class="team" id="team1">
+        <h2>Drużyna 1</h2>
+        <p>ptk: <span class="score1"></span></p>
+      </div>
+      <div class="team" id="team2">
+        <h2>Drużyna 2</h2>
+        <p>ptk: <span class="score2"></span></p>
+      </div>
+      <div class="team" id="team3">
+        <h2>Drużyna 3</h2>
+        <p>ptk: <span class="score3"></span></p>
+      </div>
+      <div class="team" id="team4">
+        <h2>Drużyna 4</h2>
+        <p>ptk: <span class="score4"></span></p>
+      </div>
+    <div id="pionki">
+      <div class="yellow pawn"><img src="../grafika/pawn1.png" alt="debil"></div>
+      <div class="red pawn"><img src="../grafika/pawn2.png" alt="debil"></div>
+      <div class="blue pawn"><img src="../grafika/pawn3.png" alt="debil"></div>
+      <div class="green pawn"><img src="../grafika/pawn4.png" alt="debil"></div>
+      </div>
     <style>
         #ADMIN{
             display: none;
@@ -76,7 +100,52 @@
     height: 96px;
     background-image: url('../grafika/gear100.png');
         }
+        body{
+        background-image:url('../grafika/pseudoplansza.png') ; 
 
+      }
+      #team1{
+        color:red;
+        position: absolute;
+        bottom:auto;
+        left: 10%;
+        top: 10%;
+        right: auto;
+      }
+      #team2{
+        color:yellowgreen;
+        position: absolute;
+        bottom:auto;
+        left: 80%;
+        top: 10%;
+        right: auto;
+      }
+      #team3{
+        color: red;
+        position: absolute;
+        bottom:auto;
+        left: 10%;
+        top: 90%;
+        right: auto;
+      }
+      #team4{
+        color:yellowgreen;
+        position: absolute;
+        bottom:auto;
+        left: 80%;
+        top: 90%;
+        right: auto;
+      }
+      #pionki{
+        scale: 0.05;
+      }
+      h2{
+        font-size: 25px;
+      }
+      p{
+        font-size: 15px
+      }
+1
 
     </style>
 </body>
