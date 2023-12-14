@@ -9,26 +9,31 @@
     <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
 </head>
 <?php
-// stworzenie złączenia z bazą daych
-//tutaj jakis zakomentowany kod php był do testów i nie ma znczenia
-$con = mysqli_connect("localhost", "root","");
-// print_r($con);
+// stworzenie złączenia z bazą danych
+$con = mysqli_connect("localhost", "root", "");
 mysqli_select_db($con, "poma");
-//zapytanie o zdjęcie
-$q = "SELECT * FROM mvc_konkurs_pytania group by img_pytania desc limit 1";
+
+// zapytanie o zdjęcie
+$q = "SELECT * FROM mvc_konkurs_pytania WHERE uzyte = 0 ORDER BY RAND() LIMIT 1";
 $result = mysqli_query($con, $q);
-// print_r($result);
-if ($result){
-    while($row = mysqli_fetch_array($result)){
-    // print_r($row);
-    //query jako sciezka do pytania
-    $query =  $row["img_pytania"];
+
+if ($result) {
+    while ($row = mysqli_fetch_array($result)) {
+        // Zaktualizuj pole 'uzyte' w bazie danych na true, aby oznaczyć obraz jako użyty
+        $id = $row['id']; // Zakładam, że masz kolumnę 'id' w tabeli
+        mysqli_query($con, "UPDATE mvc_konkurs_pytania SET uzyte = 1 WHERE id = $id");
+
+        // Pobierz informacje o pytaniu
+        $category = $row['kategoria'];
+        $level = $row['poziom'];
+        $imagePath = $row['img_pytania'];
+
+        // Przypisz ścieżkę do pytania
+        $query = "../baza_pytania/$category/$level/$imagePath";
     }
 }
-// else {
-//echo "nie działa";
-//}
 ?>
+
 <style>
         body, html {
     height: 100%;
@@ -98,21 +103,66 @@ if ($result){
     <div class="bg-image"></div>
 
     <div class="bg-text">
-    <div id="stats">
-        <div id="druzyna"><h2>Nr drużyny:</h2><h3 id="druzyna-data">1</h3></div>
-        <hr class="border border-warning border-3 opacity-100" >
-        <div id="poziom"><h2>Poziom trudności:</h2><h3 id="poziom-data">1</h3></div>
-        <hr class="border border-warning border-3 opacity-100" >
-        <div id="kategoria"><h2>Kategoria:</h2><h3 id="poziom-data">NIGGER</h3></div>
+        <div id="stats">
+            <div id="druzyna">
+                <h2>Nr drużyny:</h2>
+                <h3 id="druzyna-data">-</h3>
+            </div>
+            <hr class="border border-warning border-3 opacity-100">
+            <div id="poziom">
+                <h2>Poziom trudności:</h2>
+                <h3 id="poziom-data">-</h3>
+            </div>
+            <hr class="border border-warning border-3 opacity-100">
+            <div id="kategoria">
+                <h2>Kategoria:</h2>
+                <h3 id="kategoria-data">-</h3>
+            </div>
+        </div>
+        <hr class="border border-warning border-3 opacity-100">
+        <h1>Pytanie:</h1>
+        <!-- wyswietlanie zdjecia pytania pobranego z bazy danych kod php do tego zaraz pod headem -->
+        <img src="../<?php echo $query ?>" width="50%">
+        <h1>Poprawna odpowiedź:</h1>
+        <img src="../baza_pytania/chemia/1/co1.jpg" width="20%">
+        <div id="timer">
+            <h1>Pozostały czas:</h1>
+            <h2 id="time">30</h2>
+        </div>
+  </div>
     </div>
-    <hr class="border border-warning border-3 opacity-100" >
-    <h1>Pytanie:</h1>
-    <!-- wyswitlanie zdjecia pytania pobranego z bazy danych kod php do tego zaraz pod headem -->
-    <img src="../<?php echo $query ?>" width="50%">
-    <h1>Poprawna odpwiedź:</h1>
-    <img src="../baza_pytania/chemia/poziom_2/co1.jpg" width="20%">
-    <div id="timer"><h1>Pozostały czas:</h1><h2 id="time">30</h2></div>
-    </div>
+
 </body>
+<!-- Add this script at the end of the file -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+   const ws = new WebSocket('ws://192.168.253.91:3000/ws');
+
+   ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      updateContent(data.subject, data.points);
+   };
+
+   function updateContent(subject, points) {
+      const contentDiv = document.getElementById('kategoria-data');
+      contentDiv.innerHTML = subject;
+      const contentDiv2 = document.getElementById('poziom-data');
+      contentDiv2.innerHTML = points;
+
+      // Make an AJAX request to fetch the new image
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+         if (xhr.readyState === 4 && xhr.status === 200) {
+            const imagePath = xhr.responseText;
+            const imageElement = document.getElementById('pytanie-img');
+            imageElement.src = imagePath;
+         }
+      };
+      xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
+      xhr.send();
+   }
+});
+
+</script>
 
 </html>
