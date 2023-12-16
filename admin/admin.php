@@ -9,7 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="panets.js"></script>
     <script>
-    function submitForm() {
+        let timerInterval;
+        let timerValue = 30; // Initialize timerValue
+
+        function submitForm() {
         // Perform basic form validation
         var selectedSubject = document.querySelector('input[name="subject"]:checked');
         var selectedPoints = document.querySelector('input[name="points"]:checked');
@@ -25,11 +28,11 @@
             points: selectedPoints.value,
         };
 
-        console.log('Form data:', formData); // Add this line to log the data
+        console.log('Form data:', formData); // Log the data to the console
 
         // Connect to WebSocket and send form data
         const socket = new WebSocket('ws://localhost:3000/ws');
-        
+
         // Wait for the WebSocket connection to open
         socket.onopen = () => {
             socket.send(JSON.stringify(formData));
@@ -41,8 +44,48 @@
             console.error(`WebSocket Error: ${error}`);
         };
     }
-</script>
 
+        function sendTimerData(timerValue) {
+            const formData2 = {
+                timer: timerValue,
+            };
+
+            const socket = new WebSocket('ws://localhost:3000/ws');
+
+            socket.onopen = () => {
+                socket.send(JSON.stringify(formData2));
+                console.log('WebSocket connection opened. Timer data sent.');
+            };
+
+            socket.onerror = (error) => {
+                console.error(`WebSocket Error: ${error}`);
+            };
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timerValue -= 1;
+                sendTimerData(timerValue);
+
+                // Check if the timer has reached 0
+                if (timerValue === 0) {
+                    stopTimer();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            sendTimerData(timerValue); 
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            sendTimerData(0); 
+            timerValue = 30;
+            sendTimerData(timerValue); 
+        }
+    </script>
 </head>
 <body>
     <form id="quizForm" method="post" action="/submitForm">

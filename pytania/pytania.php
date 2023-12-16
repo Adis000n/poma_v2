@@ -35,59 +35,56 @@ if ($result) {
 ?>
 
 <style>
-        body, html {
-    height: 100%;
-    background-color: black;
+    body, html {
+        height: 100%;
+        background-color: black;
+        color: white; /* Set the default text color to white */
     }
 
     * {
-    box-sizing: border-box;
+        box-sizing: border-box;
     }
 
     .bg-image {
-    /* The image used */
-    background-image: url("../grafika/logo_poma2.jpg");
-    background-color: rgba(0, 0, 0, 0.8) ;
-    /* Add the blur effect */
-    filter: blur(10px);
-    -webkit-filter: blur(10px);
-
-    /* Full height */
-    height: 100%;
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.35;
+        background-image: url("../grafika/logo_poma2.jpg");
+        background-color: rgba(0, 0, 0, 0.8);
+        filter: blur(10px);
+        -webkit-filter: blur(10px);
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        opacity: 0.35;
     }
 
-    /* Position text in the middle of the page/image */
     .bg-text {
-    background-color: rgb(255,255,255); /* Fallback color */ 
-    color: orangered;
-    font-weight: bold;
-    border: 7px solid orange;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    width: 85%;
-    padding: 20px;
-    text-align: center;
-    border-radius: 5px;
+        background-color: rgba(255, 255, 255, 1); /* Set the background color to a semi-transparent white */
+        color: orangered;
+        font-weight: bold;
+        border: 7px solid orange;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+        width: 85%;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
     }
-    #stats{
+
+    #stats {
         display: flex;
         flex-direction: row;
         justify-content: center;
         justify-content: space-around;
     }
-    h3{
+
+    h3 {
         color: rgb(100, 100, 100);
     }
-    #timer{
+
+    #timer {
         border: 4px solid orangered;
         color: darkorange;
         margin-top: 20px !important;
@@ -95,10 +92,41 @@ if ($result) {
         margin: auto;
         border-radius: 20px;
     }
-    #time{
-        color: rgb(70,70,70);
+
+    #time {
+        color: rgb(70, 70, 70);
+    }
+
+
+    #overlay {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+        backdrop-filter: blur(15px); /* Blur effect */
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+        transition: 0,5s;
+    }
+
+    #overlay-content {
+        color: white;
+        font-size: 10rem !important;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Place it above other content */
+        transition: 0.5s;
     }
 </style>
+
+
 <body>
     <div class="bg-image"></div>
 
@@ -126,43 +154,94 @@ if ($result) {
         <h1>Poprawna odpowiedź:</h1>
         <img src="../baza_pytania/chemia/1/co1.jpg" width="20%">
         <div id="timer">
-            <h1>Pozostały czas:</h1>
-            <h2 id="time">30</h2>
+            <h2>Pozostały czas:</h2>
+            <h1 id="time">30</h1>
         </div>
   </div>
     </div>
 
+    <div id="overlay" style="display: none;">
+        <div id="overlay-content">
+            <h1>Koniec czasu!</h1>
+        </div>
+    </div>
+    <audio id="tickSound" src="../audio/clock-tick-long.mp3" autoplay muted></audio>
+    <audio id="ringSound" src="../audio/bell-ring.mp3" autoplay muted></audio>
+
 </body>
-<!-- Add this script at the end of the file -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-   const ws = new WebSocket('ws://192.168.253.91:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.108:3000/ws');
+    const tickSound = document.getElementById('tickSound');
+    tickSound.muted = false;
+    tickSound.volume = 0.5;
 
-   ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      updateContent(data.subject, data.points);
-   };
+    const ringSound = document.getElementById('ringSound');
+    ringSound.muted = false;
+    ringSound.volume = 0.4;
 
-   function updateContent(subject, points) {
-      const contentDiv = document.getElementById('kategoria-data');
-      contentDiv.innerHTML = subject;
-      const contentDiv2 = document.getElementById('poziom-data');
-      contentDiv2.innerHTML = points;
+    ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
 
-      // Make an AJAX request to fetch the new image
-      const xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-         if (xhr.readyState === 4 && xhr.status === 200) {
-            const imagePath = xhr.responseText;
-            const imageElement = document.getElementById('pytanie-img');
-            imageElement.src = imagePath;
-         }
-      };
-      xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
-      xhr.send();
-   }
+        if (data.subject && data.points) {
+            updateContent(data.subject, data.points);
+        } else if (data.timer !== undefined) {
+            updateTimer(data.timer);
+        }
+    };
+
+    function updateContent(subject, points) {
+        const contentDiv = document.getElementById('kategoria-data');
+        contentDiv.innerHTML = subject;
+        const contentDiv2 = document.getElementById('poziom-data');
+        contentDiv2.innerHTML = points;
+
+        // Make an AJAX request to fetch the new image
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const imagePath = xhr.responseText;
+                const imageElement = document.getElementById('pytanie-img');
+                imageElement.src = imagePath;
+            }
+        };
+        xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
+        xhr.send();
+    }
+
+    function showEndOfTimeOverlay() {
+        const overlay = document.getElementById('overlay');
+        const overlayContent = document.getElementById('overlay-content');
+        ringSound.play();
+        overlay.style.display = 'flex';
+        overlayContent.innerHTML = '<h1">Koniec czasu!</h1>';
+
+        // Darken the background
+        document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+
+        // Hide the overlay after 2 seconds
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            document.body.style.backgroundColor = ''; // Reset background color
+        }, 5500);
+    }
+
+    function updateTimer(timerValue) {
+        const timerElement = document.getElementById('time');
+        timerElement.innerHTML = timerValue;
+
+        if (timerValue == 5) {
+            tickSound.play();
+        }
+
+        if (timerValue == 1) {
+            setTimeout(() => {
+                timerElement.innerHTML = 0;
+                showEndOfTimeOverlay();
+            }, 1100);
+        }
+    }
 });
 
 </script>
-
 </html>

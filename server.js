@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.253.91:3000/ws');
+const ws = new WebSocket('ws://192.168.55.108:3000/ws');
 
 const app = express();
 expressWs(app);
@@ -37,12 +37,21 @@ app.ws('/ws', (ws, req) => {
     try {
       const data = JSON.parse(message);
 
-      // Broadcast the parsed data to all connected clients
-      clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(data));
-        }
-      });
+      if (data.subject && data.points) {
+        // Broadcast the parsed subject and points data to all connected clients
+        clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+          }
+        });
+      } else if (data.timer) {
+        // Broadcast the parsed timer data to all connected clients
+        clients.forEach(client => {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(data));
+          }
+        });
+      }
     } catch (error) {
       console.error('Error parsing incoming message:', error);
     }
