@@ -8,32 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
 </head>
-<?php
-// stworzenie złączenia z bazą danych
-$con = mysqli_connect("localhost", "root", "");
-mysqli_select_db($con, "poma");
-
-// zapytanie o zdjęcie
-$q = "SELECT * FROM mvc_konkurs_pytania WHERE uzyte = 0 ORDER BY RAND() LIMIT 1";
-$result = mysqli_query($con, $q);
-
-if ($result) {
-    while ($row = mysqli_fetch_array($result)) {
-        // Zaktualizuj pole 'uzyte' w bazie danych na true, aby oznaczyć obraz jako użyty
-        $id = $row['id']; // Zakładam, że masz kolumnę 'id' w tabeli
-        mysqli_query($con, "UPDATE mvc_konkurs_pytania SET uzyte = 1 WHERE id = $id");
-
-        // Pobierz informacje o pytaniu
-        $category = $row['kategoria'];
-        $level = $row['poziom'];
-        $imagePath = $row['img_pytania'];
-
-        // Przypisz ścieżkę do pytania
-        $query = "../baza_pytania/$category/$level/$imagePath";
-    }
-}
-?>
-
 <style>
     body, html {
         height: 100%;
@@ -149,8 +123,7 @@ if ($result) {
         </div>
         <hr class="border border-warning border-3 opacity-100">
         <h1>Pytanie:</h1>
-        <!-- wyswietlanie zdjecia pytania pobranego z bazy danych kod php do tego zaraz pod headem -->
-        <img src="../<?php echo $query ?>" width="50%">
+        <img id="pytanie-img" src="" width="50%">
         <h1>Poprawna odpowiedź:</h1>
         <img src="../baza_pytania/chemia/1/co1.jpg" width="20%">
         <div id="timer">
@@ -169,14 +142,42 @@ if ($result) {
     <audio id="ringSound" src="../audio/bell-ring.mp3" autoplay muted></audio>
 
 </body>
+
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+
+                if (data.subject && data.points) {
+                    updateImage(data.subject, data.points);
+                }
+            };
+
+            function updateImage(subject, points) {
+                // Make an AJAX request to fetch the new image
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const imagePath = xhr.responseText;
+                        const imageElement = document.getElementById('pytanie-img');
+                        imageElement.src = imagePath;
+                    }
+                };
+                xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
+                xhr.send();
+            }
+        });
+    </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.108:3000/ws');
-    const tickSound = document.getElementById('tickSound');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+    var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
-    tickSound.volume = 0.5;
+    tickSound.volume = 0.3;
 
-    const ringSound = document.getElementById('ringSound');
+    var ringSound = new Audio('../audio/bell-ring.mp3');
     ringSound.muted = false;
     ringSound.volume = 0.4;
 
@@ -195,18 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
         contentDiv2.innerHTML = points;
-
-        // Make an AJAX request to fetch the new image
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const imagePath = xhr.responseText;
-                const imageElement = document.getElementById('pytanie-img');
-                imageElement.src = imagePath;
-            }
-        };
-        xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
-        xhr.send();
     }
 
     function showEndOfTimeOverlay() {

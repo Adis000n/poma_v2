@@ -11,6 +11,7 @@
     <script>
         let timerInterval;
         let timerValue = 30; // Initialize timerValue
+        let timerRunning = false;
 
         function submitForm() {
         // Perform basic form validation
@@ -63,27 +64,45 @@
         }
 
         function startTimer() {
-            timerInterval = setInterval(() => {
-                timerValue -= 1;
-                sendTimerData(timerValue);
+            if (!timerRunning && timerValue > 0) {
+                timerRunning = true;
+                disableButtons(); // Disable buttons when the timer is running
+                timerInterval = setInterval(() => {
+                    timerValue -= 1;
+                    sendTimerData(timerValue);
 
-                // Check if the timer has reached 0
-                if (timerValue === 0) {
-                    stopTimer();
-                }
-            }, 1000);
+                    if (timerValue === 0) {
+                        stopTimer();
+                    }
+                }, 1000);
+            }
         }
 
         function stopTimer() {
             clearInterval(timerInterval);
-            sendTimerData(timerValue); 
+            timerRunning = false;
+            enableButtons(); // Enable buttons when the timer is stopped
         }
 
         function resetTimer() {
-            clearInterval(timerInterval);
-            sendTimerData(0); 
-            timerValue = 30;
-            sendTimerData(timerValue); 
+            if (!timerRunning) {
+                enableButtons(); // Enable buttons when the timer is reset
+                sendTimerData(0);
+                timerValue = 30;
+                sendTimerData(timerValue);
+            }
+        }
+
+        function disableButtons() {
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            document.getElementById('resetBtn').disabled = true;
+        }
+
+        function enableButtons() {
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('resetBtn').disabled = false;
         }
     </script>
 </head>
@@ -129,9 +148,9 @@
             </div>
         </div>
         <p>Timer:</p>
-        <button type="button" class="btn btn-success " onclick="startTimer()">Start</button>
-        <button type="button" class="btn btn-danger " onclick="stopTimer()">Stop</button>
-        <button type="button" class="btn btn-warning " onclick="resetTimer()">Reset</button>
+        <button type="button" id="startBtn" class="btn btn-success" onclick="startTimer()">Start</button>
+        <button type="button" id="stopBtn" class="btn btn-danger" onclick="stopTimer()" disabled>Stop</button>
+        <button type="button" id="resetBtn" class="btn btn-warning" onclick="resetTimer()">Reset</button>
         <br>
         <hr>
         <button type="button" class="btn btn-primary" onclick="submitForm()">Wyświetl</button>
