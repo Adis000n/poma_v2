@@ -98,6 +98,10 @@
         z-index: 1000; /* Place it above other content */
         transition: 0.5s;
     }
+    #bg-text{
+        font-weight: bolder;
+        font-size: xx-large;
+    }
 </style>
 
 
@@ -125,7 +129,8 @@
         <h1>Pytanie:</h1>
         <img id="pytanie-img" src="" width="50%">
         <h1>Poprawna odpowiedź:</h1>
-        <img src="../baza_pytania/chemia/1/co1.jpg" width="20%">
+        <div id="bg-text"></div>
+        <img id="odpowiedz-img" src="../baza_pytania/chemia/1/co1.jpg"  width="20%">
         <div id="timer">
             <h2>Pozostały czas:</h2>
             <h1 id="time">30</h1>
@@ -188,14 +193,25 @@ document.addEventListener('DOMContentLoaded', () => {
             updateContent(data.subject, data.points);
         } else if (data.timer !== undefined) {
             updateTimer(data.timer);
+        } else if (data.action === 'secondaryBtnClicked') {
+            handleSecondaryBtnClick();
+        } else if (data.isCorrect !== undefined) {
+            handleAnswer(data.isCorrect);
         }
     };
 
+    function handleSecondaryBtnClick() {
+        document.getElementById('bg-text').innerHTML = "WOW CLCIKED";
+    }
+
     function updateContent(subject, points) {
+        const bgText = document.getElementById('bg-text');
+        bgText.innerHTML = "";
         const contentDiv = document.getElementById('kategoria-data');
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
         contentDiv2.innerHTML = points;
+        
     }
 
     function showEndOfTimeOverlay() {
@@ -228,6 +244,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 timerElement.innerHTML = 0;
                 showEndOfTimeOverlay();
             }, 1100);
+        }
+    }
+    function handleAnswer(isCorrect) {
+        const bgText = document.getElementById('bg-text');
+        if (isCorrect) {
+            bgText.innerHTML = "To była poprawna odpowiedź";
+            bgText.style.color = 'green';
+        } else {
+            bgText.innerHTML = "To była niepoprawna odpowiedź";
+            bgText.style.color = '#f0002c';
         }
     }
 });
