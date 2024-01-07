@@ -10,7 +10,12 @@
         <script src="admin.js"></script>
         <script src="pokaz.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    </head>
+      </head>
+      <script>
+          document.addEventListener('DOMContentLoaded', () => {
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+          });
+        </script>
     <body>
     <button id="ShowAdm" >
  
@@ -57,6 +62,28 @@
         <br>
 
     </div>
+    <div class="team" id="team1">
+        <h2>Drużyna 1</h2>
+        <p>ptk: <h3 id="score1">-</h3></p>
+      </div>
+      <div class="team" id="team2">
+        <h2>Drużyna 2</h2>
+        <p>ptk: <h3 id="score1">-</h3></p>
+      </div>
+      <div class="team" id="team3">
+        <h2>Drużyna 3</h2>
+        <p>ptk: <h3 id="score1">-</h3></p>
+      </div>
+      <div class="team" id="team4">
+        <h2>Drużyna 4</h2>
+        <p>ptk: <h3 id="score1">-</h3></p>
+      </div>
+    <div id="pionki">
+      <div class="yellow_pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
+      <div class="red_pawn"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
+      <div class="blue_pawn"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
+      <div class="green_pawn"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
+      </div>
     <style>
         #ADMIN{
             display: none;

@@ -151,7 +151,7 @@
 <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -180,7 +180,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -209,7 +209,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.107:3000/ws');
+    const ws = new WebSocket('ws:/127.26.0.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -232,8 +232,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.subject && data.points) {
             subject = data.subject;
             points = data.points;
-            console.log(subject, points);
-            updateContent(data.subject, data.points);
+            team   = data.team;
+            console.log(subject, points,team);
+            updateContent(data.subject, data.points, data.team);
         } else if (data.timer !== undefined) {
             updateTimer(data.timer);
         } else if (data.action === 'secondaryBtnClicked') {
@@ -262,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    function updateContent(subject, points) {
+    function updateContent(subject, points,team) {
         const bgText = document.getElementById('bg-text');
         bgText.innerHTML = "";
         const odp = document.getElementById('odpowiedz-img');
@@ -274,7 +275,8 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
         contentDiv2.innerHTML = points;
-        
+        const contentDiv3 = document.getElementById('druzyna-data');
+        contentDiv3.innerHTML = team;
     }
 
     function showEndOfTimeOverlay() {

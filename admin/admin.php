@@ -7,8 +7,108 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="panets.js"></script>
+    <!-- <script src="panets.js"></script> -->
     <script>
+    let nr_druzyny = 1;
+    var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
+document.getElementsByTagName('head')[0].appendChild(script);
+const druzyny=[]; //tablica druzyny
+
+var eventstatus //TUTAJ JEST TENTEGES ŻE JEST FLAGA OD TEGO CZY JEST WŁĄCZONE - 1 CZY WYŁĄCZONE - 0 
+function status1(){
+  eventstatus=1;
+}
+function status0(){
+  eventstatus=0;
+}
+startevent:function startevent() { //funkcja która działa po naciścięciu start konkursu
+
+  if(eventstatus==1){
+    alert("Konkurs już aktywny")
+  }
+else{
+ // console.log(eventstatus)  
+// alert("TWOJA DUPA W HANNOWERZE OPIERDALA 4 WIERZE"); //taki żarcik 😊
+    ilosc_druzyn=Number(prompt("Podaj liczbe druzyn min 2 max 4)",4)) // PROMPT do podania liczby druzyn
+    for(let i=1;i<=ilosc_druzyn;i++){                                 //Pentla od nazw drużyn
+    druzyny.push(prompt("Podaj nazwę drużyny "+ i, "Drużyna " +i))    //wprowadza dane do tablicy
+}   
+console.log(druzyny)
+
+if(confirm("Czy na pewno chcesz kontynuować?") == true ){
+  eventstatus=1                 //przypisywanie do eventstatus jeden że konkurs aktywny
+  var url = 'admin.php?query=startevent';
+  $(document).ready(function() {
+
+    // Convert JavaScript array to JSON format
+    var jsonData = JSON.stringify(druzyny);
+
+    // AJAX request to send data to PHP
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: { data: jsonData },//typ danych tutaj JSON
+        success: function(response) {
+            console.log('Data sent successfully to PHP');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending data to PHP');
+        }
+    });
+});
+				};
+if(eventstatus==1){
+  alert("Konkurs się rozpoczą")
+}}
+};
+	
+
+
+
+
+function stopevent(){
+  if(eventstatus==1){
+  if(confirm("Czy na pewno chcesz przerwać konkurs zakończyć konkurs")==true){ //Prosty if żeby nie było missclicków
+  eventstatus=undefined;//USTAWIENIA NA undefined 
+  druzyny.length = 0 // CZYSZCZENIE TABLICY
+  nr_druzyny=1;
+  $(document).ready(function() {
+   // AJAX request to send data to PHP
+     var url = 'admin.php?query=stopevent';
+      var recordId =[1,2,3,4];
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: { ids: recordId },
+        success: function(response) {
+            console.log('Data sent successfully to PHP1');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending data to PHP');
+        }
+    });
+});
+
+  
+  alert("Udało Ci się zrestartować konkurs")} //alert sukces
+  else{ 
+    alert("Konkurs dalej trwa") // jęzeli ktoś nacinie anuluj
+  }
+}else{
+  alert("Konkurs nie trwa (XD)") 
+}
+}
+function sprawdzstan(){
+  if(eventstatus==1){
+    alert("Konkurs aktywny")
+  }
+  else{
+    alert("Konkurs nie jest aktywny")
+  }
+}
+     
+        
         let timerInterval;
         let timerValue = 30; // Initialize timerValue
         let timerRunning = false;
@@ -17,7 +117,7 @@
         // Perform basic form validation
         var selectedSubject = document.querySelector('input[name="subject"]:checked');
         var selectedPoints = document.querySelector('input[name="points"]:checked');
-
+        var selectedTeam  = nr_druzyny;
         if (!selectedSubject || !selectedPoints) {
             alert('Please select both a subject and points');
             return;
@@ -27,8 +127,13 @@
         const formData = {
             subject: selectedSubject.value,
             points: selectedPoints.value,
+            team:   selectedTeam,
         };
-
+        if(nr_druzyny<ilosc_druzyn){
+            nr_druzyny=nr_druzyny+1;
+        }else{
+            nr_druzyny=1;
+        }
         console.log('Form data:', formData); // Log the data to the console
 
         // Connect to WebSocket and send form data
@@ -183,6 +288,14 @@ function sendAnswer(isCorrect) {
     </script>
 </head>
 <body>
+<div id=panets>
+<!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
+    <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
+    <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
+    <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
+<!-- Dwa moje przyciski - zbędne -->
+    <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br>
+    <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button></div>
     <form id="quizForm" method="post" action="/submitForm">
         <div class="form-group">
             <label for="subject"><b>Kategoria:</b></label>
