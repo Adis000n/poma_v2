@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `mvc_konkurs_pytania` (
   `poziom` int(11) NOT NULL,
   `img_pytania` varchar(255) NOT NULL,
   `img_odpowiedzi` varchar(255) NOT NULL,
-  `uzyte` boolean,
+  `uzyte` int NOT NULL,
   `media` varchar(255) NOT NULL,
   `media_typ` enum('','audio','wideo') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
