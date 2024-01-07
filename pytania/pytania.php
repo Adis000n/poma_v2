@@ -128,9 +128,9 @@
         <hr class="border border-warning border-3 opacity-100">
         <h1>Pytanie:</h1>
         <img id="pytanie-img" src="" width="50%">
-        <h1>Poprawna odpowiedź:</h1>
+        <h1 id="odp-text"></h1>
         <div id="bg-text"></div>
-        <img id="odpowiedz-img" src="../baza_pytania/chemia/1/co1.jpg"  width="20%">
+        <img id="odpowiedz-img" src=""  width="20%">
         <div id="timer">
             <h2>Pozostały czas:</h2>
             <h1 id="time">30</h1>
@@ -150,15 +150,15 @@
 
 <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
-            ws.onmessage = (event) => {
-                const data = JSON.parse(event.data);
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
 
-                if (data.subject && data.points) {
-                    updateImage(data.subject, data.points);
-                }
-            };
+            if (data.subject && data.points) {
+                updateImage(data.subject, data.points);
+            } 
+        };
 
             function updateImage(subject, points) {
                 // Make an AJAX request to fetch the new image
@@ -168,9 +168,39 @@
                         const imagePath = xhr.responseText;
                         const imageElement = document.getElementById('pytanie-img');
                         imageElement.src = imagePath;
+                        console.log(imagePath);
                     }
                 };
                 xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
+                xhr.send();
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.action === 'secondaryBtnClicked') {
+                updateImage2(data.subject, data.points);
+            }
+        };
+
+
+            function updateImage2(subject, points) {
+                // Make an AJAX request to fetch the new image
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const imagePath = xhr.responseText;
+                        const imageElement = document.getElementById('odpowiedz-img');
+                        imageElement.src = imagePath;
+                        const odpText = document.getElementById('odp-text')
+                        odpText.innerHTML = "Poprawna odpowiedź:";
+                    }
+                };
+                xhr.open('GET', `script2.php?subject=${subject}&points=${points}`, true);
                 xhr.send();
             }
         });
@@ -186,27 +216,58 @@ document.addEventListener('DOMContentLoaded', () => {
     ringSound.muted = false;
     ringSound.volume = 0.4;
 
+    var correctSound = new Audio('../audio/correct.mp3');
+    correctSound.muted = false;
+    correctSound.volume = 0.65;
+
+    var wrongSound = new Audio('../audio/wrong.mp3');
+    wrongSound.muted = false;
+    wrongSound.volume = 0.2;
+
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
         if (data.subject && data.points) {
+            subject = data.subject;
+            points = data.points;
+            console.log(subject, points);
             updateContent(data.subject, data.points);
         } else if (data.timer !== undefined) {
             updateTimer(data.timer);
         } else if (data.action === 'secondaryBtnClicked') {
-            handleSecondaryBtnClick();
+            console.log(subject, points);
+            updateImage2(subject, points);
         } else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         }
     };
 
-    function handleSecondaryBtnClick() {
-        document.getElementById('bg-text').innerHTML = "WOW CLCIKED";
+    function updateImage2(subject, points) {
+        // Make an AJAX request to fetch the new image
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const imagePath = xhr.responseText;
+                const imageElement = document.getElementById('odpowiedz-img');
+                imageElement.src = imagePath;
+                const odpText = document.getElementById('odp-text')
+                odpText.innerHTML = "Poprawna odpowiedź:";
+                console.log(imagePath);
+            }
+        };
+        xhr.open('GET', `script2.php?subject=${subject}&points=${points}`, true);
+        xhr.send();
     }
+
 
     function updateContent(subject, points) {
         const bgText = document.getElementById('bg-text');
         bgText.innerHTML = "";
+        const odp = document.getElementById('odpowiedz-img');
+        odp.style.border = 'none';
+        odp.src = '';
+        const odpText = document.getElementById('odp-text')
+        odpText.innerHTML = "";
         const contentDiv = document.getElementById('kategoria-data');
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
@@ -248,12 +309,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function handleAnswer(isCorrect) {
         const bgText = document.getElementById('bg-text');
+        const odp = document.getElementById('odpowiedz-img');
         if (isCorrect) {
-            bgText.innerHTML = "To była poprawna odpowiedź";
+            bgText.innerHTML = "Podana odpowiedź była poprawna";
             bgText.style.color = 'green';
+            odp.style.border = 'solid 5px #00bd13';
+            correctSound.play();
         } else {
-            bgText.innerHTML = "To była niepoprawna odpowiedź";
+            bgText.innerHTML = "Podana odpowiedź nie była poprawna";
             bgText.style.color = '#f0002c';
+            odp.style.border = 'solid 5px #bd0000';
+            wrongSound.play();
         }
     }
 });

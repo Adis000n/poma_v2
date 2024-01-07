@@ -69,7 +69,7 @@ app.ws('/ws', (ws, req) => {
 
 // Serve PHP files using php-cgi
 app.engine('php', (filePath, options, callback) => {
-  const phpExecutable = 'D:/xampp/php/php-cgi.exe';
+  const phpExecutable = 'C:/xampp/php/php-cgi.exe';
   const scriptPath = path.resolve(filePath);
   const cmd = `"${phpExecutable}" -f "${scriptPath}"`;
 
