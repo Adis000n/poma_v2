@@ -26,7 +26,10 @@ function getRandomImage($subject, $points) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $id = $row['id'];
-        $imagePath = $row['img_pytania'];
+        $imagePath = $row['img_odpowiedzi'];
+
+        // Update the 'uzyte' column to mark the image as used
+        mysqli_query($con, "UPDATE mvc_konkurs_pytania SET uzyte=1 WHERE id=$id");
 
         return "../$imagePath";
     }

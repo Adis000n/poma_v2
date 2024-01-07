@@ -44,7 +44,48 @@
         socket.onerror = (error) => {
             console.error(`WebSocket Error: ${error}`);
         };
+        showSecondaryBtn();
     }
+
+    function showAnswerButtons() {
+    // Log that the secondary button is clicked
+    console.log('Secondary button clicked');
+
+    // You can send additional data or perform other actions here
+
+    // Example: sending a message to the server
+    const secondaryBtnData = {
+        action: 'secondaryBtnClicked',
+    };
+
+
+        // Connect to WebSocket and send form data
+        const socket = new WebSocket('ws://localhost:3000/ws');
+
+        // Wait for the WebSocket connection to open
+        socket.onopen = () => {
+            socket.send(JSON.stringify(secondaryBtnData));
+            console.log('WebSocket connection opened. Form data sent.');
+        };
+
+        // Handle socket errors if needed
+        socket.onerror = (error) => {
+            console.error(`WebSocket Error: ${error}`);
+        };
+    // Display the answer buttons container
+    document.getElementById('answerButtons').style.display = 'block';
+    document.getElementById('secondaryBtn').style.display = 'none';
+
+    // Enable buttons
+    document.getElementById('correctBtn').disabled = false;
+    document.getElementById('incorrectBtn').disabled = false;
+}
+
+
+    function showSecondaryBtn() {
+            document.getElementById('secondaryBtn').style.display = 'block';
+            document.getElementById('mainBtn').disabled = true;
+        }
 
         function sendTimerData(timerValue) {
             const formData2 = {
@@ -104,6 +145,41 @@
             document.getElementById('stopBtn').disabled = true;
             document.getElementById('resetBtn').disabled = false;
         }
+
+        function handleAnswer(isCorrect) {
+    // Log the answer to the console (you can send it to the server here)
+    console.log('Answer:', isCorrect ? 'Correct' : 'Incorrect');
+
+    // Disable buttons after the user makes a selection
+    document.getElementById('correctBtn').disabled = true;
+    document.getElementById('incorrectBtn').disabled = true;
+
+    document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
+    
+    document.getElementById('mainBtn').disabled = false;
+
+    // Send the answer to the server
+    sendAnswer(isCorrect);
+}
+
+function sendAnswer(isCorrect) {
+    // You can send the answer data to the server here
+    const answerData = {
+        isCorrect: isCorrect,
+    };
+
+    const socket = new WebSocket('ws://localhost:3000/ws');
+
+    socket.onopen = () => {
+        socket.send(JSON.stringify(answerData));
+        console.log('WebSocket connection opened. Answer data sent.');
+    };
+
+    socket.onerror = (error) => {
+        console.error(`WebSocket Error: ${error}`);
+    };
+}
+
     </script>
 </head>
 <body>
@@ -153,7 +229,14 @@
         <button type="button" id="resetBtn" class="btn btn-warning" onclick="resetTimer()">Reset</button>
         <br>
         <hr>
-        <button type="button" class="btn btn-primary" onclick="submitForm()">Wyświetl</button>
+        <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm()">Wyświetl</button>
+        <br><br>
+        <button type="button" class="btn btn-secondary" id="secondaryBtn" style="display: none;" onclick="showAnswerButtons()">Pokaż odpowiedź</button>
+        <br><br>
+        <div id="answerButtons" style="display: none;">
+            <button type="button" id="correctBtn" class="btn btn-success" onclick="handleAnswer(true)">Dobra odpowiedź</button>
+            <button type="button" id="incorrectBtn" class="btn btn-danger" onclick="handleAnswer(false)">Zła odpowiedź</button>
+        </div>
     </form>
     
 
