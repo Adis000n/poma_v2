@@ -14,7 +14,10 @@
       <script>
           document.addEventListener('DOMContentLoaded', () => {
         const ws = new WebSocket('ws://172.26.0.1:3000/ws');
-          });
+         ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);   
+      
+      });
         </script>
     <body>
     <button id="ShowAdm" >

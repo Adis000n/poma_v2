@@ -45,17 +45,17 @@ if(confirm("Czy na pewno chcesz kontynuować?") == true ){
     var jsonData = JSON.stringify(druzyny);
 
     // AJAX request to send data to PHP
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: { data: jsonData },//typ danych tutaj JSON
-        success: function(response) {
-            console.log('Data sent successfully to PHP');
-        },
-        error: function(xhr, status, error) {
-            console.error('Error sending data to PHP');
-        }
-    });
+    // $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     data: { data: jsonData },//typ danych tutaj JSON
+    //     success: function(response) {
+    //         console.log('Data sent successfully to PHP');
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.error('Error sending data to PHP');
+    //     }
+    // });
 });
 				};
 if(eventstatus==1){
@@ -75,19 +75,19 @@ function stopevent(){
   nr_druzyny=1;
   $(document).ready(function() {
    // AJAX request to send data to PHP
-     var url = 'admin.php?query=stopevent';
-      var recordId =[1,2,3,4];
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: { ids: recordId },
-        success: function(response) {
-            console.log('Data sent successfully to PHP1');
-        },
-        error: function(xhr, status, error) {
-            console.error('Error sending data to PHP');
-        }
-    });
+    //  var url = 'admin.php?query=stopevent';
+    //   var recordId =[1,2,3,4];
+    //   $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     data: { ids: recordId },
+    //     success: function(response) {
+    //         console.log('Data sent successfully to PHP1');
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.error('Error sending data to PHP');
+    //     }
+    // });
 });
 
   
@@ -129,8 +129,8 @@ function sprawdzstan(){
             points: selectedPoints.value,
             team:   selectedTeam,
         };
-        if(nr_druzyny<ilosc_druzyn){
-            nr_druzyny=nr_druzyny+1;
+        nr_druzyny=nr_druzyny+1;
+        if(nr_druzyny<ilosc_druzyn+1){
         }else{
             nr_druzyny=1;
         }
@@ -151,11 +151,11 @@ function sprawdzstan(){
         };
         showSecondaryBtn();
     }
-
+    // console.log(nr_druzyny)
     function showAnswerButtons() {
     // Log that the secondary button is clicked
     console.log('Secondary button clicked');
-
+    
     // You can send additional data or perform other actions here
 
     // Example: sending a message to the server
@@ -252,7 +252,8 @@ function sprawdzstan(){
         }
 
         function handleAnswer(isCorrect) {
-    // Log the answer to the console (you can send it to the server here)
+            console.log(isCorrect)
+             // Log the answer to the console (you can send it to the server here)
     console.log('Answer:', isCorrect ? 'Correct' : 'Incorrect');
 
     // Disable buttons after the user makes a selection
@@ -265,6 +266,7 @@ function sprawdzstan(){
 
     // Send the answer to the server
     sendAnswer(isCorrect);
+    punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect);
 }
 
 function sendAnswer(isCorrect) {
@@ -279,12 +281,15 @@ function sendAnswer(isCorrect) {
         socket.send(JSON.stringify(answerData));
         console.log('WebSocket connection opened. Answer data sent.');
     };
-
+    
     socket.onerror = (error) => {
         console.error(`WebSocket Error: ${error}`);
     };
 }
-
+    let teamA=0;
+    let teamB=0;
+    let teamC=0;
+    let teamD=0;
     </script>
 </head>
 <body>
@@ -295,7 +300,9 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
 <!-- Dwa moje przyciski - zbędne -->
     <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br>
-    <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button></div>
+    <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button>
+ 
+</div>
     <form id="quizForm" method="post" action="/submitForm">
         <div class="form-group">
             <label for="subject"><b>Kategoria:</b></label>
@@ -312,8 +319,8 @@ function sendAnswer(isCorrect) {
                 <label class="form-check-label" for="fizyka">Fizyka</label>
             </div>
             <div class="form-check">
-                <input type="radio" class="form-check-input" id="matematyka" name="subject" value="matematyka">
-                <label class="form-check-label" for="matematyka">Matematyka</label>
+            <input type="radio" class="form-check-input" id="matematyka" name="subject" value="matematyka">    
+            <label class="form-check-label" for="matematyka">Matematyka</label>
             </div>
             <div class="form-check">
                 <input type="radio" class="form-check-input" id="technika" name="subject" value="technika">
@@ -342,12 +349,12 @@ function sendAnswer(isCorrect) {
         <button type="button" id="resetBtn" class="btn btn-warning" onclick="resetTimer()">Reset</button>
         <br>
         <hr>
-        <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm()">Wyświetl</button>
+        <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm(nr_druzyny)">Wyświetl</button>
         <br><br>
         <button type="button" class="btn btn-secondary" id="secondaryBtn" style="display: none;" onclick="showAnswerButtons()">Pokaż odpowiedź</button>
         <br><br>
         <div id="answerButtons" style="display: none;">
-            <button type="button" id="correctBtn" class="btn btn-success" onclick="handleAnswer(true)">Dobra odpowiedź</button>
+            <button type="button" id="correctBtn" class="btn btn-success"   onclick="handleAnswer(true)">Dobra odpowiedź</button>
             <button type="button" id="incorrectBtn" class="btn btn-danger" onclick="handleAnswer(false)">Zła odpowiedź</button>
         </div>
     </form>
@@ -375,5 +382,54 @@ function sendAnswer(isCorrect) {
             margin-top: 10px;
         }
     </style>
+    <script>
+
+// var myButton = document.getElementById('correctBtn');
+
+// // Dodaj nasłuchiwanie zdarzenia kliknięcia
+// // myButton.onclick = handleAnswer(isCorrect);
+// myButton.onclick = function(){
+//     // handleAnswer();
+//     punktyplansza(ilosc_druzyn,nr_druzyny)
+// }
+
+function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
+{
+
+    var selectedPoints = document.querySelector('input[name="points"]:checked');
+  var points = Number(selectedPoints.value); console.log(points)
+  var numer_druzyny=nr_druzyny;
+  const punkty = {
+      team1: teamA,
+      team2: teamB,
+      team3: teamC,
+      team4: teamD,
+  };
+  
+  if(isCorrect==true){
+         if(numer_druzyny==2){
+      teamA=teamA+points}  
+ 
+        if(numer_druzyny==3){
+      teamB=teamB+points}
+        if(numer_druzyny==4){
+      teamC=teamC+points;
+
+    }
+     if(numer_druzyny==1){
+      teamD=teamD+points}
+}
+
+
+  console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
+  console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
+  console.log("DRUŻYNA 1:"+teamA)
+  console.log("DRUŻYNA 2:"+teamB)
+  console.log("DRUŻYNA 3:"+teamC)
+  console.log("DRUŻYNA 4:"+teamD)
+
+}
+
+    </script>
 </body>
 </html>

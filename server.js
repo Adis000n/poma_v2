@@ -51,6 +51,10 @@ app.ws('/ws', (ws, req) => {
         // Broadcast the secondary button click information
         broadcast(JSON.stringify({ action: 'secondaryBtnClicked' }));
       }
+     else if (data.punkty === 'wyslij') {
+      // Broadcast the secondary button click information
+      broadcast(JSON.stringify({ action: 'wyslij' }));
+    }
     } catch (error) {
       console.error('Error parsing incoming message:', error);
     }
