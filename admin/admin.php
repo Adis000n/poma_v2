@@ -421,7 +421,7 @@ function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 }
 
 
-  console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
+//   console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
   console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
   console.log("DRUŻYNA 1:"+teamA)
   console.log("DRUŻYNA 2:"+teamB)
