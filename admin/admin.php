@@ -399,13 +399,6 @@ function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
     var selectedPoints = document.querySelector('input[name="points"]:checked');
   var points = Number(selectedPoints.value); console.log(points)
   var numer_druzyny=nr_druzyny;
-  const punkty = {
-      team1: teamA,
-      team2: teamB,
-      team3: teamC,
-      team4: teamD,
-  };
-  
   if(isCorrect==true){
          if(numer_druzyny==2){
       teamA=teamA+points}  
@@ -419,7 +412,7 @@ function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
      if(numer_druzyny==1){
       teamD=teamD+points}
 }
-
+    wysylanie();
 
 //   console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
   console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
@@ -429,6 +422,30 @@ function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
   console.log("DRUŻYNA 4:"+teamD)
 
 }
+    function wysylanie(){
+        const punkty = {
+      team1: teamA,
+      team2: teamB,
+      team3: teamC,
+      team4: teamD,};
+      
+      console.log('Punkty:', punkty); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+    socket.send(JSON.stringify(punkty));
+    console.log('JEST TO WYSŁANE DO CHUJ WIE CZEGO.');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+    console.error(`WebSocket Error: ${error}`);
+};
+    
+    }
 
     </script>
 </body>
