@@ -38,25 +38,31 @@ console.log(druzyny)
 
 if(confirm("Czy na pewno chcesz kontynuować?") == true ){
   eventstatus=1                 //przypisywanie do eventstatus jeden że konkurs aktywny
-  var url = 'admin.php?query=startevent';
-  $(document).ready(function() {
+  let naz_druz1=druzyny[0];
+  let naz_druz2=druzyny[1];
+  let naz_druz3=druzyny[2];
+  let naz_druz4=druzyny[3];
+  const nazwy_druzyn = {
+      nazwa_teamA: naz_druz1,
+      nazwa_teamB: naz_druz2,
+      nazwa_teamC: naz_druz3,
+      nazwa_teamD: naz_druz4,}
+     
+      console.log('Form data:', nazwy_druzyn); // Log the data to the console
 
-    // Convert JavaScript array to JSON format
-    var jsonData = JSON.stringify(druzyny);
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
 
-    // AJAX request to send data to PHP
-    // $.ajax({
-    //     url: url,
-    //     type: 'POST',
-    //     data: { data: jsonData },//typ danych tutaj JSON
-    //     success: function(response) {
-    //         console.log('Data sent successfully to PHP');
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.error('Error sending data to PHP');
-    //     }
-    // });
-});
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+    socket.send(JSON.stringify(nazwy_druzyn));
+    console.log('WebSocket connection opened. Nazwy drużyn sent.');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+    console.error(`WebSocket Error: ${error}`);
+};
 				};
 if(eventstatus==1){
   alert("Konkurs się rozpoczą")
