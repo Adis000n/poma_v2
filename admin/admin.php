@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <!-- <script src="panets.js"></script> -->
     <script>
+    let flaga=0;
     let nr_druzyny = 1;
     var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
@@ -153,6 +154,7 @@ function sprawdzstan(){
 
         // Handle socket errors if needed
         socket.onerror = (error) => {
+
             console.error(`WebSocket Error: ${error}`);
         };
         showSecondaryBtn();
@@ -161,7 +163,7 @@ function sprawdzstan(){
     function showAnswerButtons() {
     // Log that the secondary button is clicked
     console.log('Secondary button clicked');
-    
+    document.getElementById('dodatkowyCzas').style.display = 'none';
     // You can send additional data or perform other actions here
 
     // Example: sending a message to the server
@@ -195,6 +197,7 @@ function sprawdzstan(){
 
     function showSecondaryBtn() {
             document.getElementById('secondaryBtn').style.display = 'block';
+            document.getElementById('dodatkowyCzas').style.display='block';
             document.getElementById('mainBtn').disabled = true;
         }
 
@@ -220,9 +223,11 @@ function sprawdzstan(){
                 timerRunning = true;
                 disableButtons(); // Disable buttons when the timer is running
                 timerInterval = setInterval(() => {
+                    if(flaga==1){timerValue=timerValue+15
+                    flaga=flaga-1}
                     timerValue -= 1;
                     sendTimerData(timerValue);
-
+                    
                     if (timerValue === 0) {
                         stopTimer();
                     }
@@ -267,7 +272,7 @@ function sprawdzstan(){
     document.getElementById('incorrectBtn').disabled = true;
 
     document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
-    
+    document.getElementById('dodatkowyCzas').style.display= 'none';
     document.getElementById('mainBtn').disabled = false;
 
     // Send the answer to the server
@@ -358,6 +363,7 @@ function sendAnswer(isCorrect) {
         <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm(nr_druzyny)">Wyświetl</button>
         <br><br>
         <button type="button" class="btn btn-secondary" id="secondaryBtn" style="display: none;" onclick="showAnswerButtons()">Pokaż odpowiedź</button>
+        <button type="button" class="btn btn-success" id="dodatkowyCzas" style="display: none;" onclick="dodatkowyczas()">Dodatkowy Czas</button>
         <br><br>
         <div id="answerButtons" style="display: none;">
             <button type="button" id="correctBtn" class="btn btn-success"   onclick="handleAnswer(true)">Dobra odpowiedź</button>
@@ -420,7 +426,6 @@ if(ilosc_druzyn==2 && isCorrect==true)
   if(isCorrect==true && ilosc_druzyn==4){
          if(numer_druzyny==2){
       teamA=teamA+points}  
- 
         if(numer_druzyny==3){
       teamB=teamB+points}
         if(numer_druzyny==4){
@@ -462,6 +467,10 @@ socket.onerror = (error) => {
 };
     
     }
+    function dodatkowyczas(){
+document.getElementById('dodatkowyCzas').disabled=true;
+flaga=1;
+}
 
     </script>
 </body>
