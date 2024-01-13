@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,10 +50,14 @@ app.ws('/ws', (ws, req) => {
       } else if (data.action === 'secondaryBtnClicked') {
         // Broadcast the secondary button click information
         broadcast(JSON.stringify({ action: 'secondaryBtnClicked' }));
-      }
-     else if (data.punkty !== undefined) {
-      // Broadcast the secondary button click information
-      broadcast(JSON.stringify({data}));
+      } else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
+        // Broadcast only the team information
+        broadcast(JSON.stringify({
+            team1: data.team1,
+            team2: data.team2,
+            team3: data.team3,
+            team4: data.team4
+        }));
     }
     } catch (error) {
       console.error('Error parsing incoming message:', error);
