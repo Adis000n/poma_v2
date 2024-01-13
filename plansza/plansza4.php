@@ -13,7 +13,7 @@
       </head>
       <script>
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -26,11 +26,44 @@
         console.log('Received team data:', team1, team2, team3, team4);
         updateContent(team1, team2, team3, team4);
     }
-}
+    else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
+        nazwa_teamA = data.nazwa_teamA;
+        nazwa_teamB = data.nazwa_teamB;
+        nazwa_teamC = data.nazwa_teamC;
+        nazwa_teamD = data.nazwa_teamD;
+      console.log('Received nazwy druzyn:',nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD);
+        updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD)
+  }
+
+
+  }
 });
 
 
-          function updateContent(team1,team2,team3,team4) {
+function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
+  if(nazwa_teamC == undefined || nazwa_teamD == undefined){
+    const contentDiv5 = document.getElementById('nazwa1');
+        contentDiv5.innerHTML =  nazwa_teamA ;
+        const contentDiv6 = document.getElementById('nazwa2');
+        contentDiv6.innerHTML =  nazwa_teamB ;
+    
+
+  }else{
+  const contentDiv5 = document.getElementById('nazwa1');
+        contentDiv5.innerHTML =  nazwa_teamA ;
+        const contentDiv6 = document.getElementById('nazwa2');
+        contentDiv6.innerHTML =  nazwa_teamB ;
+        const contentDiv7 = document.getElementById('nazwa3');
+        contentDiv7.innerHTML =  nazwa_teamC ;
+        const contentDiv8 = document.getElementById('nazwa4');
+        contentDiv8.innerHTML =  nazwa_teamD ;
+
+        }}
+           
+
+
+
+function updateContent(team1,team2,team3,team4) {
 
   
 
@@ -41,7 +74,7 @@
         const contentDiv3 = document.getElementById('score3');
         contentDiv3.innerHTML = team3;
         const contentDiv4 = document.getElementById('score4');
-        contentDiv3.innerHTML = team4;
+        contentDiv4.innerHTML = team4;
     }
         </script>
     <body>
@@ -91,20 +124,20 @@
 
     </div>
     <div class="team" id="team1">
-        <h2>Drużyna 1</h2>
+        <h2 id="nazwa1">Drużyna 1</h2>
         <p>ptk: <h3 id="score1">-</h3></p>
       </div>
       <div class="team" id="team2">
-        <h2>Drużyna 2</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+        <h2 id="nazwa2">Drużyna 2</h2>
+        <p>ptk: <h3 id="score2">-</h3></p>
       </div>
       <div class="team" id="team3">
-        <h2>Drużyna 3</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+        <h2 id=nazwa3>Drużyna 3</h2>
+        <p>ptk: <h3 id="score3">-</h3></p>
       </div>
       <div class="team" id="team4">
-        <h2>Drużyna 4</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+        <h2 id="nazwa4">Drużyna 4</h2>
+        <p>ptk: <h3 id="score4">-</h3></p>
       </div>
     <div id="pionki">
       <div class="yellow_pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>

@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,6 +58,14 @@ app.ws('/ws', (ws, req) => {
             team3: data.team3,
             team4: data.team4
         }));
+    }
+    else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
+      broadcast(JSON.stringify({
+        nazwa_teamA: data.nazwa_teamA,
+        nazwa_teamB: data.nazwa_teamB,
+        nazwa_teamC: data.nazwa_teamC,
+        nazwa_teamD: data.nazwa_teamD
+      }))
     }
     } catch (error) {
       console.error('Error parsing incoming message:', error);
