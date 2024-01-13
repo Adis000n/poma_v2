@@ -12,32 +12,37 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       </head>
       <script>
-          document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
-         ws.onmessage = (event) => {
-            const data = JSON.parse(event.punkty);   
-            // if(data.punkty !== undefined){
-            //   punkty=data.punkty
-            
-            // console.log(data.punkty);}
-            // updateContent(team1,team2,team3,team4)
-         
-          }});
+      document.addEventListener('DOMContentLoaded', () => {
+    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
+    ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
 
-          function updateContent(team1,team2,team3,team4) {
-
-  
-
-        const contentDiv = document.getElementById('score1');
-        contentDiv.innerHTML =  team1 ;
-        const contentDiv2 = document.getElementById('score2');
-        contentDiv2.innerHTML = team2;
-        const contentDiv3 = document.getElementById('score3');
-        contentDiv3.innerHTML = team3;
-        const contentDiv4 = document.getElementById('score4');
-        contentDiv3.innerHTML = team4;
+    if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
+        team1 = data.team1;
+        team2 = data.team2;
+        team3 = data.team3;
+        team4 = data.team4;
+        console.log('Received team data:', team1, team2, team3, team4);
+        updateContent(team1, team2, team3, team4);
     }
+}
+});
+
+function updateContent(team1, team2, team3, team4) {
+    // Update the content of your HTML elements with the received team information
+    const contentDiv1 = document.getElementById('score1');
+    contentDiv1.innerHTML = team1;
+
+    const contentDiv2 = document.getElementById('score2');
+    contentDiv2.innerHTML = team2;
+
+    const contentDiv3 = document.getElementById('score3');
+    contentDiv3.innerHTML = team3;
+
+    const contentDiv4 = document.getElementById('score4');
+    contentDiv4.innerHTML = team4;
+}
         </script>
     <body>
     <button id="ShowAdm" >
@@ -85,21 +90,21 @@
         <br>
 
     </div>
-    <div class="team" id="team1">
-        <h2>Drużyna 1</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+      <div class="team" id="team1">
+          <h2>Drużyna 1</h2>
+          <p>ptk: <h3 id="score1">-</h3></p>
       </div>
       <div class="team" id="team2">
-        <h2>Drużyna 2</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+          <h2>Drużyna 2</h2>
+          <p>ptk: <h3 id="score2">-</h3></p>
       </div>
       <div class="team" id="team3">
-        <h2>Drużyna 3</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+          <h2>Drużyna 3</h2>
+          <p>ptk: <h3 id="score3">-</h3></p>
       </div>
       <div class="team" id="team4">
-        <h2>Drużyna 4</h2>
-        <p>ptk: <h3 id="score1">-</h3></p>
+          <h2>Drużyna 4</h2>
+          <p>ptk: <h3 id="score4">-</h3></p>
       </div>
     <div id="pionki">
       <div class="yellow_pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
