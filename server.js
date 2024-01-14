@@ -67,7 +67,13 @@ app.ws('/ws', (ws, req) => {
         nazwa_teamD: data.nazwa_teamD
       }))
     }
-    } catch (error) {
+    else if(data.flaga1 !==0){
+      broadcast(JSON.stringify({
+        flaga: data.flaga1,
+      }))
+    }
+  
+  } catch (error) {
       console.error('Error parsing incoming message:', error);
     }
   });

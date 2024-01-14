@@ -223,7 +223,7 @@ function sprawdzstan(){
                 timerRunning = true;
                 disableButtons(); // Disable buttons when the timer is running
                 timerInterval = setInterval(() => {
-                    if(flaga==1){timerValue=timerValue+15
+                    if(flaga==1){timerValue=timerValue+16
                     flaga=flaga-1}
                     timerValue -= 1;
                     sendTimerData(timerValue);
@@ -468,8 +468,28 @@ socket.onerror = (error) => {
     
     }
     function dodatkowyczas(){
-document.getElementById('dodatkowyCzas').disabled=true;
+// document.getElementById('dodatkowyCzas').disabled=true;
 flaga=1;
+const flaga1 = {
+      flaga1: flaga,};
+      
+      console.log('flaga:', flaga1); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+    socket.send(JSON.stringify(flaga1));
+    console.log('Dodatkowy Czas send to server');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+    console.error(`WebSocket Error: ${error}`);
+};
+ 
+
 }
 
     </script>
