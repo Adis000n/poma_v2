@@ -80,6 +80,10 @@ function stopevent(){
   eventstatus=undefined;//USTAWIENIA NA undefined 
   druzyny.length = 0 // CZYSZCZENIE TABLICY
   nr_druzyny=1;
+teamA=0;
+teamB=0;
+teamC=0;
+teamD=0;
   $(document).ready(function() {
    // AJAX request to send data to PHP
     //  var url = 'admin.php?query=stopevent';
@@ -125,7 +129,22 @@ function sprawdzstan(){
         var selectedSubject = document.querySelector('input[name="subject"]:checked');
         var selectedPoints = document.querySelector('input[name="points"]:checked');
         var selectedTeam  = nr_druzyny;
-        if (!selectedSubject || !selectedPoints) {
+            
+        var punkty234=0;
+            
+            
+        // console.log(selectedSubject.value)
+        if(selectedSubject.value=='bonus'){
+            punkty234 = 3;
+            nr_druzyny=nr_druzyny-1;
+            selectedTeam  = nr_druzyny
+          
+ 
+        }
+        if(selectedSubject.value !== 'bonus'){
+            var punkty234=selectedPoints.value;}
+        console.log(punkty234)
+        if (!selectedSubject || !punkty234) {
             alert('Please select both a subject and points');
             return;
         }
@@ -133,9 +152,10 @@ function sprawdzstan(){
         // If validation passes, log the form data
         const formData = {
             subject: selectedSubject.value,
-            points: selectedPoints.value,
+            points: punkty234,
             team:   selectedTeam,
-        };
+        }
+
         nr_druzyny=nr_druzyny+1;
         if(nr_druzyny<ilosc_druzyn+1){
         }else{
@@ -158,6 +178,7 @@ function sprawdzstan(){
             console.error(`WebSocket Error: ${error}`);
         };
         showSecondaryBtn();
+
     }
     // console.log(nr_druzyny)
     function showAnswerButtons() {
@@ -343,6 +364,10 @@ function sendAnswer(isCorrect) {
                 <input type="radio" class="form-check-input" id="niespodzianka" name="subject" value="niespodzianka">
                 <label class="form-check-label" for="niespodzianka">Niespodzianka</label>
             </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="bonus" name="subject" value="bonus">
+                <label class="form-check-label" for="bonus">bonus</label>
+            </div>
         </div>
 
         <div class="form-group">
@@ -356,6 +381,24 @@ function sendAnswer(isCorrect) {
                 <label class="form-check-label" for="points2">2</label>
             </div>
         </div>
+        <!-- <div class="form-group">
+        <label for="points"><b>Ilość punktów:</b></label>
+        <div class="btn-group" role="group">
+            <div class="form-check">
+  <input class="form-check-input" type="checkbox" id="points1" name="points" value="1">
+  <label class="form-check-label" for="flexCheckDefault">
+    1
+  </label>
+            </div>
+
+            <div class="form-check">
+  <input class="form-check-input" type="checkbox" id="points2" name="points" value="2">
+  <label class="form-check-label" for="flexCheckDefault">
+    2
+  </label>
+            </div>
+</div>
+</div> -->
         <p>Timer:</p>
         <button type="button" id="startBtn" class="btn btn-success" onclick="startTimer()">Start</button>
         <button type="button" id="stopBtn" class="btn btn-danger" onclick="stopTimer()" disabled>Stop</button>
@@ -412,7 +455,17 @@ function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 {
 
     var selectedPoints = document.querySelector('input[name="points"]:checked');
-  var points = Number(selectedPoints.value); console.log(points)
+    var selectedSubject = document.querySelector('input[name="subject"]:checked');
+
+  if(selectedSubject.value =='bonus'){
+        points=3;
+
+    }else{
+        var points = Number(selectedPoints.value);
+    }
+    
+    
+    console.log(points)
   var numer_druzyny=nr_druzyny;
 if(ilosc_druzyn==2 && isCorrect==true)
   {
@@ -436,6 +489,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
         if(numer_druzyny==1){
       teamD=teamD+points}
 }
+
     wysylanie();
 
 //   console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
