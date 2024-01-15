@@ -10,8 +10,10 @@
         <!-- <script src="admin.js"></script> -->
         <!-- <script src="pokaz.js"></script> -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <scrip src="plansza.js"></script> -->
+        <link rel="stylesheet" href="style.css">
       </head>
-      <script>
+<script>
       document.addEventListener('DOMContentLoaded', () => {
     const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
@@ -78,6 +80,7 @@ function updateContent(team1,team2,team3,team4) {
     }
         </script>
     <body>
+    <img id="boardImg" src="../grafika/plansza.png" alt="bład ładowania planszy">
     <button id="ShowAdm" >
  
     </button>
@@ -122,8 +125,8 @@ function updateContent(team1,team2,team3,team4) {
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
         <br>
 
-    </div>
-    <div class="team" id="team1">
+    </div> 
+     <div class="team" id="team1">
         <h2 id="nazwa1">Drużyna 1</h2>
         <p>ptk: <h3 id="score1">-</h3></p>
       </div>
@@ -138,34 +141,14 @@ function updateContent(team1,team2,team3,team4) {
       <div class="team" id="team4">
         <h2 id="nazwa4">Drużyna 4</h2>
         <p>ptk: <h3 id="score4">-</h3></p>
+      </div> 
+    <div id="board">
+      <div class="pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Niebieski -->
+      <div class="pawn"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Zielony -->
+      <div class="pawn"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Czerwony -->
+      <div class="pawn"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Żólty -->
       </div>
-    <div id="pionki">
-      <div class="yellow_pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
-      <div class="red_pawn"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
-      <div class="blue_pawn"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
-      <div class="green_pawn"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>
-      </div>
-    <style>
-        #ADMIN{
-            display: none;
-            color: black;
-            background-color: white;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 40vw;
-            height: 10vh;
-            z-index: 1000;
-        }
-
-
-         #ShowAdm{  
-    width: 96px;
-    height: 96px;
-    background-image: url('../grafika/gear100.png');
-        }
-
-
-    </style>
+<style>
+</style>
 </body>
 </html>
