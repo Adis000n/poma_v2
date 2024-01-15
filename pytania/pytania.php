@@ -13,6 +13,7 @@
         height: 100%;
         background-color: black;
         color: white; /* Set the default text color to white */
+        overflow: hidden;
     }
 
     * {
@@ -102,6 +103,21 @@
         font-weight: bolder;
         font-size: xx-large;
     }
+    #fullscreen-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 54px;
+            z-index: 999;
+            display: none;
+        }
 </style>
 
 
@@ -145,11 +161,14 @@
     </div>
     <audio id="tickSound" src="../audio/clock-tick-long.mp3" autoplay muted></audio>
     <audio id="ringSound" src="../audio/bell-ring.mp3" autoplay muted></audio>
-
+    <div id="fullscreen-message">
+    <p>UŻYTO POWERUPA DODATKOWY CZAS</p>
+</div>
 </body>
 
 <script>
-        document.addEventListener('DOMContentLoaded', () => {
+       var flaga=0;
+       document.addEventListener('DOMContentLoaded', () => {
 
         const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
@@ -243,6 +262,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         }
+        else if (data.flaga !==0)
+            flaga=data.flaga
+        console.log(flaga)
+            if(flaga==1) { 
+        komunikat();
+                flaga=0; }
     };
 
     function updateImage2(subject, points) {
@@ -327,6 +352,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+    function komunikat(){
+                // Function to show the fullscreen message
+    function showFullscreenMessage(message) {
+        var fullscreenMessage = document.getElementById('fullscreen-message');
+        fullscreenMessage.innerHTML = '<p>' + message + '</p>';
+        fullscreenMessage.style.display = 'flex';
+    }
 
+    // Function to hide the fullscreen message
+    function hideFullscreenMessage() {
+        var fullscreenMessage = document.getElementById('fullscreen-message');
+        fullscreenMessage.style.display = 'none';
+    }
+
+        showFullscreenMessage('UŻYTO POWERUPA DODATKOWY CZAS!');
+
+
+    // Example: Hide the fullscreen message after 6 seconds
+    setTimeout(function() {
+        hideFullscreenMessage();
+    }, 4000);
+    }
 </script>
 </html>
