@@ -515,7 +515,7 @@ const socket = new WebSocket('ws://localhost:3000/ws');
 // Wait for the WebSocket connection to open
 socket.onopen = () => {
     socket.send(JSON.stringify(punkty));
-    console.log('JEST TO WYSŁANE DO CHUJ WIE CZEGO.');
+    console.log('przesłane do serwera punkty');
 };
 
 // Handle socket errors if needed

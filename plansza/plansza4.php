@@ -81,7 +81,7 @@ function updateContent(team1,team2,team3,team4) {
         </script>
     <body>
     <img id="boardImg" src="../grafika/plansza.png" alt="bład ładowania planszy">
-    <button id="ShowAdm" >
+    <!-- <button id="ShowAdm" >
  
     </button>
 
@@ -123,7 +123,7 @@ function updateContent(team1,team2,team3,team4) {
 
         <label for="customRange2" class="form-label">OŚ Y</label>
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
-        <br>
+        <br> -->
 
     </div> 
      <div class="team" id="team1">
