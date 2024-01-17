@@ -15,8 +15,7 @@
         <link rel="stylesheet" href="stylkjg6.css">
       </head>
 <script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
+      document.addEventListener('DOMContentLoaded', () => {
     const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
