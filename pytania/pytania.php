@@ -143,10 +143,20 @@
         </div>
         <hr class="border border-warning border-3 opacity-100">
         <h1>Pytanie:</h1>
-        <img id="pytanie-img" src="" width="50%">
+        <img id="pytanie-img" src="" width="30%">
+        <br>
+        <video width="700" height="480" controls hidden id="film" >
+            <source src="" type="video/mp4" id="film_src">
+            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+        </video>
+        <br>
+        <audio controls id="dzwiek" hidden>
+            <source src="" type="audio/mpeg" id="dzwiek_src">
+            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+        </audio>
         <h1 id="odp-text"></h1>
         <div id="bg-text"></div>
-        <img id="odpowiedz-img" src=""  width="20%">
+        <img id="odpowiedz-img" src=""  width="25%">
         <div id="timer">
             <h2>Pozostały czas:</h2>
             <h1 id="time">30</h1>
@@ -170,7 +180,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.108:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -178,6 +188,8 @@
 
             if (data.subject && data.points) {
                 updateImage(data.subject, data.points);
+                updateExtra(data.subject, data.points);
+                updateExtra2(data.subject, data.points);
             } 
         };
 
@@ -195,11 +207,53 @@
                 xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
                 xhr.send();
             }
+            function updateExtra(subject, points) {
+                // Make an AJAX request to fetch the new image
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const mediaPath = xhr.responseText;
+                        const imageElement = document.getElementById('film_src');
+                        imageElement.src = mediaPath;
+                        console.log(mediaPath);
+
+                        const isVideo =  mediaPath !== '';
+                        const videoElement = document.getElementById('film');
+                        videoElement.hidden = !isVideo; 
+                        if (isVideo) {
+                            videoElement.src = mediaPath;
+                        }
+                    }
+                };
+                xhr.open('GET', `script_extra.php?subject=${subject}&points=${points}`, true);
+                xhr.send();
+            }
+            function updateExtra2(subject, points) {
+                // Make an AJAX request to fetch the new image
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const mediaPath = xhr.responseText;
+                        const imageElement = document.getElementById('dzwiek_src');
+                        imageElement.src = mediaPath;
+                        console.log(mediaPath);
+
+                        const isAudio =  mediaPath !== '';
+                        const audioElement = document.getElementById('dzwiek');
+                        audioElement.hidden = !isAudio; 
+                        if (isAudio) {
+                            audioElement.src = mediaPath;
+                        }
+                    }
+                };
+                xhr.open('GET', `script_extra2.php?subject=${subject}&points=${points}`, true);
+                xhr.send();
+            }
         });
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.108:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -228,7 +282,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.108:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
