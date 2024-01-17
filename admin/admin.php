@@ -58,11 +58,13 @@ const socket = new WebSocket('ws://localhost:3000/ws');
 socket.onopen = () => {
     socket.send(JSON.stringify(nazwy_druzyn));
     console.log('WebSocket connection opened. Nazwy drużyn sent.');
+    wysylaniezero();
 };
 
 // Handle socket errors if needed
 socket.onerror = (error) => {
     console.error(`WebSocket Error: ${error}`);
+    
 };
 				};
 if(eventstatus==1){
@@ -70,7 +72,19 @@ if(eventstatus==1){
 }}
 };
 	
+function wysylaniezero(){
+    const punkty = {
+      team1: 0,
+      team2: 0,
+      team3: 0,
+      team4: 0,};
+      const socket = new WebSocket('ws://localhost:3000/ws');
+      socket.onopen = () => {
+    socket.send(JSON.stringify(punkty));
+    console.log('ZERÓWKI SEND');
 
+};
+}
 
 
 

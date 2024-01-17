@@ -140,7 +140,7 @@ body{
 
 
 #statement {
-	/*text-align: center;
+	/* text-align: center;
 	clear: both;
 	font-size: 80px;
 	display: none;*/
@@ -160,12 +160,18 @@ body{
 
 #boardImg{
     /* margin-top: -10vh; */
-    width: 100vh;
-    height: 100vh;
+    justify-content: center;
+    width: auto;
+    height: 700px;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     margin: auto;
+}
+#board{
+
+    height: 100vh;
+    width: 100vh;
 }

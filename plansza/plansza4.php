@@ -12,9 +12,11 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- <scrip src="plansza.js"></script> -->
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="stylkjg6.css">
       </head>
 <script>
-      document.addEventListener('DOMContentLoaded', () => {
+    
+    document.addEventListener('DOMContentLoaded', () => {
     const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
@@ -27,6 +29,11 @@
         team4 = data.team4;
         console.log('Received team data:', team1, team2, team3, team4);
         updateContent(team1, team2, team3, team4);
+        pozycjonowanie1(team1);
+        pozycjonowanie2(team2)
+        pozycjonowanie3(team3)
+        pozycjonowanie4(team4)
+
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
         nazwa_teamA = data.nazwa_teamA;
@@ -41,7 +48,7 @@
   }
 });
 
-
+  
 function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
   if(nazwa_teamC == undefined || nazwa_teamD == undefined){
     const contentDiv5 = document.getElementById('nazwa1');
@@ -78,7 +85,168 @@ function updateContent(team1,team2,team3,team4) {
         const contentDiv4 = document.getElementById('score4');
         contentDiv4.innerHTML = team4;
     }
+   
+    function setPosition(elementId, x, y) {
+  const element = document.getElementById(elementId);
+  element.style.left = x + 'px';
+  element.style.top = y + 'px';}
+  // Drużyna 1
+      function pozycjonowanie1(team1){
+        if(team1 ===0){
+          setPosition('pawn1',392.5, -75);
+        }
+        else if(team1===1){
+        setPosition('pawn1', 475.5, -75);
+      }
+        else  if(team1===2){
+        setPosition('pawn1', 550.5, -75);
+      }
+      else  if(team1===3){
+        setPosition('pawn1', 620.5, -75);
+      }
+      else  if(team1===4){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===5){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===6){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===7){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===8){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===9){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===10){
+        setPosition('pawn1', 550, -75);
+      }
+      else  if(team1===11){
+        setPosition('pawn1', 550, -75);
+      }
+    }
+//druzyna 2
+ function pozycjonowanie2(team2){       
+if(team2 ===0){
+          setPosition('pawn2',392.5, -75);
+        }
+        else if(team2===1){
+        setPosition('pawn2', 475.5, -75);
+      }
+        else  if(team2===2){
+        setPosition('pawn2', 550.5, -75);
+      }
+      else  if(team2===3){
+        setPosition('pawn2', 620.5, -75);
+      }
+      else  if(team2===4){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===5){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===6){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===7){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===8){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===9){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===10){
+        setPosition('pawn2', 550, -75);
+      }
+      else  if(team2===11){
+        setPosition('pawn2', 550, -75);
+      }}
+      function pozycjonowanie3(team3){
+        if(team3 ===0){
+          setPosition('pawn3',392.5, -75);
+        }
+        else if(team3===1){
+        setPosition('pawn3', 475.5, -75);
+      }
+        else  if(team3===2){
+        setPosition('pawn3', 550.5, -75);
+      }
+      else  if(team3===3){
+        setPosition('pawn3', 620.5, -75);
+      }
+      else  if(team3===4){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===5){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===6){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===7){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===8){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===9){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===10){
+        setPosition('pawn3', 550, -75);
+      }
+      else  if(team3===11){
+        setPosition('pawn3', 550, -75);
+      }
+      }
+      function pozycjonowanie4(team4){
+        if(team4 ===0){
+          setPosition('pawn4',392.5, -75);
+        }
+        else if(team4===1){
+        setPosition('pawn4', 475.5, -75);
+      }
+        else  if(team4===2){
+        setPosition('pawn4', 550.5, -75);
+      }
+      else  if(team4===3){
+        setPosition('pawn4', 620.5, -75);
+      }
+      else  if(team4===4){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===5){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===6){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===7){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===8){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===9){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===10){
+        setPosition('pawn4', 550, -75);
+      }
+      else  if(team4===11){
+        setPosition('pawn4', 550, -75);
+      }
+ 
+      }
+            
         </script>
+        
     <body>
     <img id="boardImg" src="../grafika/plansza.png" alt="bład ładowania planszy">
     <!-- <button id="ShowAdm" >
@@ -125,7 +293,7 @@ function updateContent(team1,team2,team3,team4) {
 <input type="range" class="form-range" min="1" max="200" value="50" id="myY">
         <br> -->
 
-    </div> 
+    <!-- </div>  -->
      <div class="team" id="team1">
         <h2 id="nazwa1">Drużyna 1</h2>
         <p>ptk: <h3 id="score1">-</h3></p>
@@ -143,12 +311,11 @@ function updateContent(team1,team2,team3,team4) {
         <p>ptk: <h3 id="score4">-</h3></p>
       </div> 
     <div id="board">
-      <div class="pawn"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Niebieski -->
-      <div class="pawn"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Zielony -->
-      <div class="pawn"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Czerwony -->
-      <div class="pawn"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Żólty -->
-      </div>
-<style>
-</style>
+      <div class="pawn" id="pawn4"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Niebieski -->
+      <div class="pawn" id="pawn3"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Zielony -->
+      <div class="pawn" id="pawn1"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Czerwony -->
+      <div class="pawn" id="pawn2"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Żólty -->
+    </div>
+
 </body>
 </html>
