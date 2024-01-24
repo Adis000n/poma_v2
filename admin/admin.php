@@ -207,6 +207,7 @@ function sprawdzstan(){
     };
 
 
+    
         // Connect to WebSocket and send form data
         const socket = new WebSocket('ws://localhost:3000/ws');
 
@@ -227,6 +228,32 @@ function sprawdzstan(){
     // Enable buttons
     document.getElementById('correctBtn').disabled = false;
     document.getElementById('incorrectBtn').disabled = false;
+}
+
+function clearAll() {
+    // Log that the secondary button is clicked
+    stopTimer()
+    console.log('Clearing now');
+    timerValue = 30;
+    sendTimerData(timerValue);
+    
+    const clearBtnData = {
+        action: 'clearAll',
+    };
+
+        // Connect to WebSocket and send form data
+        const socket = new WebSocket('ws://localhost:3000/ws');
+
+        // Wait for the WebSocket connection to open
+        socket.onopen = () => {
+            socket.send(JSON.stringify(clearBtnData));
+            console.log('WebSocket connection opened. Form data sent.');
+        };
+
+        // Handle socket errors if needed
+        socket.onerror = (error) => {
+            console.error(`WebSocket Error: ${error}`);
+        };
 }
 
 
@@ -421,6 +448,7 @@ function sendAnswer(isCorrect) {
         <br>
         <hr>
         <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm(nr_druzyny)">Wyświetl</button>
+        <button type="button" class="btn btn-dark" id="clearBtn" onclick="clearAll()">Wyczyść wszystko</button>
         <br><br>
         <button type="button" class="btn btn-secondary" id="secondaryBtn" style="display: none;" onclick="showAnswerButtons()">Pokaż odpowiedź</button>
 
@@ -565,4 +593,4 @@ socket.onerror = (error) => {
 
     </script>
 </body>
-</html>
+</html> 

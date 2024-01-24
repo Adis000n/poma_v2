@@ -16,7 +16,7 @@
       </head>
 <script>
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.109:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
