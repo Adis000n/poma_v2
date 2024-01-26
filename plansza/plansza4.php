@@ -12,11 +12,11 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <!-- <scrip src="plansza.js"></script> -->
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="stylkjg6.css">
+        <!-- <link rel="stylesheet" href="stylkjg6.css"> -->
       </head>
 <script>
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://10.0.21.26:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -29,9 +29,9 @@
         console.log('Received team data:', team1, team2, team3, team4);
         updateContent(team1, team2, team3, team4);
         pozycjonowanie1(team1);
-        // pozycjonowanie2(team2)
-        // pozycjonowanie3(team3)
-        // pozycjonowanie4(team4)
+         pozycjonowanie2(team2)
+         pozycjonowanie3(team3)
+         pozycjonowanie4(team4)
 
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
@@ -134,7 +134,7 @@ function updateContent(team1,team2,team3,team4) {
 //druzyna 2
  function pozycjonowanie2(team2){       
 if(team2 ===0){
-          setPosition('pawn2',392.5, -75);
+          setPosition('pawn2',300, -75);
         }
         else if(team2===1){
         setPosition('pawn2', 475.5, -75);
@@ -314,10 +314,10 @@ if(team2 ===0){
         <p>ptk: <h3 id="score4">-</h3></p>
       </div> 
     <div id="board">
-      <div class="pawn" id="pawn4"><img src="../grafika/pawn1.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Niebieski -->
-      <div class="pawn" id="pawn3"><img src="../grafika/pawn2.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Zielony -->
-      <div class="pawn" id="pawn1"><img src="../grafika/pawn3.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Czerwony -->
-      <div class="pawn" id="pawn2"><img src="../grafika/pawn4.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Żólty -->
+      <div class="pawn" id="pawn4"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Niebieski -->
+      <div class="pawn" id="pawn3"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Zielony -->
+      <div class="pawn" id="pawn1"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Czerwony -->
+      <div class="pawn" id="pawn2"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ"></div>  <!-- Żólty -->
     </div>
 
 </body>

@@ -109,10 +109,11 @@ body{
 .pawn {
     width: 5vh;
     height: 5vh;
-    top: 0px;
-	left: 0px;
-	border-radius: 50%;
+        top: 0px;
+	 left: 0px; 
+	 border-radius: 50%; 
 	position: relative;
+    align-items: center;
     
     box-shadow: 0 0 10px 20px rgba(0, 0, 0, 0.363);
     transition: 1s ease-in-out ;

@@ -516,7 +516,9 @@ if(ilosc_druzyn==2 && isCorrect==true)
       if(numer_druzyny==1){
       teamB=teamB+points}
   }
-  
+  else if(ilosc_druzyn==2 && nr_druzyny==1&& isCorrect==true && punkty234==3){
+    teamB=teamB+3;
+  }
   
   
   
