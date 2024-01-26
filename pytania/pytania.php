@@ -318,9 +318,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (data.action === 'secondaryBtnClicked') {
             console.log(subject, points);
             updateImage2(subject, points);
+        } else if (data.action === 'clearAll') {
+            clearAllContent();
         } else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
-        }
+        } 
         else if (data.flaga !==0)
             flaga=data.flaga
         console.log(flaga)
@@ -328,6 +330,30 @@ document.addEventListener('DOMContentLoaded', () => {
         komunikat();
                 flaga=0; }
     };
+
+    function clearAllContent() {
+    const pyt = document.getElementById('pytanie-img');
+    pyt.src = '';
+    const bgText = document.getElementById('bg-text');
+    bgText.innerHTML = "";
+    const odp = document.getElementById('odpowiedz-img');
+    odp.style.border = 'none';
+    odp.src = '';
+    const odpText = document.getElementById('odp-text');
+    odpText.innerHTML = "";
+    const videoElement = document.getElementById('film');
+    const audioElement = document.getElementById('dzwiek');
+    videoElement.hidden = true;
+    audioElement.hidden = true;
+
+    // Set placeholders for category, points, and team number
+    const contentDiv = document.getElementById('kategoria-data');
+    contentDiv.innerHTML = '-';
+    const contentDiv2 = document.getElementById('poziom-data');
+    contentDiv2.innerHTML = '-';
+    const contentDiv3 = document.getElementById('druzyna-data');
+    contentDiv3.innerHTML = '-';
+}
 
     function updateImage2(subject, points) {
         // Make an AJAX request to fetch the new image

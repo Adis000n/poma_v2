@@ -50,6 +50,9 @@ app.ws('/ws', (ws, req) => {
       } else if (data.action === 'secondaryBtnClicked') {
         // Broadcast the secondary button click information
         broadcast(JSON.stringify({ action: 'secondaryBtnClicked' }));
+      } else if (data.action === 'clearAll') {
+        // Broadcast the secondary button click information
+        broadcast(JSON.stringify({ action: 'clearAll' }));
       } else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
         // Broadcast only the team information
         broadcast(JSON.stringify({
