@@ -170,9 +170,13 @@
         </div>
     </div>
     <audio id="tickSound" src="../audio/clock-tick-long.mp3" autoplay muted></audio>
-    <audio id="ringSound" src="../audio/bell-ring.mp3" autoplay muted></audio>
+    <audio id="tickSound" src="../audio/clock-tick-long.mp3" autoplay muted></audio>
+
     <div id="fullscreen-message">
     <p>UŻYTO POWERUPA DODATKOWY CZAS</p>
+</div>
+<div id="fullscreen-message1">
+    <p><p>
 </div>
 </body>
 
@@ -180,7 +184,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.108:3000/ws');
+        const ws = new WebSocket('ws://10.0.21.26:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -253,7 +257,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.108:3000/ws');
+        const ws = new WebSocket('ws://10.0.21.26:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -282,7 +286,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.108:3000/ws');
+    const ws = new WebSocket('ws://10.0.21.26:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -298,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var wrongSound = new Audio('../audio/wrong.mp3');
     wrongSound.muted = false;
     wrongSound.volume = 0.2;
+
 
     ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
@@ -429,4 +434,108 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
     }
 </script>
+<script>
+    var wujekSound = new Audio('../audio/wygranabeta.mp3');
+    wujekSound.muted = false;
+    wujekSound.volume = 1;
+
+    var powerup = new Audio('../audio/powerup.mp3');
+    wujekSound.muted = false;
+    wujekSound.volume = 1;
+      
+    document.addEventListener('DOMContentLoaded', () => {
+    const ws = new WebSocket('ws://10.0.21.26:3000/ws');
+
+    ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
+        team1 = data.team1;
+        team2 = data.team2;
+        team3 = data.team3;
+        team4 = data.team4;
+    
+        // console.log('Received team data:', team1, team2, team3, team4);
+    wujekplay(team1,team2,team3,team4)
+    palerap2(team1,team2,team3,team4)
+    palerap6(team1,team2,team3,team4)
+    palerap8(team1,team2,team3,team4)
+}}
+        
+    function wujekplay(team1,team2,team3,team4){
+    if(team1 >= 11|| team2 >=11||team3 >=11||team4 >=11){
+        wujekSound.play();
+        }}
+    function palerap2(team1,team2,team3,team4){
+        if(team1 == 2|| team2 ==2 ||team3 ==2||team4 ==2){
+           
+        powerup.play()
+        showFullscreenMessage("DODANO POWERUPA +1 punkt");
+        setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+
+        }}
+        function palerap6(team1,team2,team3,team4){
+            if(team1 == 6|| team2 ==6 ||team3 ==6||team4 ==6){
+            
+            powerup.play();
+            showFullscreenMessage("DODANO POWERUPA +1 punkt");
+            setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+
+        }
+    }
+    function palerap8(team1,team2,team3,team4){
+            if(team1 == 8|| team2 ==8 ||team3 ==9||team4 ==9){
+            
+            powerup.play();
+            showFullscreenMessage("DODANO POWERUPA +1 punkt");
+            setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+
+        }
+    }
+    
+
+})
+</script>
+<style>        #fullscreen-message1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-size: 54px;
+            z-index: 999;
+            display: none;
+        }</style>
+        <script>
+              function showFullscreenMessage(message) {
+        var fullscreenMessage = document.getElementById('fullscreen-message1');
+        fullscreenMessage.innerHTML = '<p>' + message + '</p>';
+        fullscreenMessage.style.display = 'flex';
+    }
+
+    // Function to hide the fullscreen message
+    function hideFullscreenMessage() {
+        var fullscreenMessage = document.getElementById('fullscreen-message1');
+        fullscreenMessage.style.display = 'none';
+    }
+
+    // Example: Show the fullscreen message after 3 seconds
+
+
+
+
+    // Example: Hide the fullscreen message after 6 seconds
+
+        </script>
 </html>

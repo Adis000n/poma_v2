@@ -16,7 +16,7 @@
       </head>
 <script>
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://10.0.21.26:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -29,9 +29,9 @@
         console.log('Received team data:', team1, team2, team3, team4);
         updateContent(team1, team2, team3, team4);
         pozycjonowanie1(team1);
-        pozycjonowanie2(team2)
-        pozycjonowanie3(team3)
-        pozycjonowanie4(team4)
+        // pozycjonowanie2(team2)
+        // pozycjonowanie3(team3)
+        // pozycjonowanie4(team4)
 
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
@@ -89,10 +89,13 @@ function updateContent(team1,team2,team3,team4) {
   const element = document.getElementById(elementId);
   element.style.left = x + 'px';
   element.style.top = y + 'px';}
+        
+  var team1=0;
+      pozycjonowanie1(team1);
   // Drużyna 1
       function pozycjonowanie1(team1){
         if(team1 ===0){
-          setPosition('pawn1',392.5, -75);
+          setPosition('pawn1',475,-75);
         }
         else if(team1===1){
         setPosition('pawn1', 475.5, -75);
@@ -247,9 +250,10 @@ if(team2 ===0){
         </script>
         
     <body>
+    <button onclick> </button>
     <img id="boardImg" src="../grafika/plansza.png" alt="bład ładowania planszy">
     <!-- <button id="ShowAdm" >
- 
+     
     </button>
 
     <div id='ADMIN'>
