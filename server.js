@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,7 +59,11 @@ app.ws('/ws', (ws, req) => {
             team1: data.team1,
             team2: data.team2,
             team3: data.team3,
-            team4: data.team4
+            team4: data.team4,
+            flagaA3:data.flagaA3,
+            flagaB3: data.flagaB3,
+            flagaC3: data.flagaC3,
+            flagaD3: data.flagaD3
         }));
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){

@@ -98,6 +98,10 @@ teamA=0;
 teamB=0;
 teamC=0;
 teamD=0;
+flagaA3=0;
+flagaB3=0;
+flagaC3=0;
+flagaD3=0;
   $(document).ready(function() {
    // AJAX request to send data to PHP
     //  var url = 'admin.php?query=stopevent';
@@ -533,10 +537,36 @@ if(ilosc_druzyn==2 && isCorrect==true)
         if(numer_druzyny==1){
       teamD=teamD+points}
 }
+if(teamA==8 ){
+                teamA++;
+                flagaA3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            }
+           if(teamB==8 ){
+                teamB++
+                flagaB3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            
+            }
+           if(teamC==8){
+                teamC++
+                flagaC3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            }
+          if(teamD==8){
+                teamD++;
+                flagaD3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                
+            }
+            
+                wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
 
-    wysylanie();
+    // wysylanie(teamA,teamB,teamC,teamD);
+    // wysylanie2(team1,team2,team3,team4);
+    // powerup(teamA,teamB,teamC,teamD)
 
-//   console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
+  console.log("ilość punktów wybrana:"+points+", numer druzyny:"+numer_druzyny)
   console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
   console.log("DRUŻYNA 1:"+teamA)
   console.log("DRUŻYNA 2:"+teamB)
@@ -544,12 +574,56 @@ if(ilosc_druzyn==2 && isCorrect==true)
   console.log("DRUŻYNA 4:"+teamD)
 
 }
-    function wysylanie(){
-        const punkty = {
-      team1: teamA,
-      team2: teamB,
-      team3: teamC,
-      team4: teamD,};
+    var flagaA3=0;
+    var flagaB3=0;
+    var flagaC3=0;
+    var flagaD3=0;
+    function powerup(teamA,teamB,teamC,teamD){
+            if(teamA==8 ){
+                teamA++;
+                flagaA3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            }
+           if(teamB==8 ){
+                teamB++
+                flagaB3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            
+            }
+           if(teamC==8){
+                teamC++
+                flagaC3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            }
+          if(teamD==8){
+                teamD++;
+                flagaD3++;
+                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                
+            }
+            
+                wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+            
+//             console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
+//   console.log("DRUŻYNA 1:"+teamA)
+//   console.log("DRUŻYNA 2:"+teamB)
+//   console.log("DRUŻYNA 3:"+teamC)
+//   console.log("DRUŻYNA 4:"+teamD)
+        
+        }
+     
+        
+        function wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3){
+            const punkty = {
+    team1: teamA,
+    team2: teamB,
+    team3: teamC,
+    team4: teamD,
+    flagaA3:flagaA3,
+    flagaB3:flagaB3,
+    flagaC3:flagaC3,
+    flagaD3:flagaD3,
+                        };
       
       console.log('Punkty:', punkty); // Log the data to the console
 
@@ -592,6 +666,10 @@ socket.onerror = (error) => {
  
 
 }
+
+    </script>
+    <script>
+ 
 
     </script>
 </body>
