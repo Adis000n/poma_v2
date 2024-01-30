@@ -14,12 +14,13 @@
     width: 96px;
     background-image: url('../grafika/gear100.png');
 }
-#team0{
+#team4{
+    text-align: right;
     position: absolute;
-    left: 0;
-    top: 0;
-    right: auto;
-    bottom: auto;
+    left: auto;
+    top: auto;
+    right: 0;
+    bottom: 0;
 }
 
 body{
@@ -31,26 +32,26 @@ body{
 }
 
 #team1{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: auto;
+    bottom: auto;
+}
+#team2{
     text-align: right;
     position: absolute;
     left: auto;
     top: 0;
     right: 0;
     bottom: auto;
+
 }
-#team2{
+#team3{
     position: absolute;
     left: 0;
     top: auto;
     right: auto;
-    bottom: 0;
-}
-#team3{
-    text-align: right;
-    position: absolute;
-    left: auto;
-    top: auto;
-    right: 0;
     bottom: 0;
 }
 
@@ -86,10 +87,10 @@ body{
 }
 
 
-.team h1{
+/* .team h1{
     font-size: 32px;
     color: rgb(223, 20, 223);
-}
+} */
 
 .score{
     font-size: 50px;
@@ -97,27 +98,29 @@ body{
     letter-spacing: 2px;
 }
 
-#board{
-    height: 100vh;
-    width: 100vh;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
+#board {
+    width: 800px;
+    height: 800px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     margin: auto;
-    /* background-color: aqua; */
 }
 
 .pawn {
-    width: 5vh;
-    height: 5vh;
-        top: 0px;
-	 left: 0px; 
-	 border-radius: 50%; 
-	position: relative;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    position: absolute;
     align-items: center;
-    
-    box-shadow: 0 0 10px 20px rgba(0, 0, 0, 0.363);
-    transition: 1s ease-in-out ;
+    box-shadow: none;
+    transition: 0.7s ease-in-out;
 }
+
 .name{
     color: burlywood;
 }
