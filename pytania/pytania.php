@@ -43,17 +43,46 @@
         transform: translate(-50%, -50%);
         z-index: 2;
         width: 85%;
+        height: 80%;
         padding: 20px;
         text-align: center;
         border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .stats_container{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: space-between  ; */
+        align-items: center;
+        margin-top: 20%;
+        margin-bottom: 20%;
     }
 
     #stats {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        justify-content: space-around;
+        flex-direction: column;
+        width: 20%;
+        margin 0;
+        border-left: 5px solid orange;
+        /* background-color: blue; */
+        /* justify-content: space-between; */
+        
     }
+    #pyt-css {
+        /* display: flex; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 79%;
+        height: 100%;
+        /* padding: 40px; */
+        margin 0;
+        /* background-color: red; */
+
+    }
+    
 
     h3 {
         color: rgb(100, 100, 100);
@@ -64,8 +93,11 @@
         color: darkorange;
         margin-top: 20px !important;
         width: 30%;
-        margin: auto;
+        margin: 0;
+        margin-bottom: 1%;
+        align-self: center;
         border-radius: 20px;
+
     }
 
     #time {
@@ -125,44 +157,47 @@
     <div class="bg-image"></div>
 
     <div class="bg-text">
+        <div id="pyt-css">
+            <h1>Pytanie:</h1>
+            <img id="pytanie-img" src="../baza_pytania/chemia/1/c1.jpg" width="30%">
+            <br>
+            <video width="700" height="480" controls hidden id="film" >
+                <source src="" type="video/mp4" id="film_src">
+                Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+            </video>
+            <br>
+            <audio controls id="dzwiek" hidden>
+                <source src="" type="audio/mpeg" id="dzwiek_src">
+                Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+            </audio>
+            <h1 id="odp-text"></h1>
+            <div id="bg-text"></div>
+            <img id="odpowiedz-img" src=""  width="25%">
+            <div id="timer">
+                <h2>Pozostały czas:</h2>
+                <h1 id="time">30</h1>
+            </div>
+        </div>
         <div id="stats">
-            <div id="druzyna">
+            <div id="druzyna" class="stats_container">
                 <h2>Nr drużyny:</h2>
                 <h3 id="druzyna-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
-            <div id="poziom">
+            <div id="poziom" class="stats_container">
                 <h2>Poziom trudności:</h2>
                 <h3 id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
-            <div id="kategoria">
+            <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
                 <h3 id="kategoria-data">-</h3>
             </div>
         </div>
-        <hr class="border border-warning border-3 opacity-100">
-        <h1>Pytanie:</h1>
-        <img id="pytanie-img" src="" width="30%">
-        <br>
-        <video width="700" height="480" controls hidden id="film" >
-            <source src="" type="video/mp4" id="film_src">
-            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
-        </video>
-        <br>
-        <audio controls id="dzwiek" hidden>
-            <source src="" type="audio/mpeg" id="dzwiek_src">
-            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
-        </audio>
-        <h1 id="odp-text"></h1>
-        <div id="bg-text"></div>
-        <img id="odpowiedz-img" src=""  width="25%">
-        <div id="timer">
-            <h2>Pozostały czas:</h2>
-            <h1 id="time">30</h1>
-        </div>
-  </div>
+        <!-- <hr class="border border-warning border-3 opacity-100"> -->
+        
     </div>
+    
 
     <div id="overlay" style="display: none;">
         <div id="overlay-content">
@@ -257,7 +292,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.1.113:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -286,7 +321,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -470,7 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -528,7 +563,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 </script>
-<style>        #fullscreen-message1 {
+<style>        
+        #fullscreen-message1 {
             display: flex;
             align-items: center;
             justify-content: center;
