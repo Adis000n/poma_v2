@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="shortcut icon" href="../grafika/favicon/favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 </head>
 <style>
     body, html {
@@ -213,13 +214,14 @@
 <div id="fullscreen-message1">
     <p><p>
 </div>
+<canvas class="confetti" id="canvas"></canvas>
 </body>
 
 <script>
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.102:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -318,6 +320,7 @@
                 xhr.send();
             }
         });
+
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -515,8 +518,13 @@ document.addEventListener('DOMContentLoaded', () => {
         team2 = data.team2;
         team3 = data.team3;
         team4 = data.team4;
+        flagaA3=data.flagaA3;
+        flagaB3=data.flagaB3;
+        flagaC3=data.flagaC3;
+        flagaD3=data.flagaD3;
     
         // console.log('Received team data:', team1, team2, team3, team4);
+         console.log(flagaA3,flagaB3,flagaC3,flagaD3);
     wujekplay(team1,team2,team3,team4)
     palerap2(team1,team2,team3,team4)
     palerap6(team1,team2,team3,team4)
@@ -526,33 +534,130 @@ document.addEventListener('DOMContentLoaded', () => {
     function wujekplay(team1,team2,team3,team4){
     if(team1 >= 11|| team2 >=11||team3 >=11||team4 >=11){
         wujekSound.play();
+        const duration = 15 * 1000,
+  animationEnd = Date.now() + duration,
+  defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+const interval = setInterval(function() {
+  const timeLeft = animationEnd - Date.now();
+
+  if (timeLeft <= 0) {
+    return clearInterval(interval);
+  }
+
+  const particleCount = 50 * (timeLeft / duration);
+
+  // since particles fall down, start a bit higher than random
+  confetti(
+    Object.assign({}, defaults, {
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+    })
+  );
+  confetti(
+    Object.assign({}, defaults, {
+      particleCount,
+      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+    })
+  );
+}, 250);
+
+
         }}
-    function palerap2(team1,team2,team3,team4){
-        if(team1 == 2|| team2 ==2 ||team3 ==2||team4 ==2){
+        var flagaA=0
+        var flagaB=0
+        var flagaC=0
+        var flagaD=0   
+        var flagaA2=0;
+        var flagaB2=0;
+        var flagaC2=0;
+        var flagaD2=0;  
+        function palerap2(team1,team2,team3,team4){
+        if(team1 == 2 && flagaA==0 ){
            
         powerup.play()
-        showFullscreenMessage("DODANO POWERUPA +1 punkt");
+        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
     }, 8000);
+        flagaA++;}
+    else if(team2== 2 && flagaB==0){
+        powerup.play()
+        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaB++
 
-        }}
+    }
+    else if(team3== 2 && flagaC==0){
+        powerup.play()
+        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaC++
+    }
+    else if(team4== 2 && flagaD==0){
+        powerup.play()
+        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaD++
+    }
+
+        }
         function palerap6(team1,team2,team3,team4){
-            if(team1 == 6|| team2 ==6 ||team3 ==6||team4 ==6){
+            if(team1 == 6&& flagaA2==0){
             
             powerup.play();
-            showFullscreenMessage("DODANO POWERUPA +1 punkt");
+            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
     }, 8000);
+    flagaA2++;
+}
+    else if(team2==6&&flagaB2==0){
+        powerup.play();
+             showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaB2++;
 
-        }
+    }
+    else if(team3==6&&flagaC2==0){
+        powerup.play();
+            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaC2++;
+
+    }
+    else if(team4==6&&flagaD2==0){
+        powerup.play();
+            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            setTimeout(function() {
+        hideFullscreenMessage();
+    }, 8000);
+    flagaD2++;
+
+    }
+
+        
     }
     function palerap8(team1,team2,team3,team4){
-            if(team1 == 8|| team2 ==8 ||team3 ==9||team4 ==9){
+            if(team1 == 8|| team2 ==8 ||team3 ==8||team4 ==8){
             
             powerup.play();
-            showFullscreenMessage("DODANO POWERUPA +1 punkt");
+            showFullscreenMessage("OTRZYMANO POWER UPA: +1 punkt");
+            // plus1punkt(team1,team2,team3,team4);
             setTimeout(function() {
         hideFullscreenMessage();
     }, 8000);
@@ -592,12 +697,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fullscreenMessage.style.display = 'none';
     }
 
-    // Example: Show the fullscreen message after 3 seconds
-
-
-
-
-    // Example: Hide the fullscreen message after 6 seconds
-
         </script>
+
 </html>

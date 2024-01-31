@@ -59,7 +59,11 @@ app.ws('/ws', (ws, req) => {
             team1: data.team1,
             team2: data.team2,
             team3: data.team3,
-            team4: data.team4
+            team4: data.team4,
+            flagaA3:data.flagaA3,
+            flagaB3: data.flagaB3,
+            flagaC3: data.flagaC3,
+            flagaD3: data.flagaD3
         }));
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
