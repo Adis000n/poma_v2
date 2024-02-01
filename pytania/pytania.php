@@ -10,12 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 </head>
 <style>
+    @font-face {
+        font-family: jah;
+        src: url(../JustAnotherHand-Regular.ttf);
+    }
     body, html {
         height: 100%;
         background-color: black;
         color: white; /* Set the default text color to white */
         overflow: hidden;
+        font-family: jah;
+        font-size: 16pt;
     }
+
 
     * {
         box-sizing: border-box;
@@ -56,8 +63,8 @@
         flex-direction: column;
         /* justify-content: space-between  ; */
         align-items: center;
-        margin-top: 20%;
-        margin-bottom: 20%;
+        margin-top: 16%;
+        margin-bottom: 16%;
     }
 
     #stats {
@@ -160,7 +167,7 @@
     <div class="bg-text">
         <div id="pyt-css">
             <h1>Pytanie:</h1>
-            <img id="pytanie-img" src="../baza_pytania/chemia/1/c1.jpg" width="30%">
+            <img id="pytanie-img" src="" width="30%">
             <br>
             <video width="700" height="480" controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
