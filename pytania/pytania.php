@@ -30,9 +30,9 @@
 
     .bg-image {
         background-image: url("../grafika/logo_poma2.jpg");
-        background-color: rgba(0, 0, 0, 0.8);
-        filter: blur(10px);
-        -webkit-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.7);
+        filter: blur(7px);
+        -webkit-filter: blur(7px);
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -41,7 +41,7 @@
     }
 
     .bg-text {
-        background-color: rgba(255, 255, 255, 1); /* Set the background color to a semi-transparent white */
+        background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
         color: orangered;
         font-weight: bold;
         border: 7px solid orange;
@@ -58,6 +58,10 @@
         display: flex;
         justify-content: space-between;
     }
+    .confetti{
+        opacity: 1;
+        z-index: 9999;
+    }
     .stats_container{
         display: flex;
         flex-direction: column;
@@ -71,7 +75,7 @@
         display: flex;
         flex-direction: column;
         width: 20%;
-        margin 0;
+        margin: 0;
         border-left: 5px solid orange;
         /* background-color: blue; */
         /* justify-content: space-between; */
@@ -86,7 +90,7 @@
         width: 79%;
         height: 100%;
         /* padding: 40px; */
-        margin 0;
+        margin: 0;
         /* background-color: red; */
 
     }
@@ -167,7 +171,7 @@
     <div class="bg-text">
         <div id="pyt-css">
             <h1>Pytanie:</h1>
-            <img id="pytanie-img" src="" width="30%">
+            <img id="pytanie-img" src="" width="80%">
             <br>
             <video width="700" height="480" controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
@@ -228,7 +232,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.102:3000/ws');
+        const ws = new WebSocket('ws://192.168.79.90:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -301,7 +305,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+        const ws = new WebSocket('ws://192.168.79.90:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -331,7 +335,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.79.90:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -515,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.79.90:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -556,7 +560,7 @@ const interval = setInterval(function() {
     return clearInterval(interval);
   }
 
-  const particleCount = 50 * (timeLeft / duration);
+  const particleCount = 80 * (timeLeft / duration);
 
   // since particles fall down, start a bit higher than random
   confetti(
