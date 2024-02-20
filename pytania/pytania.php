@@ -49,9 +49,9 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 2;
-        width: 85%;
-        height: 80%;
+        z-index: 0;
+        width: 90%;
+        height: 90%;
         padding: 20px;
         text-align: center;
         border-radius: 5px;
@@ -62,13 +62,13 @@
         opacity: 1;
         z-index: 9999;
     }
-    .stats_container{
-        display: flex;
-        flex-direction: column;
-        /* justify-content: space-between  ; */
-        align-items: center;
-        margin-top: 16%;
-        margin-bottom: 16%;
+    .stats_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16%;
+    margin-bottom: 16%;
+    height: 33%; /* Set a fixed height for each stats container */
     }
 
     #stats {
@@ -77,10 +77,26 @@
         width: 20%;
         margin: 0;
         border-left: 5px solid orange;
-        /* background-color: blue; */
-        /* justify-content: space-between; */
-        
     }
+
+    #druzyna,
+    #poziom,
+    #kategoria {
+        flex: 1; /* Make each stats container grow to fill the available space */
+    }
+
+    #druzyna h2,
+    #poziom h2,
+    #kategoria h2 {
+        margin: 0; /* Remove any default margin for consistency */
+    }
+
+    #druzyna-data,
+    #poziom-data,
+    #kategoria-data {
+        margin: 5px 0; /* Adjust margin as needed */
+    }
+
     #pyt-css {
         /* display: flex; */
         display: flex;
@@ -197,7 +213,7 @@
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="poziom" class="stats_container">
-                <h2>Poziom trudności:</h2>
+                <h2>Pytanie za:</h2>
                 <h3 id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
@@ -232,7 +248,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.79.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -305,7 +321,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.79.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -335,7 +351,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.79.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -433,7 +449,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDiv = document.getElementById('kategoria-data');
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
-        contentDiv2.innerHTML = points;
+        if (points == 1){
+            contentDiv2.innerHTML = "Jeden punkt";
+        } 
+        else if (points == 2){
+            contentDiv2.innerHTML = "Dwa punkty";
+        }
+        else if (points == 3){
+            contentDiv2.innerHTML = "Trzy punkty";
+        }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
     }
@@ -519,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.79.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
