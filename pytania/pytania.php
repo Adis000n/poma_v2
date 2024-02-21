@@ -615,34 +615,34 @@ const interval = setInterval(function() {
         if(team1 == 2 && flagaA==0 ){
            
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
         flagaA++;}
     else if(team2== 2 && flagaB==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB++
 
     }
     else if(team3== 2 && flagaC==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC++
     }
     else if(team4== 2 && flagaD==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD++
     }
 
@@ -651,36 +651,36 @@ const interval = setInterval(function() {
             if(team1 == 6&& flagaA2==0){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaA2++;
 }
     else if(team2==6&&flagaB2==0){
         powerup.play();
-             showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+             showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB2++;
 
     }
     else if(team3==6&&flagaC2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC2++;
 
     }
     else if(team4==6&&flagaD2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD2++;
 
     }
@@ -691,11 +691,11 @@ const interval = setInterval(function() {
             if(team1 == 8|| team2 ==8 ||team3 ==8||team4 ==8){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: +1 punkt");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> +1 punkt");
             // plus1punkt(team1,team2,team3,team4);
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
 
         }
     }
@@ -707,15 +707,17 @@ const interval = setInterval(function() {
         #fullscreen-message1 {
             display: flex;
             align-items: center;
+            text-align: center;
             justify-content: center;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
             color: white;
-            font-size: 54px;
+            font-size: 70px;
             z-index: 999;
             display: none;
         }</style>
