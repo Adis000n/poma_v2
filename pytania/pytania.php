@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('dzwiek');
     videoElement.hidden = true;
     audioElement.hidden = true;
-
+    // JEBAC ŻYDÓW
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
     contentDiv.innerHTML = '-';
