@@ -1,6 +1,7 @@
 @font-face {
     font-family: jah;
     src: url(../JustAnotherHand-Regular.ttf);
+    font-size: x-large;
 }
 #ADMIN{
     display: none;
@@ -59,11 +60,14 @@ body{
     right: auto;
     bottom: 0;
 }
+.highb{
+    font-size:  40px;
+}
 
 .team{
     width: 20%;
     color: white;
-    font-size: 30px;
+    font-size: 40px;
     margin: 8vh;
     padding: 2vh;
     font-weight: 700;
