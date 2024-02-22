@@ -10,12 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 </head>
 <style>
+    @font-face {
+        font-family: jah;
+        src: url(../JustAnotherHand-Regular.ttf);
+    }
     body, html {
         height: 100%;
         background-color: black;
         color: white; /* Set the default text color to white */
         overflow: hidden;
+        font-family: jah;
+        font-size: 16pt;
     }
+
 
     * {
         box-sizing: border-box;
@@ -23,9 +30,9 @@
 
     .bg-image {
         background-image: url("../grafika/logo_poma2.jpg");
-        background-color: rgba(0, 0, 0, 0.8);
-        filter: blur(10px);
-        -webkit-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.7);
+        filter: blur(7px);
+        -webkit-filter: blur(7px);
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -34,7 +41,7 @@
     }
 
     .bg-text {
-        background-color: rgba(255, 255, 255, 1); /* Set the background color to a semi-transparent white */
+        background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
         color: orangered;
         font-weight: bold;
         border: 7px solid orange;
@@ -42,19 +49,68 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 2;
-        width: 85%;
+        z-index: 0;
+        width: 90%;
+        height: 90%;
         padding: 20px;
         text-align: center;
         border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .confetti{
+        opacity: 1;
+        z-index: 9999;
+    }
+    .stats_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16%;
+    margin-bottom: 16%;
+    height: 33%; /* Set a fixed height for each stats container */
     }
 
     #stats {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        justify-content: space-around;
+        flex-direction: column;
+        width: 20%;
+        margin: 0;
+        border-left: 5px solid orange;
     }
+
+    #druzyna,
+    #poziom,
+    #kategoria {
+        flex: 1; /* Make each stats container grow to fill the available space */
+    }
+
+    #druzyna h2,
+    #poziom h2,
+    #kategoria h2 {
+        margin: 0; /* Remove any default margin for consistency */
+    }
+
+    #druzyna-data,
+    #poziom-data,
+    #kategoria-data {
+        margin: 5px 0; /* Adjust margin as needed */
+    }
+
+    #pyt-css {
+        /* display: flex; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 79%;
+        height: 100%;
+        /* padding: 40px; */
+        margin: 0;
+        /* background-color: red; */
+
+    }
+    
 
     h3 {
         color: rgb(100, 100, 100);
@@ -65,8 +121,11 @@
         color: darkorange;
         margin-top: 20px !important;
         width: 30%;
-        margin: auto;
+        margin: 0;
+        margin-bottom: 1%;
+        align-self: center;
         border-radius: 20px;
+
     }
 
     #time {
@@ -126,44 +185,47 @@
     <div class="bg-image"></div>
 
     <div class="bg-text">
+        <div id="pyt-css">
+            <h1>Pytanie:</h1>
+            <img id="pytanie-img" src="" width="80%">
+            <br>
+            <video width="700" height="480" controls hidden id="film" >
+                <source src="" type="video/mp4" id="film_src">
+                Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+            </video>
+            <br>
+            <audio controls id="dzwiek" hidden>
+                <source src="" type="audio/mpeg" id="dzwiek_src">
+                Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
+            </audio>
+            <h1 id="odp-text"></h1>
+            <div id="bg-text"></div>
+            <img id="odpowiedz-img" src=""  width="25%">
+            <div id="timer">
+                <h2>Pozostały czas:</h2>
+                <h1 id="time">30</h1>
+            </div>
+        </div>
         <div id="stats">
-            <div id="druzyna">
+            <div id="druzyna" class="stats_container">
                 <h2>Nr drużyny:</h2>
                 <h3 id="druzyna-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
-            <div id="poziom">
-                <h2>Poziom trudności:</h2>
+            <div id="poziom" class="stats_container">
+                <h2>Pytanie za:</h2>
                 <h3 id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
-            <div id="kategoria">
+            <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
                 <h3 id="kategoria-data">-</h3>
             </div>
         </div>
-        <hr class="border border-warning border-3 opacity-100">
-        <h1>Pytanie:</h1>
-        <img id="pytanie-img" src="" width="30%">
-        <br>
-        <video width="700" height="480" controls hidden id="film" >
-            <source src="" type="video/mp4" id="film_src">
-            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
-        </video>
-        <br>
-        <audio controls id="dzwiek" hidden>
-            <source src="" type="audio/mpeg" id="dzwiek_src">
-            Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
-        </audio>
-        <h1 id="odp-text"></h1>
-        <div id="bg-text"></div>
-        <img id="odpowiedz-img" src=""  width="25%">
-        <div id="timer">
-            <h2>Pozostały czas:</h2>
-            <h1 id="time">30</h1>
-        </div>
-  </div>
+        <!-- <hr class="border border-warning border-3 opacity-100"> -->
+        
     </div>
+    
 
     <div id="overlay" style="display: none;">
         <div id="overlay-content">
@@ -259,7 +321,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -289,7 +351,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -348,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('dzwiek');
     videoElement.hidden = true;
     audioElement.hidden = true;
-
+    // JEBAC ŻYDÓW
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
     contentDiv.innerHTML = '-';
@@ -387,7 +449,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDiv = document.getElementById('kategoria-data');
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
-        contentDiv2.innerHTML = points;
+        if (points == 1){
+            contentDiv2.innerHTML = "Jeden punkt";
+        } 
+        else if (points == 2){
+            contentDiv2.innerHTML = "Dwa punkty";
+        }
+        else if (points == 3){
+            contentDiv2.innerHTML = "Trzy punkty";
+        }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
     }
@@ -473,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -514,7 +584,7 @@ const interval = setInterval(function() {
     return clearInterval(interval);
   }
 
-  const particleCount = 50 * 10;
+  const particleCount = 50 * (timeLeft / duration);
 
   // since particles fall down, start a bit higher than random
   confetti(
@@ -545,34 +615,34 @@ const interval = setInterval(function() {
         if(team1 == 2 && flagaA==0 ){
            
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
         flagaA++;}
     else if(team2== 2 && flagaB==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB++
 
     }
     else if(team3== 2 && flagaC==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC++
     }
     else if(team4== 2 && flagaD==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD++
     }
 
@@ -581,36 +651,36 @@ const interval = setInterval(function() {
             if(team1 == 6&& flagaA2==0){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaA2++;
 }
     else if(team2==6&&flagaB2==0){
         powerup.play();
-             showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+             showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB2++;
 
     }
     else if(team3==6&&flagaC2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC2++;
 
     }
     else if(team4==6&&flagaD2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD2++;
 
     }
@@ -621,11 +691,11 @@ const interval = setInterval(function() {
             if(team1 == 8|| team2 ==8 ||team3 ==8||team4 ==8){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: +1 punkt");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> +1 punkt");
             // plus1punkt(team1,team2,team3,team4);
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
 
         }
     }
@@ -633,18 +703,21 @@ const interval = setInterval(function() {
 
 })
 </script>
-<style>        #fullscreen-message1 {
+<style>        
+        #fullscreen-message1 {
             display: flex;
             align-items: center;
+            text-align: center;
             justify-content: center;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
             color: white;
-            font-size: 54px;
+            font-size: 70px;
             z-index: 999;
             display: none;
         }</style>
