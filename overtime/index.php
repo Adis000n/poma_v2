@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Mechaniczna POmarańcza - OVERTIME</title>
 </head>
-<style>
-    body{
-        background-color: lightblue;
-        
-    }
-
-</style>
 <script>
              const ws = new WebSocket('ws://172.26.0.1:3000/ws');
              document.addEventListener('DOMContentLoaded', () => {
@@ -53,17 +47,17 @@
         
         
 </script>
-<body>  <div>
-     <h2 id="tytul1">Drużyna 1:</h2>
-        <h2 id="nazwa1" style="color:cyan">Drużyna 1</h2>
-        <p>pkt: <h1 id="score1">-</h1></p></div>
-
-        <DIV>
-        <h2 id="tytul2">Drużyna 2:</h2>
-        <h2 id="nazwa2" style="color:red">Drużyna 2</h2>
-        <p>pkt: <h1 id="score2">-</h1></p></DIV>
-    <div class="nazwa2"></div>
-    <div class="punkty1"></div>
-    <div class="punkty2"></div>
+<body> 
+    <div class="overtimed" id="overtime1">
+        <!-- <div class="tytul" id="tytul1">Drużyna 1:</div> -->
+        <div class="nazwa" id="nazwa1" style="color:rgb(0, 148, 255)">Drużyna 1</div>
+        <br><br><br><br><br>
+        <p class="pkt">punkty: <div class="ile" id="score1">-</div></p>
+    </div><div class="overtimed" id="overtime2">
+        <!-- <div class="tytul" id="tytul2">Drużyna 2:</div> -->
+        <div class="nazwa" id="nazwa2" style="color:red">Drużyna 2</div>
+        <br><br><br><br><br>
+        <p class="pkt">punkty: <div class="ile" id="score2">-</div></p>
+    </div>  
 </body>
 </html>

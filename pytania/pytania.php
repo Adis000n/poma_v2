@@ -178,6 +178,9 @@
             z-index: 999;
             display: none;
         }
+    .poprawka{
+        font-size: 50px;
+    }
 </style>
 
 
@@ -209,17 +212,17 @@
         <div id="stats">
             <div id="druzyna" class="stats_container">
                 <h2>Nr drużyny:</h2>
-                <h3 id="druzyna-data">-</h3>
+                <h3 class="poprawka" id="druzyna-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="poziom" class="stats_container">
                 <h2>Pytanie za:</h2>
-                <h3 id="poziom-data">-</h3>
+                <h3 class="poprawka" id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
-                <h3 id="kategoria-data">-</h3>
+                <h3 class="poprawka" id="kategoria-data">-</h3>
             </div>
         </div>
         <!-- <hr class="border border-warning border-3 opacity-100"> -->
