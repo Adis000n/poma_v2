@@ -30,9 +30,9 @@
 
     .bg-image {
         background-image: url("../grafika/logo_poma2.jpg");
-        background-color: rgba(0, 0, 0, 0.8);
-        filter: blur(10px);
-        -webkit-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.7);
+        filter: blur(7px);
+        -webkit-filter: blur(7px);
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -41,7 +41,7 @@
     }
 
     .bg-text {
-        background-color: rgba(255, 255, 255, 1); /* Set the background color to a semi-transparent white */
+        background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
         color: orangered;
         font-weight: bold;
         border: 7px solid orange;
@@ -49,34 +49,54 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        z-index: 2;
-        width: 85%;
-        height: 80%;
+        z-index: 0;
+        width: 90%;
+        height: 90%;
         padding: 20px;
         text-align: center;
         border-radius: 5px;
         display: flex;
         justify-content: space-between;
     }
-    .stats_container{
-        display: flex;
-        flex-direction: column;
-        /* justify-content: space-between  ; */
-        align-items: center;
-        margin-top: 16%;
-        margin-bottom: 16%;
+    .confetti{
+        opacity: 1;
+        z-index: 9999;
+    }
+    .stats_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16%;
+    margin-bottom: 16%;
+    height: 33%; /* Set a fixed height for each stats container */
     }
 
     #stats {
         display: flex;
         flex-direction: column;
         width: 20%;
-        margin 0;
+        margin: 0;
         border-left: 5px solid orange;
-        /* background-color: blue; */
-        /* justify-content: space-between; */
-        
     }
+
+    #druzyna,
+    #poziom,
+    #kategoria {
+        flex: 1; /* Make each stats container grow to fill the available space */
+    }
+
+    #druzyna h2,
+    #poziom h2,
+    #kategoria h2 {
+        margin: 0; /* Remove any default margin for consistency */
+    }
+
+    #druzyna-data,
+    #poziom-data,
+    #kategoria-data {
+        margin: 5px 0; /* Adjust margin as needed */
+    }
+
     #pyt-css {
         /* display: flex; */
         display: flex;
@@ -86,7 +106,7 @@
         width: 79%;
         height: 100%;
         /* padding: 40px; */
-        margin 0;
+        margin: 0;
         /* background-color: red; */
 
     }
@@ -167,7 +187,7 @@
     <div class="bg-text">
         <div id="pyt-css">
             <h1>Pytanie:</h1>
-            <img id="pytanie-img" src="" width="30%">
+            <img id="pytanie-img" src="" width="80%">
             <br>
             <video width="700" height="480" controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
@@ -193,7 +213,7 @@
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="poziom" class="stats_container">
-                <h2>Poziom trudności:</h2>
+                <h2>Pytanie za:</h2>
                 <h3 id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
@@ -228,7 +248,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.102:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -301,7 +321,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -331,7 +351,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -390,7 +410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioElement = document.getElementById('dzwiek');
     videoElement.hidden = true;
     audioElement.hidden = true;
-
+    // JEBAC ŻYDÓW
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
     contentDiv.innerHTML = '-';
@@ -429,7 +449,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentDiv = document.getElementById('kategoria-data');
         contentDiv.innerHTML = subject;
         const contentDiv2 = document.getElementById('poziom-data');
-        contentDiv2.innerHTML = points;
+        if (points == 1){
+            contentDiv2.innerHTML = "Jeden punkt";
+        } 
+        else if (points == 2){
+            contentDiv2.innerHTML = "Dwa punkty";
+        }
+        else if (points == 3){
+            contentDiv2.innerHTML = "Trzy punkty";
+        }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
     }
@@ -515,7 +543,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.1.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -562,13 +590,13 @@ const interval = setInterval(function() {
   confetti(
     Object.assign({}, defaults, {
       particleCount,
-      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      origin: { x: randomInRange(0.1, 0.5), y: Math.random() - 0.2 },
     })
   );
   confetti(
     Object.assign({}, defaults, {
       particleCount,
-      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      origin: { x: randomInRange(0.5, 0.9), y: Math.random() - 0.2 },
     })
   );
 }, 250);
@@ -587,34 +615,34 @@ const interval = setInterval(function() {
         if(team1 == 2 && flagaA==0 ){
            
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
         flagaA++;}
     else if(team2== 2 && flagaB==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB++
 
     }
     else if(team3== 2 && flagaC==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC++
     }
     else if(team4== 2 && flagaD==0){
         powerup.play()
-        showFullscreenMessage("OTRZYMANO POWER UPA: PODPOWEIDŹ PUBLICZNOŚĆI");
+        showFullscreenMessage("OTRZYMANO BONUS:<br> PODPOWIEDŹ PUBLICZNOŚĆI");
         setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD++
     }
 
@@ -623,36 +651,36 @@ const interval = setInterval(function() {
             if(team1 == 6&& flagaA2==0){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaA2++;
 }
     else if(team2==6&&flagaB2==0){
         powerup.play();
-             showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+             showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaB2++;
 
     }
     else if(team3==6&&flagaC2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaC2++;
 
     }
     else if(team4==6&&flagaD2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
     flagaD2++;
 
     }
@@ -663,11 +691,11 @@ const interval = setInterval(function() {
             if(team1 == 8|| team2 ==8 ||team3 ==8||team4 ==8){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO POWER UPA: +1 punkt");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> +1 punkt");
             // plus1punkt(team1,team2,team3,team4);
             setTimeout(function() {
         hideFullscreenMessage();
-    }, 8000);
+    }, 5000);
 
         }
     }
@@ -679,15 +707,17 @@ const interval = setInterval(function() {
         #fullscreen-message1 {
             display: flex;
             align-items: center;
+            text-align: center;
             justify-content: center;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
             color: white;
-            font-size: 54px;
+            font-size: 70px;
             z-index: 999;
             display: none;
         }</style>

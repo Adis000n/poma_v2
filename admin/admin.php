@@ -377,11 +377,84 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
     <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
+    <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
     <!-- <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button> -->
  
 </div>
+<script>
+ function  wysputot(){
+    var dropdown1 = document.getElementById("team");
+  // Pobierz wybraną wartość
+  var wybor1doot = dropdown1.value;
+  var dropdown2 = document.getElementById("team2");
+  // Pobierz wybraną wartość
+  var wybor2doot = dropdown2.value;
+    if(wybor1doot==1&&wybor2doot==2){
+        ApunktyOT=teamA
+        BpunktyOT=teamB
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+    if(wybor1doot==1&&wybor2doot==3){
+        ApunktyOT=teamA
+        BpunktyOT=teamC
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+    if(wybor1doot==1&&wybor2doot==4){
+        ApunktyOT=teamA
+        BpunktyOT=teamD
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+    if(wybor1doot==2&&wybor2doot==3){
+        ApunktyOT=teamB
+        BpunktyOT=teamC
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+    if(wybor1doot==2&&wybor2doot==4){
+        ApunktyOT=teamB
+        BpunktyOT=teamD
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+    if(wybor1doot==3&&wybor2doot==4){
+        ApunktyOT=teamC
+        BpunktyOT=teamD
+        console.log(ApunktyOT,BpunktyOT)
+        punktyOT(ApunktyOT,BpunktyOT)
+    }
+ }
+ function punktyOT(ApunkyOT,BpunkyOT){
+    const pozdrowWuja = {
+
+punktyA: ApunkyOT,
+punktyB: BpunkyOT,
+
+                    };
+  
+  console.log('punkty do OT:', pozdrowWuja,"PISZE to na pbd"); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+socket.send(JSON.stringify(pozdrowWuja));
+console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE i JEDNORENKIEGO BANDYTE');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+console.error(`WebSocket Error: ${error}`);
+};
+
+
+ }
+</script>
     <form id="quizForm" method="post" action="/submitForm">
         <div class="form-group">
             <label for="subject"><b>Kategoria:</b></label>
@@ -444,7 +517,31 @@ function sendAnswer(isCorrect) {
             </div>
 </div>
 </div> -->
-        <p>Timer:</p>
+<div>
+    <p>DEBILU JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
+</div>
+<label for="cars">Wybierz team 1 do OT:</label>
+  <select name="cars" id="team">
+    <option value="1">TEAM 1 </option>
+    <option value="2"> TEAM 2 </option>
+    <option value="3"> TEAM 3 </option>
+    <option value="4"> TEAM 4 </option>
+
+  </select>
+  <br><br>
+
+  <label for="cars">Wybierz team 2 do OT:</label>
+  <select name="cars" id="team2">
+    <option value="1">TEAM 1 </option>
+    <option value="2"> TEAM 2 </option>
+    <option value="3"> TEAM 3 </option>
+    <option value="4"> TEAM 4 </option>
+
+  </select>
+  <br><br>
+        
+<button type="button" class="btn btn-light" onclick="pozdrowkustosza()">CHUJ!! RUCHAJ </button>
+<p>Timer:</p>
         <button type="button" id="startBtn" class="btn btn-success" onclick="startTimer()">Start</button>
         <button type="button" id="stopBtn" class="btn btn-danger" onclick="stopTimer()" disabled>Stop</button>
         <button type="button" id="resetBtn" class="btn btn-warning" onclick="resetTimer()">Reset</button>
@@ -463,6 +560,7 @@ function sendAnswer(isCorrect) {
         </div>
     </form>
     
+
 
     <div id="response"></div>
 
@@ -496,6 +594,50 @@ function sendAnswer(isCorrect) {
 //     // handleAnswer();
 //     punktyplansza(ilosc_druzyn,nr_druzyny)
 // }
+function pozdrowkustosza(){
+  
+    var dropdown1 = document.getElementById("team");
+  // Pobierz wybraną wartość
+  var wybor1doot = dropdown1.value;
+
+   var dropdown2 = document.getElementById("team2");
+  // Pobierz wybraną wartość
+  var wybor2doot = dropdown2.value;
+  console.log(wybor1doot,wybor2doot)
+    nazwaA=druzyny[wybor1doot-1]
+    nazwaB=druzyny[wybor2doot-1]
+    console.log(nazwaA,nazwaB)
+    wysylawieovertime(nazwaA,nazwaB)
+}
+function wysylawieovertime(nazwaA,nazwaB){
+            const chujciwdupe = {
+
+    nazwaA: nazwaA,
+    nazwaB: nazwaB,
+ 
+                        };
+      
+      console.log('DRUŻYNY:', chujciwdupe,"RUSKA CHUJNINA"); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+    socket.send(JSON.stringify(chujciwdupe));
+    console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+    console.error(`WebSocket Error: ${error}`);
+};
+        }
+
+
+
+
+
 
 function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 {
@@ -559,8 +701,10 @@ if(teamA==8 ){
                 // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
                 
             }
+
             
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+
 
     // wysylanie(teamA,teamB,teamC,teamD);
     // wysylanie2(team1,team2,team3,team4);
@@ -601,7 +745,7 @@ if(teamA==8 ){
                 // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
                 
             }
-            
+       
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
             
 //             console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
@@ -669,7 +813,31 @@ socket.onerror = (error) => {
 
     </script>
     <script>
+//         function halcnowgura(kutasA,kutasB,nazwaA,nazwaB){
+//             const chujciwdupe = {
+//     kurwa_scoreA: kutasA,
+//     kurwa_scoreB: kutasB,
+//     kurwa_teamA: nazwaA,
+//     kurwa_teamB: nazwaB,
  
+//                         };
+      
+//       console.log('Punkty:', chujciwdupe, "CHUJ CI W DUPE JSSSSSSSSSS"); // Log the data to the console
+
+// // Connect to WebSocket and send form data
+// const socket = new WebSocket('ws://localhost:3000/ws');
+
+// // Wait for the WebSocket connection to open
+// socket.onopen = () => {
+//     socket.send(JSON.stringify(chujciwdupe));
+//     console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE');
+// };
+
+// // Handle socket errors if needed
+// socket.onerror = (error) => {
+//     console.error(`WebSocket Error: ${error}`);
+// };
+//         }
 
     </script>
 </body>
