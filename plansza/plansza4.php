@@ -52,6 +52,7 @@ function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
   if(nazwa_teamC == undefined || nazwa_teamD == undefined){
     const contentDiv5 = document.getElementById('nazwa1');
         contentDiv5.innerHTML =  nazwa_teamA ;
+        tylko_dwie = true;
         const contentDiv6 = document.getElementById('nazwa2');
         contentDiv6.innerHTML =  nazwa_teamB ;
     
@@ -183,9 +184,11 @@ function updateContent(team1,team2,team3,team4) {
       }}
       function pozycjonowanie3(team3){
         if(team3 ===0){
-          document.getElementById('pawn3').querySelector('img').removeAttribute('hidden');
+          if(tylko_dwie==false){
+            document.getElementById('pawn3').querySelector('img').removeAttribute('hidden');
           document.getElementById('pawn3').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
           setPosition('pawn3',330, 430 );
+          }
         }
         else if(team3===1){
           setPosition('pawn3',240, 432 );
@@ -223,9 +226,11 @@ function updateContent(team1,team2,team3,team4) {
       }
       function pozycjonowanie4(team4){
         if(team4===0){
-          document.getElementById('pawn4').querySelector('img').removeAttribute('hidden');
+          if(tylko_dwie==false){
+            document.getElementById('pawn4').querySelector('img').removeAttribute('hidden');
           document.getElementById('pawn4').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
           setPosition('pawn4',430, 430 );
+          }
         }
         else if(team4===1){
           setPosition('pawn4',520, 432 );
@@ -314,22 +319,22 @@ function updateContent(team1,team2,team3,team4) {
     <!-- </div>  -->
      <div class="team" id="team1">
         <h2 id="tytul1">Drużyna 1:</h2>
-        <h2 id="nazwa1" style="color:cyan">Drużyna 1</h2>
+        <h2 id="nazwa1" style="color:cyan">-</h2>
         <p>pkt: <h1 id="score1">-</h1></p>
       </div>
       <div class="team" id="team2">
         <h2 id="tytul2">Drużyna 2:</h2>
-        <h2 id="nazwa2" style="color:red">Drużyna 2</h2>
+        <h2 id="nazwa2" style="color:red">-</h2>
         <p>pkt: <h1 id="score2">-</h1></p>
       </div>
       <div class="team" id="team3">
         <h2 id="tytul3">Drużyna 3:</h2>
-        <h2 id=nazwa3 style="color:yellow">Drużyna 3</h2>
+        <h2 id=nazwa3 style="color:yellow">-</h2>
         <p>pkt: <h1 id="score3">-</h1></p>
       </div>
       <div class="team" id="team4">
         <h2 id="tytul4">Drużyna 4:</h2>
-        <h2 id="nazwa4" style="color:green">Drużyna 4</h2>
+        <h2 id="nazwa4" style="color:green">-</h2>
         <p>pkt: <h1 id="score4">-</h1></p>
       </div> 
     <div id="board">
