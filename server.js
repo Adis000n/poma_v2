@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -74,11 +74,37 @@ app.ws('/ws', (ws, req) => {
         nazwa_teamD: data.nazwa_teamD
       }))
     }
+    
+    else if(data.nazwaA!== undefined||data.nazwaB!== undefined){
+      broadcast(JSON.stringify({
+  nazwaA: data.nazwaA,
+  nazwaB: data.nazwaB
+      }))
+    }
+    else if(data.punktyA!== undefined ||data.punktyB==undefined ){
+      broadcast(JSON.stringify({
+        punktyA:data.punktyA,
+        punktyB:data.punktyB
+      }))
+    }
     else if(data.flaga1 !==0){
       broadcast(JSON.stringify({
         flaga: data.flaga1,
       }))
     }
+  //   else if(data.nazwaA!== undefined||data.nazwaB!== undefined){
+  //     broadcast(JSON.stringify({
+  // nazwaA: data.nazwaA,
+  // nazwaB: data.nazwaB
+  //     }))
+  //   }
+    // else if(data.punktyA!== undefined ||data.punktyB==undefined ){
+    //   broadcast(JSON.stringify({
+    //     punktyA:data.punktyA,
+    //     punktyB:data.punktyB
+    //   }))
+    // }
+
   
   } catch (error) {
       console.error('Error parsing incoming message:', error);

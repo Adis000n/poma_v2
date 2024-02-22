@@ -186,7 +186,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.102:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -259,7 +259,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -289,7 +289,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -514,19 +514,19 @@ const interval = setInterval(function() {
     return clearInterval(interval);
   }
 
-  const particleCount = 50 * (timeLeft / duration);
+  const particleCount = 50 * 10;
 
   // since particles fall down, start a bit higher than random
   confetti(
     Object.assign({}, defaults, {
       particleCount,
-      origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      origin: { x: randomInRange(0.1, 0.5), y: Math.random() - 0.2 },
     })
   );
   confetti(
     Object.assign({}, defaults, {
       particleCount,
-      origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      origin: { x: randomInRange(0.5, 0.9), y: Math.random() - 0.2 },
     })
   );
 }, 250);
