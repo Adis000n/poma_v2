@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -124,7 +124,7 @@ app.ws('/ws', (ws, req) => {
 
 // Serve PHP files using php-cgi
 app.engine('php', (filePath, options, callback) => {
-  const phpExecutable = 'D:/xampp/php/php-cgi.exe';
+  const phpExecutable = 'C:/xampp/php/php-cgi.exe';
   const scriptPath = path.resolve(filePath);
   const cmd = `"${phpExecutable}" -f "${scriptPath}"`;
 

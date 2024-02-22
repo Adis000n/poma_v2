@@ -517,10 +517,12 @@ console.error(`WebSocket Error: ${error}`);
             </div>
 </div>
 </div> -->
+<hr>
 <div>
-    <p>DEBILU JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
+    
+    <p>JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
 </div>
-<label for="cars">Wybierz team 1 do OT:</label>
+<label for="cars">Wybierz team 1 do dogrywki:</label>
   <select name="cars" id="team">
     <option value="1">TEAM 1 </option>
     <option value="2"> TEAM 2 </option>
@@ -530,7 +532,7 @@ console.error(`WebSocket Error: ${error}`);
   </select>
   <br><br>
 
-  <label for="cars">Wybierz team 2 do OT:</label>
+  <label for="cars">Wybierz team 2 do dogrywki:</label>
   <select name="cars" id="team2">
     <option value="1">TEAM 1 </option>
     <option value="2"> TEAM 2 </option>
@@ -540,8 +542,9 @@ console.error(`WebSocket Error: ${error}`);
   </select>
   <br><br>
         
-<button type="button" class="btn btn-light" onclick="pozdrowkustosza()">CHUJ!! RUCHAJ </button>
-<p>Timer:</p>
+<button type="button" class="btn btn-light" onclick="pozdrowkustosza()">Rozpocznij dogrywkę </button>
+<hr>
+<p>Timer :</p>
         <button type="button" id="startBtn" class="btn btn-success" onclick="startTimer()">Start</button>
         <button type="button" id="stopBtn" class="btn btn-danger" onclick="stopTimer()" disabled>Stop</button>
         <button type="button" id="resetBtn" class="btn btn-warning" onclick="resetTimer()">Reset</button>

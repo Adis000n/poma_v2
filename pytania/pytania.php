@@ -52,11 +52,10 @@
         z-index: 0;
         width: 90%;
         height: 90%;
-        padding: 20px;
+        padding: 10px;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 10px;
         display: flex;
-        justify-content: space-between;
     }
     .confetti{
         opacity: 1;
@@ -120,11 +119,10 @@
         border: 4px solid orangered;
         color: darkorange;
         margin-top: 20px !important;
-        width: 30%;
+        width: 20%;
         margin: 0;
-        margin-bottom: 1%;
         align-self: center;
-        border-radius: 20px;
+        border-radius: 30px;
 
     }
 
@@ -186,7 +184,6 @@
 
     <div class="bg-text">
         <div id="pyt-css">
-            <h1>Pytanie:</h1>
             <img id="pytanie-img" src="" width="80%">
             <br>
             <video width="700" height="480" controls hidden id="film" >
@@ -248,7 +245,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -321,7 +318,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -351,7 +348,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -494,21 +491,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1100);
         }
     }
-    function handleAnswer(isCorrect) {
-        const bgText = document.getElementById('bg-text');
-        const odp = document.getElementById('odpowiedz-img');
-        if (isCorrect) {
-            bgText.innerHTML = "Podana odpowiedź była poprawna";
-            bgText.style.color = 'green';
-            odp.style.border = 'solid 5px #00bd13';
-            correctSound.play();
-        } else {
-            bgText.innerHTML = "Podana odpowiedź nie była poprawna";
-            bgText.style.color = '#f0002c';
-            odp.style.border = 'solid 5px #bd0000';
-            wrongSound.play();
-        }
-    }
 });
     function komunikat(){
                 // Function to show the fullscreen message
@@ -543,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
