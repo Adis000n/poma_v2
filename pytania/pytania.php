@@ -96,31 +96,39 @@
         margin: 5px 0; /* Adjust margin as needed */
     }
 
-    #pyt-css {
-        /* display: flex; */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        width: 79%;
-        height: 100%;
-        /* padding: 40px; */
-        margin: 0;
-        /* background-color: red; */
 
-    }
-    
+    #pyt-css {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 79%;
+    height: 100%;
+    margin: 0;
+    margin-bottom: 7px; /* Adjust the margin-bottom as needed */
+}
+
+
+
+#odp-text {
+    margin-bottom: 7px; /* Adjust the margin as needed */
+    margin-top: 7px; /* Adjust the margin as needed */
+}
 
     h3 {
         color: rgb(100, 100, 100);
     }
 
     #timer {
+        position: absolute; /* Change position to absolute */
         border: 4px solid orangered;
         color: darkorange;
-        margin-top: 20px !important;
-        width: 20%;
+        bottom: 0;
+        margin-top: 10px !important;
+        margin-bottom: 7px !important; 
+        width: 15%;
         margin: 0;
+        height: 15%;
         align-self: center;
         border-radius: 30px;
 
