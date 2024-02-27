@@ -13,7 +13,7 @@
 
 </style>
 <script>
-             const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+             const ws = new WebSocket('ws://127.26.0.1:3000/ws');
              document.addEventListener('DOMContentLoaded', () => {
     
 

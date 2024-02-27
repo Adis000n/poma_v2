@@ -87,6 +87,11 @@ app.ws('/ws', (ws, req) => {
         punktyB:data.punktyB
       }))
     }
+    else if(data.flaga69!== undefined){
+      broadcast(JSON.stringify({
+        flaga69:data.flaga69
+      }))
+    }
     else if(data.flaga1 !==0){
       broadcast(JSON.stringify({
         flaga: data.flaga1,
@@ -124,7 +129,7 @@ app.ws('/ws', (ws, req) => {
 
 // Serve PHP files using php-cgi
 app.engine('php', (filePath, options, callback) => {
-  const phpExecutable = 'D:/xampp/php/php-cgi.exe';
+  const phpExecutable = 'C:/xampp/php/php-cgi.exe';
   const scriptPath = path.resolve(filePath);
   const cmd = `"${phpExecutable}" -f "${scriptPath}"`;
 
