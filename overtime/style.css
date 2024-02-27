@@ -1,0 +1,46 @@
+@font-face {
+    font-family: jah;
+    src: url(../JustAnotherHand-Regular.ttf);
+    font-size: x-large;
+}
+*{
+    margin: 0;
+    border: 0;
+}
+body{
+    font-family: jah;
+    height: auto;
+    width: auto;
+}
+.overtimed{
+    margin: 0;
+    display: inline-flex;
+    justify-content: center;
+    flex-direction: column;
+    align-self: center;
+    width: 50%;
+    height: 100vh;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+#overtime1{
+    background-image: url(../grafika/Background-red.png);
+}
+#overtime2{
+    background-image: url(../grafika/Background-blue.png);
+}
+.tytul{
+    font-size: 5vh;
+}
+.nazwa{
+    font-size: 15vh;
+}
+.pkt{
+    font-size: 10vh;
+    color: whitesmoke;
+}
+.ile{
+    font-size: 10vh;
+    color: whitesmoke;
+}

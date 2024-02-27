@@ -52,11 +52,10 @@
         z-index: 0;
         width: 90%;
         height: 90%;
-        padding: 20px;
+        padding: 10px;
         text-align: center;
-        border-radius: 5px;
+        border-radius: 10px;
         display: flex;
-        justify-content: space-between;
     }
     .confetti{
         opacity: 1;
@@ -97,34 +96,41 @@
         margin: 5px 0; /* Adjust margin as needed */
     }
 
-    #pyt-css {
-        /* display: flex; */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        width: 79%;
-        height: 100%;
-        /* padding: 40px; */
-        margin: 0;
-        /* background-color: red; */
 
-    }
-    
+    #pyt-css {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 79%;
+    height: 100%;
+    margin: 0;
+    margin-bottom: 7px; /* Adjust the margin-bottom as needed */
+}
+
+
+
+#odp-text {
+    margin-bottom: 7px; /* Adjust the margin as needed */
+    margin-top: 7px; /* Adjust the margin as needed */
+}
 
     h3 {
         color: rgb(100, 100, 100);
     }
 
     #timer {
+        position: absolute; /* Change position to absolute */
         border: 4px solid orangered;
         color: darkorange;
-        margin-top: 20px !important;
-        width: 30%;
+        bottom: 0;
+        margin-top: 10px !important;
+        margin-bottom: 7px !important; 
+        width: 15%;
         margin: 0;
-        margin-bottom: 1%;
+        height: 15%;
         align-self: center;
-        border-radius: 20px;
+        border-radius: 30px;
 
     }
 
@@ -178,6 +184,9 @@
             z-index: 999;
             display: none;
         }
+    .poprawka{
+        font-size: 50px;
+    }
 </style>
 
 
@@ -186,7 +195,6 @@
 
     <div class="bg-text">
         <div id="pyt-css">
-            <h1>Pytanie:</h1>
             <img id="pytanie-img" src="" width="80%">
             <br>
             <video width="700" height="480" controls hidden id="film" >
@@ -209,17 +217,17 @@
         <div id="stats">
             <div id="druzyna" class="stats_container">
                 <h2>Nr drużyny:</h2>
-                <h3 id="druzyna-data">-</h3>
+                <h3 class="poprawka" id="druzyna-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="poziom" class="stats_container">
                 <h2>Pytanie za:</h2>
-                <h3 id="poziom-data">-</h3>
+                <h3 class="poprawka" id="poziom-data">-</h3>
             </div>
             <hr class="border border-warning border-3 opacity-100">
             <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
-                <h3 id="kategoria-data">-</h3>
+                <h3 class="poprawka" id="kategoria-data">-</h3>
             </div>
         </div>
         <!-- <hr class="border border-warning border-3 opacity-100"> -->
@@ -248,7 +256,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -321,7 +329,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -351,7 +359,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -494,21 +502,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1100);
         }
     }
-    function handleAnswer(isCorrect) {
-        const bgText = document.getElementById('bg-text');
-        const odp = document.getElementById('odpowiedz-img');
-        if (isCorrect) {
-            bgText.innerHTML = "Podana odpowiedź była poprawna";
-            bgText.style.color = 'green';
-            odp.style.border = 'solid 5px #00bd13';
-            correctSound.play();
-        } else {
-            bgText.innerHTML = "Podana odpowiedź nie była poprawna";
-            bgText.style.color = '#f0002c';
-            odp.style.border = 'solid 5px #bd0000';
-            wrongSound.play();
-        }
-    }
 });
     function komunikat(){
                 // Function to show the fullscreen message
@@ -544,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.137.1:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);

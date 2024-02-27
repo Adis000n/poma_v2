@@ -21,7 +21,7 @@ function getRandomImage($subject, $points) {
     $con = mysqli_connect("localhost", "root", "");
     mysqli_select_db($con, "poma");
     // Select a random, unused image from the database
-    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND (YEAR(CURDATE())-uzyte)>=5 LIMIT 1;
+    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND (YEAR(CURDATE())-rok_uzycia)>=5 LIMIT 1;
     ");
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -30,7 +30,7 @@ function getRandomImage($subject, $points) {
         $imagePath = $row['img_odpowiedzi'];
 
         // Update the 'uzyte' column to mark the image as used
-        mysqli_query($con, "UPDATE mvc_konkurs_pytania SET uzyte=year(CURDATE()) WHERE id=$id");
+        mysqli_query($con, "UPDATE mvc_konkurs_pytania SET rok_uzycia=year(CURDATE()) WHERE id=$id");
 
         return "../$imagePath";
     }

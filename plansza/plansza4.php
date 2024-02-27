@@ -19,7 +19,7 @@
   tylko_dwie = false;
   tylko_trzy = false;
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -369,24 +369,24 @@ function updateContent(team1,team2,team3,team4) {
 
     <!-- </div>  -->
      <div class="team" id="team1">
-        <h2 id="tytul1">Drużyna 1:</h2>
-        <h2 id="nazwa1" style="color:cyan">-</h2>
-        <p>pkt: <h1 id="score1">-</h1></p>
+        <h2 class="highb" id="tytul1">Drużyna 1:</h2>
+        <h2 class="highb" id="nazwa1" style="color:cyan">-</h2>
+        <p>pkt: <h1 class="highb" id="score1">-</h1></p>
       </div>
       <div class="team" id="team2">
-        <h2 id="tytul2">Drużyna 2:</h2>
-        <h2 id="nazwa2" style="color:red">-</h2>
-        <p>pkt: <h1 id="score2">-</h1></p>
+        <h2 class="highb" id="tytul2">Drużyna 2:</h2>
+        <h2 class="highb" id="nazwa2" style="color:red">-</h2>
+        <p>pkt: <h1 class="highb" id="score2">-</h1></p>
       </div>
       <div class="team" id="team3">
-        <h2 id="tytul3">Drużyna 3:</h2>
-        <h2 id=nazwa3 style="color:yellow">-</h2>
-        <p>pkt: <h1 id="score3">-</h1></p>
+        <h2 class="highb" id="tytul3">Drużyna 3:</h2>
+        <h2 class="highb" id=nazwa3 style="color:yellow">-</h2>
+        <p>pkt: <h1 class="highb" id="score3">-</h1></p>
       </div>
       <div class="team" id="team4">
-        <h2 id="tytul4">Drużyna 4:</h2>
-        <h2 id="nazwa4" style="color:green">-</h2>
-        <p>pkt: <h1 id="score4">-</h1></p>
+        <h2 class="highb" id="tytul4">Drużyna 4:</h2>
+        <h2 class="highb" id="nazwa4" style="color:green">-</h2>
+        <p>pkt: <h1 class="highb" id="score4">-</h1></p>
       </div> 
     <div id="board">
       <div class="pawn" id="pawn4"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ" hidden></div>  <!-- Niebieski -->
