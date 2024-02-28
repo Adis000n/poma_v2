@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -85,6 +85,11 @@ app.ws('/ws', (ws, req) => {
       broadcast(JSON.stringify({
         punktyA:data.punktyA,
         punktyB:data.punktyB
+      }))
+    }
+    else if(data.flaga69!== undefined){
+      broadcast(JSON.stringify({
+        flaga69:data.flaga69
       }))
     }
     else if(data.flaga1 !==0){

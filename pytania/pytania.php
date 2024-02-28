@@ -262,8 +262,7 @@
 <script>
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
-
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -336,7 +335,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -366,7 +365,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -535,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 </script>
 <script>
+    flaga69=0;
     var wujekSound = new Audio('../audio/wygranabeta.mp3');
     wujekSound.muted = false;
     wujekSound.volume = 1;
@@ -544,12 +544,16 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-
-    if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
+        console.log('Received message:', event.data);
+        const data = JSON.parse(event.data);
+        if(data.flaga69!== undefined){
+            flaga69=data.flaga69
+            console.log(flaga69)
+        }
+    else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
         team1 = data.team1;
         team2 = data.team2;
         team3 = data.team3;
@@ -558,13 +562,15 @@ document.addEventListener('DOMContentLoaded', () => {
         flagaB3=data.flagaB3;
         flagaC3=data.flagaC3;
         flagaD3=data.flagaD3;
+        
     
         // console.log('Received team data:', team1, team2, team3, team4);
          console.log(flagaA3,flagaB3,flagaC3,flagaD3);
-    wujekplay(team1,team2,team3,team4)
+            if(flaga69!=1){
+         wujekplay(team1,team2,team3,team4)
     palerap2(team1,team2,team3,team4)
     palerap6(team1,team2,team3,team4)
-    palerap8(team1,team2,team3,team4)
+    palerap8(team1,team2,team3,team4)}
 }}
         
     function wujekplay(team1,team2,team3,team4){

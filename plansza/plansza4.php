@@ -13,12 +13,13 @@
         <!-- <scrip src="plansza.js"></script> -->
         <link rel="stylesheet" href="style.css">
         <!-- <link rel="stylesheet" href="stylkjg6.css"> -->
+        <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
       </head>
 <script>
   tylko_dwie = false;
   tylko_trzy = false;
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+      const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -34,6 +35,44 @@
          pozycjonowanie2(team2)
          pozycjonowanie3(team3)
          pozycjonowanie4(team4)
+         
+        //  function wujekplay(team1,team2,team3,team4){
+    if(team1 >= 11|| team2 >=11||team3 >=11||team4 >=11){
+        // wujekSound.play();
+        const duration = 15 * 1000,
+  animationEnd = Date.now() + duration,
+  defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+const interval = setInterval(function() {
+  const timeLeft = animationEnd - Date.now();
+
+  if (timeLeft <= 0) {
+    return clearInterval(interval);
+  }
+
+  const particleCount = 50 * (timeLeft / duration);
+
+  // since particles fall down, start a bit higher than random
+  confetti(
+    Object.assign({}, defaults, {
+      particleCount,
+      origin: { x: randomInRange(0.1, 0.5), y: Math.random() - 0.2 },
+    })
+  );
+  confetti(
+    Object.assign({}, defaults, {
+      particleCount,
+      origin: { x: randomInRange(0.5, 0.9), y: Math.random() - 0.2 },
+    })
+  );
+}, 250);
+
+
+        }
 
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){

@@ -378,11 +378,70 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
     <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
+    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button>
+    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO GÓWNA (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
+
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
     <!-- <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button> -->
  
 </div>
+<script>
+function chcetoskonczyc(){
+//projekt nie życie 😎😎😥😥🤣💀❤️😊😁😁😁😢😢👍👍👍😍😥😢😢🤣(^///^)☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆):☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆^_^^_^:-()
+
+const pozdroOVERTAJMIK = {
+
+flaga69:0,
+
+
+                    };
+  
+  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+socket.send(JSON.stringify(pozdroOVERTAJMIK));
+console.log('ROBUUUUR W FERARI');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+console.error(`WebSocket Error: ${error}`);
+};
+
+
+}</script>
+<script>
+    function jaktonazwac(){
+        const pozdroOVERTAJMIK = {
+
+flaga69:1,
+
+
+                    };
+  
+  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
+
+// Connect to WebSocket and send form data
+const socket = new WebSocket('ws://localhost:3000/ws');
+
+// Wait for the WebSocket connection to open
+socket.onopen = () => {
+socket.send(JSON.stringify(pozdroOVERTAJMIK));
+console.log('ROBUUUUR W FERARI');
+};
+
+// Handle socket errors if needed
+socket.onerror = (error) => {
+console.error(`WebSocket Error: ${error}`);
+};
+
+    }
+</script>
 <script>
  function  wysputot(){
     var dropdown1 = document.getElementById("team");
@@ -689,8 +748,16 @@ if(ilosc_druzyn==2 && isCorrect==true)
         if(numer_druzyny==4){
       teamC=teamC+points;}
         if(numer_druzyny==1){
-      teamD=teamD+points}
-}
+      teamD=teamD+points}}
+      if(isCorrect==true && ilosc_druzyn==3){
+        if(numer_druzyny==2){
+      teamA=teamA+points}
+        if(numer_druzyny==3){
+      teamB=teamB+points;}
+        if(numer_druzyny==1){
+      teamC=teamC+points}
+      }
+
 if(teamA==8 ){
                 teamA++;
                 flagaA3++;
