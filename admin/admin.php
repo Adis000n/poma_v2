@@ -669,8 +669,17 @@ if(ilosc_druzyn==2 && isCorrect==true)
     teamB=teamB+3;
   }
   
-  
-  
+  if (isCorrect == true && ilosc_druzyn == 3) {
+        if (numer_druzyny == 2) {
+            teamA = teamA + points
+        }
+        if (numer_druzyny == 3) {
+            teamB = teamB + points
+        }
+        if (numer_druzyny == 1) {
+            teamC = teamC + points
+        }
+    }
   
   if(isCorrect==true && ilosc_druzyn==4){
          if(numer_druzyny==2){

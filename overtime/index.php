@@ -7,7 +7,7 @@
     <title>Mechaniczna POmarańcza - OVERTIME</title>
 </head>
 <script>
-             const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+             const ws = new WebSocket('ws://192.168.55.113:3000/ws');
              document.addEventListener('DOMContentLoaded', () => {
     
 

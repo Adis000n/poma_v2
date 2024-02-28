@@ -50,7 +50,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 0;
-        width: 90%;
+        width: 80%;
         height: 90%;
         padding: 10px;
         text-align: center;
@@ -101,37 +101,45 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start; /* Align items to the top */
     position: relative;
     width: 79%;
     height: 100%;
     margin: 0;
-    margin-bottom: 7px; /* Adjust the margin-bottom as needed */
+    margin-bottom: 7px;
 }
 
+
+#pytanie-img {
+    margin-top: 5px; /* Add margin-top to pytanie-img */
+}
+
+#dzwiek, #film {
+    margin-top: 5px; /* Add margin-top to audio and video elements */
+}
 
 
 #odp-text {
-    margin-bottom: 7px; /* Adjust the margin as needed */
-    margin-top: 7px; /* Adjust the margin as needed */
+    margin-top: 0; /* Remove margin-top for "Poprawna odpowiedź" */
+    margin-bottom: 7px; /* Keep margin-bottom as it is */
 }
+
 
     h3 {
         color: rgb(100, 100, 100);
     }
 
     #timer {
-        position: absolute; /* Change position to absolute */
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
         border: 4px solid orangered;
         color: darkorange;
-        bottom: 0;
-        margin-top: 10px !important;
-        margin-bottom: 7px !important; 
         width: 15%;
-        margin: 0;
         height: 15%;
         align-self: center;
         border-radius: 30px;
-
     }
 
     #time {
@@ -194,21 +202,20 @@
     <div class="bg-image"></div>
 
     <div class="bg-text">
-        <div id="pyt-css">
+        <div id="pyt-css" style="position: relative;">
+        <h1>Pytanie:</h1>
             <img id="pytanie-img" src="" width="80%">
-            <br>
-            <video width="700" height="480" controls hidden id="film" >
+            <video width="50%"  controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
             </video>
-            <br>
             <audio controls id="dzwiek" hidden>
                 <source src="" type="audio/mpeg" id="dzwiek_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
             </audio>
             <h1 id="odp-text"></h1>
             <div id="bg-text"></div>
-            <img id="odpowiedz-img" src=""  width="25%">
+            <img id="odpowiedz-img" src=""  width="80%">
             <div id="timer">
                 <h2>Pozostały czas:</h2>
                 <h1 id="time">30</h1>
@@ -256,7 +263,7 @@
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
 
-        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -329,7 +336,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -359,7 +366,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -396,12 +403,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         } 
-        else if (data.flaga !==0)
+        else if (data.flaga !==0){
             flaga=data.flaga
         console.log(flaga)
             if(flaga==1) { 
         komunikat();
                 flaga=0; }
+            }
     };
 
     function clearAllContent() {
@@ -536,7 +544,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.112:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
