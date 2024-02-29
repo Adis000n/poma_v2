@@ -50,9 +50,9 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 0;
-        width: 80%;
+        width: 78%;
         height: 90%;
-        padding: 10px;
+        padding: 5px;
         text-align: center;
         border-radius: 10px;
         display: flex;
@@ -136,14 +136,19 @@
         transform: translateX(-50%);
         border: 4px solid orangered;
         color: darkorange;
-        width: 15%;
-        height: 15%;
+        width: 22%;
+        height: 14.5%;
         align-self: center;
-        border-radius: 30px;
+        border-radius: 80px;
+    }
+    #time-text{
+        font-size:4.5vh;
+        margin-bottom: 0;
     }
 
     #time {
         color: rgb(70, 70, 70);
+        font-size:6.7vh;
     }
 
 
@@ -175,7 +180,7 @@
     }
     #bg-text{
         font-weight: bolder;
-        font-size: xx-large;
+        font-size: x-large;
     }
     #fullscreen-message {
             display: flex;
@@ -203,8 +208,8 @@
 
     <div class="bg-text">
         <div id="pyt-css" style="position: relative;">
-        <h1>Pytanie:</h1>
-            <img id="pytanie-img" src="" width="80%">
+        <h2 style="margin-bottom: 0px;">Pytanie:</h2>
+            <img id="pytanie-img" src="" width="90%">
             <video width="50%"  controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
@@ -213,11 +218,11 @@
                 <source src="" type="audio/mpeg" id="dzwiek_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
             </audio>
-            <h1 id="odp-text"></h1>
+            <h2 id="odp-text"></h2>
             <div id="bg-text"></div>
-            <img id="odpowiedz-img" src=""  width="80%">
+            <img id="odpowiedz-img" src=""  width="90%">
             <div id="timer">
-                <h2>Pozostały czas:</h2>
+                <h2 id="time-text">Pozostały czas:</h2>
                 <h1 id="time">30</h1>
             </div>
         </div>
@@ -262,7 +267,7 @@
 <script>
        var flaga=0;
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.179.90:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -335,7 +340,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.179.90:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -365,7 +370,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.179.90:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -544,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.179.90:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);

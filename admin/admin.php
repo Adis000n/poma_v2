@@ -379,7 +379,7 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
     <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
     <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button>
-    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO GÓWNA (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
+    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
 
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->

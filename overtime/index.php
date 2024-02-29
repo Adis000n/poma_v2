@@ -8,7 +8,7 @@
 </head>
 <script>
      document.addEventListener('DOMContentLoaded', () => {
-       const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+       const ws = new WebSocket('ws://192.168.179.90:3000/ws');
     
 
     ws.onmessage = (event) => {
