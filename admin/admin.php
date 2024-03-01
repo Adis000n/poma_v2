@@ -143,6 +143,10 @@ function sprawdzstan(){
         let timerRunning = false;
 
         function submitForm() {
+            stopTimer();
+        console.log('Clearing now');
+        timerValue = 30;
+        sendTimerData(timerValue);
         // Perform basic form validation
         var selectedSubject = document.querySelector('input[name="subject"]:checked');
         var selectedPoints = document.querySelector('input[name="points"]:checked');
@@ -236,7 +240,7 @@ function sprawdzstan(){
 
 function clearAll() {
     // Log that the secondary button is clicked
-    stopTimer()
+    stopTimer();
     console.log('Clearing now');
     timerValue = 30;
     sendTimerData(timerValue);
@@ -251,6 +255,26 @@ function clearAll() {
         // Wait for the WebSocket connection to open
         socket.onopen = () => {
             socket.send(JSON.stringify(clearBtnData));
+            console.log('WebSocket connection opened. Form data sent.');
+        };
+
+        // Handle socket errors if needed
+        socket.onerror = (error) => {
+            console.error(`WebSocket Error: ${error}`);
+        };
+}
+
+function playMedia() {
+    const playMedia = {
+        action: 'playMedia',
+    };
+
+        // Connect to WebSocket and send form data
+        const socket = new WebSocket('ws://localhost:3000/ws');
+
+        // Wait for the WebSocket connection to open
+        socket.onopen = () => {
+            socket.send(JSON.stringify(playMedia));
             console.log('WebSocket connection opened. Form data sent.');
         };
 
@@ -612,6 +636,7 @@ console.error(`WebSocket Error: ${error}`);
         <hr>
         <button type="button" class="btn btn-primary" id="mainBtn" onclick="submitForm(nr_druzyny)">Wyświetl</button>
         <button type="button" class="btn btn-dark" id="clearBtn" onclick="clearAll()">Wyczyść wszystko</button>
+        <button type="button" class="btn btn-secondary" id="playBtn" onclick="playMedia()">Start/Stop media</button>
         <br><br>
         <button type="button" class="btn btn-secondary" id="secondaryBtn" style="display: none;" onclick="showAnswerButtons()">Pokaż odpowiedź</button>
 

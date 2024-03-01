@@ -266,8 +266,9 @@
 
 <script>
        var flaga=0;
+       wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.179.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -340,7 +341,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.179.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -370,7 +371,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.179.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -404,7 +405,10 @@ document.addEventListener('DOMContentLoaded', () => {
             updateImage2(subject, points);
         } else if (data.action === 'clearAll') {
             clearAllContent();
-        } else if (data.isCorrect !== undefined) {
+        } else if (data.action === 'playMedia') {
+            playMedia();
+        } 
+        else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         } 
         else if (data.flaga !==0){
@@ -426,10 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
     odp.src = '';
     const odpText = document.getElementById('odp-text');
     odpText.innerHTML = "";
-    const videoElement = document.getElementById('film');
-    const audioElement = document.getElementById('dzwiek');
-    videoElement.hidden = true;
-    audioElement.hidden = true;
     // JEBAC ŻYDÓW
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
@@ -438,7 +438,27 @@ document.addEventListener('DOMContentLoaded', () => {
     contentDiv2.innerHTML = '-';
     const contentDiv3 = document.getElementById('druzyna-data');
     contentDiv3.innerHTML = '-';
+    const videoElement = document.getElementById('film');
+    const audioElement = document.getElementById('dzwiek');
+    videoElement.hidden = true;
+    audioElement.hidden = true;
+    audioElement.src = " ";
+    videopElement.src = " ";
 }
+    function playMedia() {
+        const videoElement = document.getElementById('film');
+            const audioElement = document.getElementById('dzwiek');
+        if (wystartowane == false){
+            videoElement.play();
+            audioElement.play();
+            wystartowane = true;
+        }
+        else if((wystartowane == true)){
+            videoElement.pause();
+            audioElement.pause();
+            wystartowane = false;
+        }
+    }
 
     function updateImage2(subject, points) {
         // Make an AJAX request to fetch the new image
@@ -480,6 +500,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
+        const videoElement = document.getElementById('film');
+        const audioElement = document.getElementById('dzwiek');
+        videoElement.hidden = true;
+        audioElement.hidden = true;
+        audioElement.src = " ";
+        videopElement.src = " ";
     }
 
     function showEndOfTimeOverlay() {
@@ -549,7 +575,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.179.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
