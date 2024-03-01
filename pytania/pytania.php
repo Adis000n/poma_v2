@@ -42,9 +42,9 @@
 
     .bg-text {
         background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
-        color: orangered;
+        color: orange;
         font-weight: bold;
-        border: 7px solid orange;
+        border: 7px solid orangered;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -75,7 +75,7 @@
         flex-direction: column;
         width: 20%;
         margin: 0;
-        border-left: 5px solid orange;
+        border-left: 5px solid orangered;
     }
 
     #druzyna,
@@ -131,15 +131,20 @@
 
     #timer {
         position: absolute;
+        display: flex;
+        flex-direction: row;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
         border: 4px solid orangered;
-        color: darkorange;
-        width: 22%;
-        height: 14.5%;
+        color: orange;
+        width: 25%;
+        height: 10%;
         align-self: center;
         border-radius: 80px;
+        justify-content:flex-start;
+        padding-left: 2.5%;
+        align-items: center;
     }
     #time-text{
         font-size:4.5vh;
@@ -147,6 +152,8 @@
     }
 
     #time {
+        margin-left: 4%;
+        margin-top: 10% !important;
         color: rgb(70, 70, 70);
         font-size:6.7vh;
     }
@@ -222,7 +229,7 @@
             <div id="bg-text"></div>
             <img id="odpowiedz-img" src=""  width="90%">
             <div id="timer">
-                <h2 id="time-text">Pozostały czas:</h2>
+                <h2 id="time-text">Pozostały czas: </h2>
                 <h1 id="time">30</h1>
             </div>
         </div>
@@ -231,12 +238,12 @@
                 <h2>Nr drużyny:</h2>
                 <h3 class="poprawka" id="druzyna-data">-</h3>
             </div>
-            <hr class="border border-warning border-3 opacity-100">
+            <hr class="border border-3 opacity-100" style="border-color: orangered !important; ">
             <div id="poziom" class="stats_container">
                 <h2>Pytanie za:</h2>
                 <h3 class="poprawka" id="poziom-data">-</h3>
             </div>
-            <hr class="border border-warning border-3 opacity-100">
+            <hr class="border border-3 opacity-100" style="border-color: orangered !important; ">
             <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
                 <h3 class="poprawka" id="kategoria-data">-</h3>
@@ -268,7 +275,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+        const ws = new WebSocket('ws://192.168.65.90:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -341,7 +348,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+        const ws = new WebSocket('ws://192.168.65.90:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -371,7 +378,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.65.90:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -575,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.65.90:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);

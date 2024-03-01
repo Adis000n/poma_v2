@@ -1,4 +1,4 @@
-  create databse poma; 
+  create database poma; 
   use poma;
   CREATE TABLE IF NOT EXISTS `mvc_konkurs_pytania` (
     `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
