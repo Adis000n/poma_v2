@@ -42,7 +42,7 @@
 
     .bg-text {
         background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
-        color: orange;
+        color: #cd4100;
         font-weight: bold;
         border: 7px solid orangered;
         position: absolute;
@@ -126,7 +126,7 @@
 
 
     h3 {
-        color: rgb(100, 100, 100);
+        color: rgb(50, 50, 50);
     }
 
     #timer {
@@ -136,8 +136,8 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        border: 4px solid orangered;
-        color: orange;
+        border: 4px solid #AA0000;
+        color: #cd4100;
         width: 25%;
         height: 10%;
         align-self: center;
@@ -154,7 +154,7 @@
     #time {
         margin-left: 4%;
         margin-top: 10% !important;
-        color: rgb(70, 70, 70);
+        color: rgb(50, 50, 50);
         font-size:6.7vh;
     }
 
@@ -275,7 +275,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.65.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -348,7 +348,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.65.90:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -378,7 +378,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.65.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.65.90:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
