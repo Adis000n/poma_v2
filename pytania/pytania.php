@@ -366,6 +366,8 @@
                         const imagePath = xhr.responseText;
                         const imageElement = document.getElementById('odpowiedz-img');
                         imageElement.src = imagePath;
+                        imageElement.src = " ";
+                        imageElement.src = imagePath;
                         const odpText = document.getElementById('odp-text')
                         odpText.innerHTML = "Poprawna odpowiedź:";
                     }
