@@ -158,7 +158,12 @@ function sprawdzstan(){
         // console.log(selectedSubject.value)
         if(selectedSubject.value=='bonus'){
             punkty234 = 3;
-            nr_druzyny=nr_druzyny-1;
+            if(nr_druzyny==1){
+                nr_druzyny =ilosc_druzyn;
+            }
+            else{
+                nr_druzyny=nr_druzyny-1;
+            }
             selectedTeam  = nr_druzyny
           
  
