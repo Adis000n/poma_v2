@@ -275,7 +275,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -346,41 +346,9 @@
             }
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
-
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            if (data.action === 'secondaryBtnClicked') {
-                updateImage2(data.subject, data.points);
-            }
-        };
-
-
-            function updateImage2(subject, points) {
-                // Make an AJAX request to fetch the new image
-                const xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        const imagePath = xhr.responseText;
-                        const imageElement = document.getElementById('odpowiedz-img');
-                        imageElement.src = imagePath;
-                        imageElement.src = " ";
-                        imageElement.src = imagePath;
-                        const odpText = document.getElementById('odp-text')
-                        odpText.innerHTML = "Poprawna odpowiedź:";
-                    }
-                };
-                xhr.open('GET', `script2.php?subject=${subject}&points=${points}`, true);
-                xhr.send();
-            }
-        });
-
-    </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -411,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTimer(data.timer);
         } else if (data.action === 'secondaryBtnClicked') {
             console.log(subject, points);
+            console.log("numero uno");
             updateImage2(subject, points);
         } else if (data.action === 'clearAll') {
             clearAllContent();
@@ -480,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const odpText = document.getElementById('odp-text')
                 odpText.innerHTML = "Poprawna odpowiedź:";
                 console.log(imagePath);
+                console.log("numero dos");
             }
         };
         xhr.open('GET', `script2.php?subject=${subject}&points=${points}`, true);
@@ -584,7 +554,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
