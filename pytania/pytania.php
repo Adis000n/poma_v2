@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     odp.src = '';
     const odpText = document.getElementById('odp-text');
     odpText.innerHTML = "";
-    // JEBAC ŻYDÓW
+    
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
     contentDiv.innerHTML = '-';
