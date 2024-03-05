@@ -19,24 +19,24 @@
         nazwaA=data.nazwaA
         nazwaB=data.nazwaB
         console.log(nazwaA,nazwaB)
-        kurwateam(nazwaA,nazwaB)
+        nazwyaku(nazwaA,nazwaB)
     }
     else if(data.punktyA!== undefined|| data.punktyB!== undefined){
         punktyA=data.punktyA
         punktyB=data.punktyB
         console.log(punktyA,punktyB)
-        pozdroKubi(punktyA,punktyB)
+        punktyaku(punktyA,punktyB)//
     }
 }
           
           
-          function kurwateam(nazwaA,nazwaB){
+          function nazwyaku(nazwaA,nazwaB){
             const contentDiv = document.getElementById('nazwa1');
             contentDiv.innerHTML = nazwaA;
             const contentDiv1 = document.getElementById('nazwa2');
             contentDiv1.innerHTML = nazwaB;
            } 
-           function pozdroKubi(punktyA,punktyB){
+           function punktyaku(punktyA,punktyB){
            const contentDiv2 = document.getElementById('score1');
             contentDiv2.innerHTML = punktyA;
             const contentDiv3 = document.getElementById('score2');

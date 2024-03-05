@@ -388,10 +388,10 @@ function updateContent(team1,team2,team3,team4) {
         <p>pkt: <h1 class="highb" id="score4">-</h1></p>
       </div> 
     <div id="board">
-      <div class="pawn" id="pawn4"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ" hidden></div>  <!-- Niebieski -->
-      <div class="pawn" id="pawn3"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ" hidden></div>  <!-- Zielony -->
-      <div class="pawn" id="pawn1"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ" hidden></div>  <!-- Czerwony -->
-      <div class="pawn" id="pawn2"><img src="../grafika/orange.png" alt="debil AKA BRAKUJE ZDJĘĆ" hidden></div>  <!-- Żólty -->
+      <div class="pawn" id="pawn4"><img src="../grafika/orange.png" alt="BRAKUJE ZDJĘĆ" hidden></div>  <!-- Niebieski -->
+      <div class="pawn" id="pawn3"><img src="../grafika/orange.png" alt="BRAKUJE ZDJĘĆ" hidden></div>  <!-- Zielony -->
+      <div class="pawn" id="pawn1"><img src="../grafika/orange.png" alt="BRAKUJE ZDJĘĆ" hidden></div>  <!-- Czerwony -->
+      <div class="pawn" id="pawn2"><img src="../grafika/orange.png" alt="BRAKUJE ZDJĘĆ" hidden></div>  <!-- Żólty -->
     </div>
 
 </body>

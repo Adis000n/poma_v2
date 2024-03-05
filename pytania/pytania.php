@@ -607,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log('Received team data:', team1, team2, team3, team4);
          console.log(flagaA3,flagaB3,flagaC3,flagaD3);
             if(flaga69!=1){
-         wujekplay(team1,team2,team3,team4)
+         wujekplay(team1,team2,team3,team4) // dziwęk + fanfara
     palerap2(team1,team2,team3,team4)
     palerap6(team1,team2,team3,team4)
     palerap8(team1,team2,team3,team4)}

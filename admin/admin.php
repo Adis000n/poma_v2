@@ -102,22 +102,7 @@ flagaA3=0;
 flagaB3=0;
 flagaC3=0;
 flagaD3=0;
-  $(document).ready(function() {
-   // AJAX request to send data to PHP
-    //  var url = 'admin.php?query=stopevent';
-    //   var recordId =[1,2,3,4];
-    //   $.ajax({
-    //     url: url,
-    //     type: 'POST',
-    //     data: { ids: recordId },
-    //     success: function(response) {
-    //         console.log('Data sent successfully to PHP1');
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.error('Error sending data to PHP');
-    //     }
-    // });
-});
+ 
 
   
   alert("Udało Ci się zrestartować konkurs")} //alert sukces
@@ -157,7 +142,7 @@ function sprawdzstan(){
             
         // console.log(selectedSubject.value)
         if(selectedSubject.value=='bonus'){
-            punkty234 = 3;
+            punkty234 = 3; //takie coś że jak jest bunus to jest cacy
             if(nr_druzyny==1){
                 nr_druzyny =ilosc_druzyn;
             }
@@ -171,7 +156,7 @@ function sprawdzstan(){
         if(selectedSubject.value !== 'bonus'){
             var punkty234=selectedPoints.value;}
         console.log(punkty234)
-        if (!selectedSubject || !punkty234) {
+        if (!selectedSubject || !punkty234) {  // ten if nie działa bo coś popsulem XD
             alert('Please select both a subject and points');
             return;
         }
@@ -416,12 +401,12 @@ function sendAnswer(isCorrect) {
  
 </div>
 <script>
-function chcetoskonczyc(){
+function chcetoskonczyc(){ //mental 100 fikoł
 //projekt nie życie 😎😎😥😥🤣💀❤️😊😁😁😁😢😢👍👍👍😍😥😢😢🤣(^///^)☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆):☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆^_^^_^:-()
 
 const pozdroOVERTAJMIK = {
 
-flaga69:0,
+flaga69:0,// flaga od bonusów na pytankach 
 
 
                     };
@@ -434,7 +419,7 @@ const socket = new WebSocket('ws://localhost:3000/ws');
 // Wait for the WebSocket connection to open
 socket.onopen = () => {
 socket.send(JSON.stringify(pozdroOVERTAJMIK));
-console.log('ROBUUUUR W FERARI');
+console.log('ROBUUUUR W FERARI'); //Robert Kubica największy polak
 };
 
 // Handle socket errors if needed
@@ -472,7 +457,7 @@ console.error(`WebSocket Error: ${error}`);
     }
 </script>
 <script>
- function  wysputot(){
+ function  wysputot(){ // overtajm drużyny go
     var dropdown1 = document.getElementById("team");
   // Pobierz wybraną wartość
   var wybor1doot = dropdown1.value;
@@ -532,7 +517,7 @@ const socket = new WebSocket('ws://localhost:3000/ws');
 // Wait for the WebSocket connection to open
 socket.onopen = () => {
 socket.send(JSON.stringify(pozdrowWuja));
-console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE i JEDNORENKIEGO BANDYTE');
+console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE i JEDNORENKIEGO BANDYTE'); // kustosz- ranka proboszcza parafii
 };
 
 // Handle socket errors if needed
@@ -702,21 +687,21 @@ function pozdrowkustosza(){
     wysylawieovertime(nazwaA,nazwaB)
 }
 function wysylawieovertime(nazwaA,nazwaB){
-            const chujciwdupe = {
+            const nazwy = {
 
     nazwaA: nazwaA,
     nazwaB: nazwaB,
  
                         };
       
-      console.log('DRUŻYNY:', chujciwdupe,"RUSKA CHUJNINA"); // Log the data to the console
+      console.log('nazwy:', nazwy,"*"); // Log the data to the console
 
 // Connect to WebSocket and send form data
 const socket = new WebSocket('ws://localhost:3000/ws');
 
 // Wait for the WebSocket connection to open
 socket.onopen = () => {
-    socket.send(JSON.stringify(chujciwdupe));
+    socket.send(JSON.stringify(nazwy));
     console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE');
 };
 
@@ -934,31 +919,6 @@ socket.onerror = (error) => {
 
     </script>
     <script>
-//         function halcnowgura(kutasA,kutasB,nazwaA,nazwaB){
-//             const chujciwdupe = {
-//     kurwa_scoreA: kutasA,
-//     kurwa_scoreB: kutasB,
-//     kurwa_teamA: nazwaA,
-//     kurwa_teamB: nazwaB,
- 
-//                         };
-      
-//       console.log('Punkty:', chujciwdupe, "CHUJ CI W DUPE JSSSSSSSSSS"); // Log the data to the console
-
-// // Connect to WebSocket and send form data
-// const socket = new WebSocket('ws://localhost:3000/ws');
-
-// // Wait for the WebSocket connection to open
-// socket.onopen = () => {
-//     socket.send(JSON.stringify(chujciwdupe));
-//     console.log('POZDRÓW KUSTOSZA W HAŁCNOWIE');
-// };
-
-// // Handle socket errors if needed
-// socket.onerror = (error) => {
-//     console.error(`WebSocket Error: ${error}`);
-// };
-//         }
 
     </script>
 </body>
