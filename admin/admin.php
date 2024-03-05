@@ -163,7 +163,7 @@ function sprawdzstan(){
             }
             else{
                 nr_druzyny=nr_druzyny-1;
-            }
+            }   
             selectedTeam  = nr_druzyny
           
  
