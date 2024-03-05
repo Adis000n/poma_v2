@@ -749,26 +749,38 @@ if(ilosc_druzyn==2 && isCorrect==true)
       teamC=teamC+points}
       }
 
-if(teamA==8 ){
-                teamA++;
+            if(teamA==8 ){
+                wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+                setTimeout(() => {
+                    teamA++;
                 flagaA3++;
-                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+}, 5000); 
+
             }
-           if(teamB==8 ){
-                teamB++
+          else if(teamB==8 ){
+            wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+                setTimeout(() => {
+                    teamB++;
                 flagaB3++;
-                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
-            
+                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+}, 5000); 
             }
-           if(teamC==8){
-                teamC++
+       else    if(teamC==8){
+        wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+                setTimeout(() => {
+                    teamC++;
                 flagaC3++;
-                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+}, 5000); 
             }
-          if(teamD==8){
-                teamD++;
+      else    if(teamD==8){
+        wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+                setTimeout(() => {
+                    teamD++;
                 flagaD3++;
-                // wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
+}, 5000); 
                 
             }
 
