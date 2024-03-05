@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,7 +53,10 @@ app.ws('/ws', (ws, req) => {
       } else if (data.action === 'clearAll') {
         // Broadcast the secondary button click information
         broadcast(JSON.stringify({ action: 'clearAll' }));
-      } else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
+      }else if (data.action === 'playMedia'){
+        broadcast(JSON.stringify({ action: 'playMedia' }));
+      } 
+      else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
         // Broadcast only the team information
         broadcast(JSON.stringify({
             team1: data.team1,

@@ -19,7 +19,7 @@
   tylko_dwie = false;
   tylko_trzy = false;
       document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+      const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -321,7 +321,6 @@ function updateContent(team1,team2,team3,team4) {
         </script>
         
     <body>
-    <button onclick> </button>
     <img id="boardImg" src="../grafika/plansza.png" alt="bład ładowania planszy">
     <!-- <button id="ShowAdm" >
      

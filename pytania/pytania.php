@@ -42,17 +42,17 @@
 
     .bg-text {
         background-color: rgba(255, 255, 255, 0.75); /* Set the background color to a semi-transparent white */
-        color: orangered;
+        color: #cd4100;
         font-weight: bold;
-        border: 7px solid orange;
+        border: 7px solid orangered;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 0;
-        width: 90%;
+        width: 78%;
         height: 90%;
-        padding: 10px;
+        padding: 5px;
         text-align: center;
         border-radius: 10px;
         display: flex;
@@ -75,7 +75,7 @@
         flex-direction: column;
         width: 20%;
         margin: 0;
-        border-left: 5px solid orange;
+        border-left: 5px solid orangered;
     }
 
     #druzyna,
@@ -101,41 +101,61 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start; /* Align items to the top */
     position: relative;
     width: 79%;
     height: 100%;
     margin: 0;
-    margin-bottom: 7px; /* Adjust the margin-bottom as needed */
+    margin-bottom: 7px;
 }
 
+
+#pytanie-img {
+    margin-top: 5px; /* Add margin-top to pytanie-img */
+}
+
+#dzwiek, #film {
+    margin-top: 5px; /* Add margin-top to audio and video elements */
+}
 
 
 #odp-text {
-    margin-bottom: 7px; /* Adjust the margin as needed */
-    margin-top: 7px; /* Adjust the margin as needed */
+    margin-top: 0; /* Remove margin-top for "Poprawna odpowiedź" */
+    margin-bottom: 7px; /* Keep margin-bottom as it is */
 }
 
+
     h3 {
-        color: rgb(100, 100, 100);
+        color: rgb(50, 50, 50);
     }
 
     #timer {
-        position: absolute; /* Change position to absolute */
-        border: 4px solid orangered;
-        color: darkorange;
+        position: absolute;
+        display: flex;
+        flex-direction: row;
         bottom: 0;
-        margin-top: 10px !important;
-        margin-bottom: 7px !important; 
-        width: 15%;
-        margin: 0;
-        height: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 4px solid #AA0000;
+        color: #cd4100;
+        width: 25%;
+        height: 10%;
         align-self: center;
-        border-radius: 30px;
-
+        border-radius: 80px;
+        justify-content:flex-start;
+        padding-left: 2.5%;
+        align-items: center;
+    }
+    #time-text{
+        font-size:4.5vh;
+        margin-bottom: 0;
     }
 
     #time {
-        color: rgb(70, 70, 70);
+        margin-left: 4%;
+        margin-top: 10% !important;
+        color: rgb(50, 50, 50);
+        font-size:6.7vh;
     }
 
 
@@ -167,7 +187,7 @@
     }
     #bg-text{
         font-weight: bolder;
-        font-size: xx-large;
+        font-size: x-large;
     }
     #fullscreen-message {
             display: flex;
@@ -194,23 +214,22 @@
     <div class="bg-image"></div>
 
     <div class="bg-text">
-        <div id="pyt-css">
-            <img id="pytanie-img" src="" width="80%">
-            <br>
-            <video width="700" height="480" controls hidden id="film" >
+        <div id="pyt-css" style="position: relative;">
+        <h2 style="margin-bottom: 0px;">Pytanie:</h2>
+            <img id="pytanie-img" src="" width="90%">
+            <video width="50%"  controls hidden id="film" >
                 <source src="" type="video/mp4" id="film_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
             </video>
-            <br>
             <audio controls id="dzwiek" hidden>
                 <source src="" type="audio/mpeg" id="dzwiek_src">
                 Coś poszło nie tak lub twoja przeglądarka nie wspiera wyswietlania filmów.
             </audio>
-            <h1 id="odp-text"></h1>
+            <h2 id="odp-text"></h2>
             <div id="bg-text"></div>
-            <img id="odpowiedz-img" src=""  width="25%">
+            <img id="odpowiedz-img" src=""  width="90%">
             <div id="timer">
-                <h2>Pozostały czas:</h2>
+                <h2 id="time-text">Pozostały czas: </h2>
                 <h1 id="time">30</h1>
             </div>
         </div>
@@ -219,12 +238,12 @@
                 <h2>Nr drużyny:</h2>
                 <h3 class="poprawka" id="druzyna-data">-</h3>
             </div>
-            <hr class="border border-warning border-3 opacity-100">
+            <hr class="border border-3 opacity-100" style="border-color: orangered !important; ">
             <div id="poziom" class="stats_container">
                 <h2>Pytanie za:</h2>
                 <h3 class="poprawka" id="poziom-data">-</h3>
             </div>
-            <hr class="border border-warning border-3 opacity-100">
+            <hr class="border border-3 opacity-100" style="border-color: orangered !important; ">
             <div id="kategoria" class="stats_container">
                 <h2>Kategoria:</h2>
                 <h3 class="poprawka" id="kategoria-data">-</h3>
@@ -254,9 +273,9 @@
 
 <script>
        var flaga=0;
+       wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -329,7 +348,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -347,6 +366,8 @@
                         const imagePath = xhr.responseText;
                         const imageElement = document.getElementById('odpowiedz-img');
                         imageElement.src = imagePath;
+                        imageElement.src = " ";
+                        imageElement.src = imagePath;
                         const odpText = document.getElementById('odp-text')
                         odpText.innerHTML = "Poprawna odpowiedź:";
                     }
@@ -359,7 +380,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -393,15 +414,19 @@ document.addEventListener('DOMContentLoaded', () => {
             updateImage2(subject, points);
         } else if (data.action === 'clearAll') {
             clearAllContent();
-        } else if (data.isCorrect !== undefined) {
+        } else if (data.action === 'playMedia') {
+            playMedia();
+        } 
+        else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         } 
-        else if (data.flaga !==0)
+        else if (data.flaga !==0){
             flaga=data.flaga
         console.log(flaga)
             if(flaga==1) { 
         komunikat();
                 flaga=0; }
+            }
     };
 
     function clearAllContent() {
@@ -414,10 +439,6 @@ document.addEventListener('DOMContentLoaded', () => {
     odp.src = '';
     const odpText = document.getElementById('odp-text');
     odpText.innerHTML = "";
-    const videoElement = document.getElementById('film');
-    const audioElement = document.getElementById('dzwiek');
-    videoElement.hidden = true;
-    audioElement.hidden = true;
     // JEBAC ŻYDÓW
     // Set placeholders for category, points, and team number
     const contentDiv = document.getElementById('kategoria-data');
@@ -426,7 +447,27 @@ document.addEventListener('DOMContentLoaded', () => {
     contentDiv2.innerHTML = '-';
     const contentDiv3 = document.getElementById('druzyna-data');
     contentDiv3.innerHTML = '-';
+    const videoElement = document.getElementById('film');
+    const audioElement = document.getElementById('dzwiek');
+    videoElement.hidden = true;
+    audioElement.hidden = true;
+    audioElement.src = " ";
+    videopElement.src = " ";
 }
+    function playMedia() {
+        const videoElement = document.getElementById('film');
+            const audioElement = document.getElementById('dzwiek');
+        if (wystartowane == false){
+            videoElement.play();
+            audioElement.play();
+            wystartowane = true;
+        }
+        else if((wystartowane == true)){
+            videoElement.pause();
+            audioElement.pause();
+            wystartowane = false;
+        }
+    }
 
     function updateImage2(subject, points) {
         // Make an AJAX request to fetch the new image
@@ -468,6 +509,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
+        const videoElement = document.getElementById('film');
+        const audioElement = document.getElementById('dzwiek');
+        videoElement.hidden = true;
+        audioElement.hidden = true;
+        audioElement.src = " ";
+        videopElement.src = " ";
     }
 
     function showEndOfTimeOverlay() {
@@ -537,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.113:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
