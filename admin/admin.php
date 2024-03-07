@@ -764,14 +764,6 @@ if(ilosc_druzyn==2 && isCorrect==true)
       teamC=teamC+points;}
         if(numer_druzyny==1){
       teamD=teamD+points}}
-      if(isCorrect==true && ilosc_druzyn==3){
-        if(numer_druzyny==2){
-      teamA=teamA+points}
-        if(numer_druzyny==3){
-      teamB=teamB+points;}
-        if(numer_druzyny==1){
-      teamC=teamC+points}
-      }
 
             if(teamA==8 ){
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
