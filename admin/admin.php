@@ -151,7 +151,7 @@ function sprawdzstan(){
             }   
             selectedTeam  = nr_druzyny
           
- 
+            consolo.log(punkty234)
         }
         if(selectedSubject.value !== 'bonus'){
             var punkty234=selectedPoints.value;}
