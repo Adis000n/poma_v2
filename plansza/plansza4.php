@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pl">
     <head>
@@ -19,7 +20,7 @@
   tylko_dwie = false;
   tylko_trzy = false;
       document.addEventListener('DOMContentLoaded', () => {
-      const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+      const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -90,6 +91,34 @@ const interval = setInterval(function() {
 
   
 function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
+  var data = {
+        nazwa_teamA: nazwa_teamA,
+        nazwa_teamB: nazwa_teamB,
+        nazwa_teamC: nazwa_teamC,
+        nazwa_teamD: nazwa_teamD
+    };
+
+    // Replace "undefined" values with null
+    for (var key in data) {
+        if (data.hasOwnProperty(key) && data[key] === undefined) {
+            data[key] = null;
+        }
+    }
+
+    // Convert the object to a JSON string
+    var jsonString = JSON.stringify(data);
+
+    // Use AJAX to send this JSON string to a PHP script
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_teams.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Response from PHP (if any)
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(jsonString);
   if(nazwa_teamC == undefined){
     const contentDiv5 = document.getElementById('nazwa1');
         contentDiv5.innerHTML =  nazwa_teamA ;
@@ -125,7 +154,27 @@ function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
 
 function updateContent(team1,team2,team3,team4) {
 
-  
+  var data = {
+        team1: team1,
+        team2: team2,
+        team3: team3,
+        team4: team4
+    };
+
+    // Convert the object to a JSON string
+    var jsonString = JSON.stringify(data);
+
+    // Use AJAX to send this JSON string to a PHP script
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "update_points.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Response from PHP (if any)
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(jsonString);
 
         const contentDiv = document.getElementById('score1');
         contentDiv.innerHTML =  team1 ;

@@ -33,7 +33,36 @@ function getRandomMedia($subject, $points) {
         if ($row['media_typ'] == 'wideo') {
             // If media type is 'wideo', use the path from the 'media' column
             $mediaPath = "../" . $row['media'];
-        } 
+
+            $con = mysqli_connect("localhost", "root", "", "poma");
+            if (!$con) {
+                die("Database connection failed: " . mysqli_connect_error());
+            }
+
+            // Prepare the update query
+            $update_query = "UPDATE `mvc_konkurs_batalia` SET `media`=?, `media_typ`='wideo' WHERE `id`=1";
+
+            $update_stmt = mysqli_prepare($con, $update_query);
+            if (!$update_stmt) {
+                die("Error preparing update statement: " . mysqli_error($con));
+            }
+
+            // Bind parameters
+            mysqli_stmt_bind_param($update_stmt, "s", $mediaPath);
+
+            // Execute the update query
+            if (!mysqli_stmt_execute($update_stmt)) {
+                die("Error updating record: " . mysqli_stmt_error($update_stmt));
+            }
+
+            // Close the statement
+            mysqli_stmt_close($update_stmt);
+
+            // Close the database connection
+            mysqli_close($con);
+
+            return $mediaPath;
+        }
         else {
             $mediaPath = "";
         }

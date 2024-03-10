@@ -151,7 +151,7 @@ function sprawdzstan(){
             }   
             selectedTeam  = nr_druzyny
           
-            consolo.log(punkty234)
+            console.log(punkty234)
         }
         if(selectedSubject.value !== 'bonus'){
             var punkty234=selectedPoints.value;}
@@ -169,6 +169,15 @@ function sprawdzstan(){
         }
 
         nr_druzyny=nr_druzyny+1;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_nr_druzyny.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Log the response from the backend
+            }
+        };
+        xhr.send('nr_druzyny=' + nr_druzyny);
         if(nr_druzyny<ilosc_druzyn+1){
         }else{
             nr_druzyny=1;

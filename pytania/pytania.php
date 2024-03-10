@@ -1,3 +1,9 @@
+<?php
+$con = mysqli_connect("localhost", "root", "", "poma");
+if (!$con) {
+    die("Nie działa: " . mysqli_connect_error());
+}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -275,7 +281,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -348,7 +354,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -398,6 +404,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     };
 
+    function handleAnswer(isCorrect) {
+        var xhr = new XMLHttpRequest();
+    xhr.open("GET", "done.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
+    }
+
+
     function clearAllContent() {
     const pyt = document.getElementById('pytanie-img');
     pyt.src = '';
@@ -421,7 +439,16 @@ document.addEventListener('DOMContentLoaded', () => {
     videoElement.hidden = true;
     audioElement.hidden = true;
     audioElement.src = " ";
-    videopElement.src = " ";
+    videoElement.src = " ";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "clear_content.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
 }
     function playMedia() {
         const videoElement = document.getElementById('film');
@@ -479,6 +506,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_nr_druzyny.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Log the response from the backend
+            }
+        };
+        xhr.send('team=' + team); // Send the team value as POST data
         const videoElement = document.getElementById('film');
         const audioElement = document.getElementById('dzwiek');
         videoElement.hidden = true;
@@ -554,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
