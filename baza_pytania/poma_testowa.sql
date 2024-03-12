@@ -1,14 +1,32 @@
   create database poma; 
   use poma;
   CREATE TABLE IF NOT EXISTS `mvc_konkurs_pytania` (
-    `id` int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `kategoria` varchar(255) NOT NULL,
-    `poziom` int(11) NOT NULL,
-    `img_pytania` varchar(255) NOT NULL,
-    `img_odpowiedzi` varchar(255) NOT NULL,
-    `rok_uzycia` int(4) NOT NULL DEFAULT '0',
-    `media` varchar(255) NOT NULL,
-    `media_typ` enum('','audio','wideo') NOT NULL
+    `id` int(11) PRIMARY KEY AUTO_INCREMENT,
+    `kategoria` varchar(255),
+    `poziom` int(11),
+    `img_pytania` varchar(255),
+    `img_odpowiedzi` varchar(255),
+    `rok_uzycia` int(4) DEFAULT '0',
+    `media` varchar(255),
+    `media_typ` enum('','audio','wideo')
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  CREATE TABLE IF NOT EXISTS `mvc_konkurs_druzyny` (
+    `id` int(11) PRIMARY KEY AUTO_INCREMENT,
+    `nazwa` varchar(255),
+    `punkty` int(11)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+  CREATE TABLE IF NOT EXISTS `mvc_konkurs_batalia` (
+    `id` int(11) PRIMARY KEY AUTO_INCREMENT,
+    `kategoria` varchar(255),
+    `poziom` int(11),
+    `nr_druzyny` int(11),
+    `img_odpowiedzi` varchar(255),
+    `img_pytania` varchar(255)
+    `media` varchar(255),
+    `media_typ` enum('','audio','wideo')
+    `stan` enum('clear','pytanie','odpowiedz','done')
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
   --
