@@ -275,7 +275,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+        const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -348,7 +348,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -554,13 +554,14 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://127.26.0.1:3000/ws');
+    const ws = new WebSocket('ws://172.26.0.1:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
         const data = JSON.parse(event.data);
         if(data.flaga69!== undefined){
-            flaga69=data.flaga69
+            flaga69=data.flaga69 
+            // console.log("DZIAJJJJJ URWA")
             console.log(flaga69)
         }
     else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {

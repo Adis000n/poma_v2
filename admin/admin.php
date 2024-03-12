@@ -47,7 +47,8 @@ if(confirm("Czy na pewno chcesz kontynuować?") == true ){
       nazwa_teamA: naz_druz1,
       nazwa_teamB: naz_druz2,
       nazwa_teamC: naz_druz3,
-      nazwa_teamD: naz_druz4,}
+      nazwa_teamD: naz_druz4,
+      flaga69:flaga69,}
      
       console.log('Form data:', nazwy_druzyn); // Log the data to the console
 
@@ -386,14 +387,24 @@ function sendAnswer(isCorrect) {
     </script>
 </head>
 <body>
+    <style>
+        #tekscik{
+            font-size: 100px;
+            color: #C44B6C;
+            font-weight: bold;
+
+        }
+    </style>
 <div id=panets>
 <!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
     <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
     <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
     <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
-    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button>
-    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
+    
+    <h1 id="tekscik">TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</h1>
+    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! TRZEBA DAĆ TO PRZED WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!! </button>
+    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!! TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</button>
 
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
@@ -403,57 +414,12 @@ function sendAnswer(isCorrect) {
 <script>
 function chcetoskonczyc(){ //mental 100 fikoł
 //projekt nie życie 😎😎😥😥🤣💀❤️😊😁😁😁😢😢👍👍👍😍😥😢😢🤣(^///^)☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆):☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆^_^^_^:-()
-
-const pozdroOVERTAJMIK = {
-
-flaga69:0,// flaga od bonusów na pytankach 
-
-
-                    };
-  
-  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
-
-// Connect to WebSocket and send form data
-const socket = new WebSocket('ws://localhost:3000/ws');
-
-// Wait for the WebSocket connection to open
-socket.onopen = () => {
-socket.send(JSON.stringify(pozdroOVERTAJMIK));
-console.log('ROBUUUUR W FERARI'); //Robert Kubica największy polak
-};
-
-// Handle socket errors if needed
-socket.onerror = (error) => {
-console.error(`WebSocket Error: ${error}`);
-};
-
-
+flaga69=0
 }</script>
 <script>
+
     function jaktonazwac(){
-        const pozdroOVERTAJMIK = {
-
-flaga69:1,
-
-
-                    };
-  
-  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
-
-// Connect to WebSocket and send form data
-const socket = new WebSocket('ws://localhost:3000/ws');
-
-// Wait for the WebSocket connection to open
-socket.onopen = () => {
-socket.send(JSON.stringify(pozdroOVERTAJMIK));
-console.log('ROBUUUUR W FERARI');
-};
-
-// Handle socket errors if needed
-socket.onerror = (error) => {
-console.error(`WebSocket Error: ${error}`);
-};
-
+        flaga69=1
     }
 </script>
 <script>
@@ -593,7 +559,7 @@ console.error(`WebSocket Error: ${error}`);
 <hr>
 <div>
     
-    <p>JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
+    <!-- <p>JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
 </div>
 <label for="cars">Wybierz team 1 do dogrywki:</label>
   <select name="cars" id="team">
@@ -612,8 +578,8 @@ console.error(`WebSocket Error: ${error}`);
     <option value="3"> TEAM 3 </option>
     <option value="4"> TEAM 4 </option>
 
-  </select>
-  <br><br>
+  </select> -->
+  <!-- <br><br> -->
         
 <button type="button" class="btn btn-light" onclick="pozdrowkustosza()">Rozpocznij dogrywkę </button>
 <hr>
@@ -672,17 +638,9 @@ console.error(`WebSocket Error: ${error}`);
 //     punktyplansza(ilosc_druzyn,nr_druzyny)
 // }
 function pozdrowkustosza(){
-  
-    var dropdown1 = document.getElementById("team");
-  // Pobierz wybraną wartość
-  var wybor1doot = dropdown1.value;
 
-   var dropdown2 = document.getElementById("team2");
-  // Pobierz wybraną wartość
-  var wybor2doot = dropdown2.value;
-  console.log(wybor1doot,wybor2doot)
-    nazwaA=druzyny[wybor1doot-1]
-    nazwaB=druzyny[wybor2doot-1]
+    nazwaA=druzyny[0]
+    nazwaB=druzyny[1]
     console.log(nazwaA,nazwaB)
     wysylawieovertime(nazwaA,nazwaB)
 }
@@ -865,6 +823,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
     flagaB3:flagaB3,
     flagaC3:flagaC3,
     flagaD3:flagaD3,
+
                         };
       
       console.log('Punkty:', punkty); // Log the data to the console
