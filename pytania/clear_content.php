@@ -12,7 +12,6 @@ if (!$con) {
 $update_query = "UPDATE `mvc_konkurs_batalia` SET 
                  `kategoria`='-',
                  `poziom`=?,
-                 `nr_druzyny`=?,
                  `img_odpowiedzi`='',
                  `img_pytania`='',
                  `media`='',
@@ -27,10 +26,9 @@ if (!$update_stmt) {
 
 // Set parameter values
 $poziom = NULL;
-$nr_druzyny = NULL; // Set nr_druzyny to NULL
 
 // Bind parameters
-mysqli_stmt_bind_param($update_stmt, "ii", $poziom, $nr_druzyny);
+mysqli_stmt_bind_param($update_stmt, "i", $poziom);
 
 // Execute the update query
 if (!mysqli_stmt_execute($update_stmt)) {
