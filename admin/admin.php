@@ -10,7 +10,8 @@
     <!-- <script src="panets.js"></script> -->
     <script>
     let flaga=0;
-    let nr_druzyny = 1;
+    nr_druzyny = 1;
+    backup_if = false;
     var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
 document.getElementsByTagName('head')[0].appendChild(script);
@@ -44,7 +45,17 @@ else{
     for(let i=1;i<=ilosc_druzyn;i++){                                 //Pentla od nazw drużyn
     druzyny.push(prompt("Podaj nazwę drużyny "+ i, "Drużyna " +i))    //wprowadza dane do tablicy
 }   
-console.log(druzyny)
+console.log(druzyny);
+team = nr_druzyny;
+var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/pytania/update_nr_druzyny.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText); // Log the response from the backend
+        }
+    };
+    xhr.send('team=' + team); // Send the team value as POST data
 
 if(confirm("Czy na pewno chcesz kontynuować?") == true ){
   eventstatus=1                 //przypisywanie do eventstatus jeden że konkurs aktywny
@@ -142,9 +153,16 @@ function sprawdzstan(){
         timerValue = 30;
         sendTimerData(timerValue);
         // Perform basic form validation
-        selectedSubject = document.querySelector('input[name="subject"]:checked');
-        selectedPoints = document.querySelector('input[name="points"]:checked');
-        var selectedTeam  = nr_druzyny;
+        if (backup_if == true){
+            console.log("backup, punkty i kategoria");
+            backup_if = false;
+        }
+        else{
+            selectedSubject = document.querySelector('input[name="subject"]:checked');
+            selectedPoints = document.querySelector('input[name="points"]:checked');
+        }
+
+        selectedTeam  = nr_druzyny;
             
         var punkty234=0;
             
@@ -158,12 +176,19 @@ function sprawdzstan(){
             else{
                 nr_druzyny=nr_druzyny-1;
             }   
-            selectedTeam  = nr_druzyny
+            selectedTeam  = nr_druzyny;
           
             console.log(punkty234)
         }
         if(selectedSubject.value !== 'bonus'){
-            var punkty234=selectedPoints.value;}
+                if (backup_if == true){
+                    punkty234=selectedPoints;
+                    backup_if = false;
+                }
+                else{
+                    punkty234=selectedPoints.value;
+                }
+            }
         console.log(punkty234)
         if (!selectedSubject || !punkty234) {  // ten if nie działa bo coś popsulem XD
             alert('Please select both a subject and points');
@@ -176,17 +201,9 @@ function sprawdzstan(){
             points: punkty234,
             team:   selectedTeam,
         }
-
+        console.log("nr_druzyny_przed: " + nr_druzyny);
         nr_druzyny=nr_druzyny+1;
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/admin/update_ilosc_druzyn.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText); // Log the response from the backend
-            }
-        };
-        xhr.send('nr_druzyny=' + nr_druzyny);
+        
         if(nr_druzyny<ilosc_druzyn+1){
         }else{
             nr_druzyny=1;
@@ -212,7 +229,6 @@ function sprawdzstan(){
     }
     function backup(){
         eventstatus = 1;
-
         const backupData = {
         action: 'backup',
     };
@@ -247,13 +263,9 @@ function sprawdzstan(){
                     console.log("\n");
                     nr_druzyny = parseInt(row.nr_druzyny);
                     points = parseInt(row.poziom);
-                    ilosc_druzyn = row.ilosc_druzyn;
-                    if (nr_druzyny == ilosc_druzyn){
-                        nr_druzyny=1;
-                    }
-                    else{
-                        nr_druzyny ++;
-                    }
+                    ilosc_druzyn = parseInt(row.ilosc_druzyn);
+                    selectedPoints = points;
+                    selectedSubject = row.kategoria;
                     if (row.stan == "clear"){
                         document.getElementById('correctBtn').disabled = true;
                         document.getElementById('incorrectBtn').disabled = true;
@@ -263,9 +275,11 @@ function sprawdzstan(){
                         document.getElementById('mainBtn').disabled = false;
                     }
                     else if (row.stan == "pytanie"){
+                        backup_if = true;
                         showSecondaryBtn();
                     }
                     else if (row.stan == "odpowiedz"){
+                        backup_if = true;
                         document.getElementById('answerButtons').style.display = 'block';
                         document.getElementById('secondaryBtn').style.display = 'none';
 
@@ -321,6 +335,10 @@ function sprawdzstan(){
                 teamB = parseInt(data[1].punkty);
                 teamC = parseInt(data[2].punkty);
                 teamD = parseInt(data[3].punkty);
+                flagaA3=0;
+                flagaB3=0;
+                flagaC3=0;
+                flagaD3=0;
 
                 wysylanie(0,0,0,0,flagaA3,flagaB3,flagaC3,flagaD3); 
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3); }
@@ -482,7 +500,7 @@ function playMedia() {
         }
 
         function handleAnswer(isCorrect) {
-            console.log(isCorrect)
+            console.log(isCorrect);
              // Log the answer to the console (you can send it to the server here)
     console.log('Answer:', isCorrect ? 'Correct' : 'Incorrect');
 
@@ -857,19 +875,44 @@ socket.onerror = (error) => {
 function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 {
 
-    var selectedPoints = document.querySelector('input[name="points"]:checked');
-    var selectedSubject = document.querySelector('input[name="subject"]:checked');
-
-  if(selectedSubject.value =='bonus'){
+if (backup_if == true){
+        console.log("backup, punkty i kategoria");
+        if(selectedSubject.value =='bonus'){
         points=3;
-
-    }else{
-        points = Number(selectedPoints.value);
+        }else{
+            points = selectedPoints;
+        }
     }
+    else{
+        selectedSubject = document.querySelector('input[name="subject"]:checked');
+        selectedPoints = document.querySelector('input[name="points"]:checked');
+        if(selectedSubject.value =='bonus'){
+        points=3;
+        }else{
+            points = Number(selectedPoints.value);
+        }
+    }
+
     
     
-    console.log("Pooints:"points)
-  var numer_druzyny=nr_druzyny;
+    console.log(backup_if);
+    if(backup_if == true){
+        nr_druzyny=nr_druzyny+1;
+        if(nr_druzyny<ilosc_druzyn+1){
+        }else{
+            nr_druzyny=1;
+        }
+        numer_druzyny=nr_druzyny;
+        console.log("backup activated for nr_druzyny");
+        backup_if = false;
+    }
+    else{
+        numer_druzyny=nr_druzyny;
+        console.log("backup NOT activated for nr_druzyny");
+    }
+    console.log("Pooints:",points);
+  
+  
 if(ilosc_druzyn==2 && isCorrect==true)
   {
     if(numer_druzyny==2){

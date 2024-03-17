@@ -8,7 +8,7 @@ if (!$con) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT kategoria, poziom, nr_druzyny, img_odpowiedzi, img_pytania, media, media_typ, stan FROM mvc_konkurs_batalia";
+$sql = "SELECT kategoria, poziom, ilosc_druzyn, nr_druzyny, img_odpowiedzi, img_pytania, media, media_typ, stan FROM mvc_konkurs_batalia";
 $result = mysqli_query($con, $sql);
 
 $rows = array();

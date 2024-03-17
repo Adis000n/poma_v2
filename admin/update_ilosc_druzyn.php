@@ -13,7 +13,7 @@ if (isset($_POST['ilosc_druzyn'])) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    $update_query = "UPDATE mvc_konkurs_batalia SET nr_druzyny=? WHERE id=1";
+    $update_query = "UPDATE mvc_konkurs_batalia SET ilosc_druzyn=? WHERE id=1";
 
     $update_stmt = mysqli_prepare($con, $update_query);
     if (!$update_stmt) {
@@ -34,7 +34,7 @@ if (isset($_POST['ilosc_druzyn'])) {
     // Close the database connection
     mysqli_close($con);
 
-    echo "Successfully updated nr_druzyny to $ilosc_druzyn";
+    echo "Successfully updated ilosc_druzyn to $ilosc_druzyn";
 } else {
     echo "Invalid request";
 }
