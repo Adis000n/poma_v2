@@ -4,7 +4,7 @@ const path = require('path');
 const childProcess = require('child_process');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
-const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+const ws = new WebSocket('ws://127.26.0.1:3000/ws');
 const app = express();
 expressWs(app);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -69,7 +69,8 @@ app.ws('/ws', (ws, req) => {
             flagaA3:data.flagaA3,
             flagaB3: data.flagaB3,
             flagaC3: data.flagaC3,
-            flagaD3: data.flagaD3
+            flagaD3: data.flagaD3,
+ 
         }));
     }
     else if(data.nazwa_teamA !== undefined ||data.nazwa_teamB !== undefined ||data.nazwa_teamC !== undefined ||data.nazwa_teamD !== undefined){
@@ -77,7 +78,9 @@ app.ws('/ws', (ws, req) => {
         nazwa_teamA: data.nazwa_teamA,
         nazwa_teamB: data.nazwa_teamB,
         nazwa_teamC: data.nazwa_teamC,
-        nazwa_teamD: data.nazwa_teamD
+        nazwa_teamD: data.nazwa_teamD,
+        flaga69:data.flaga69,
+
       }))
     }
     
@@ -91,30 +94,15 @@ app.ws('/ws', (ws, req) => {
       broadcast(JSON.stringify({
         punktyA:data.punktyA,
         punktyB:data.punktyB
+
       }))
     }
-    else if(data.flaga69!== undefined){
-      broadcast(JSON.stringify({
-        flaga69:data.flaga69
-      }))
-    }
-    else if(data.flaga1 !==0){
-      broadcast(JSON.stringify({
-        flaga: data.flaga1,
-      }))
-    }
-  //   else if(data.nazwaA!== undefined||data.nazwaB!== undefined){
-  //     broadcast(JSON.stringify({
-  // nazwaA: data.nazwaA,
-  // nazwaB: data.nazwaB
-  //     }))
-  //   }
-    // else if(data.punktyA!== undefined ||data.punktyB==undefined ){
+    // else if(data.flaga69!== undefined){
     //   broadcast(JSON.stringify({
-    //     punktyA:data.punktyA,
-    //     punktyB:data.punktyB
+    //     flaga69:data.flaga69,
     //   }))
     // }
+
 
   
   } catch (error) {
