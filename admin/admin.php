@@ -10,7 +10,8 @@
     <!-- <script src="panets.js"></script> -->
     <script>
     let flaga=0;
-    let nr_druzyny = 1;
+    nr_druzyny = 1;
+    backup_if = false;
     var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
 document.getElementsByTagName('head')[0].appendChild(script);
@@ -32,10 +33,29 @@ else{
  // console.log(eventstatus)  
 // alert("TWOJA DUPA W HANNOWERZE OPIERDALA 4 WIERZE"); //taki żarcik 😊
     ilosc_druzyn=Number(prompt("Podaj liczbe druzyn min 2 max 4)",4)) // PROMPT do podania liczby druzyn
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/admin/update_ilosc_druzyn.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Log the response from the backend
+            }
+        };
+        xhr.send('ilosc_druzyn=' + ilosc_druzyn); // Send the team value as POST data
     for(let i=1;i<=ilosc_druzyn;i++){                                 //Pentla od nazw drużyn
     druzyny.push(prompt("Podaj nazwę drużyny "+ i, "Drużyna " +i))    //wprowadza dane do tablicy
 }   
-console.log(druzyny)
+console.log(druzyny);
+team = nr_druzyny;
+var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/pytania/update_nr_druzyny.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText); // Log the response from the backend
+        }
+    };
+    xhr.send('team=' + team); // Send the team value as POST data
 
 if(confirm("Czy na pewno chcesz kontynuować?") == true ){
   eventstatus=1                 //przypisywanie do eventstatus jeden że konkurs aktywny
@@ -69,7 +89,7 @@ socket.onerror = (error) => {
 };
 				};
 if(eventstatus==1){
-  alert("Konkurs się rozpoczą")
+  alert("Konkurs się rozpoczął")
 }}
 };
 	
@@ -134,9 +154,16 @@ function sprawdzstan(){
         timerValue = 30;
         sendTimerData(timerValue);
         // Perform basic form validation
-        var selectedSubject = document.querySelector('input[name="subject"]:checked');
-        var selectedPoints = document.querySelector('input[name="points"]:checked');
-        var selectedTeam  = nr_druzyny;
+        if (backup_if == true){
+            console.log("backup, punkty i kategoria");
+            backup_if = false;
+        }
+        else{
+            selectedSubject = document.querySelector('input[name="subject"]:checked');
+            selectedPoints = document.querySelector('input[name="points"]:checked');
+        }
+
+        selectedTeam  = nr_druzyny;
             
         var punkty234=0;
             
@@ -150,12 +177,19 @@ function sprawdzstan(){
             else{
                 nr_druzyny=nr_druzyny-1;
             }   
-            selectedTeam  = nr_druzyny
+            selectedTeam  = nr_druzyny;
           
             console.log(punkty234)
         }
         if(selectedSubject.value !== 'bonus'){
-            var punkty234=selectedPoints.value;}
+                if (backup_if == true){
+                    punkty234=selectedPoints;
+                    backup_if = false;
+                }
+                else{
+                    punkty234=selectedPoints.value;
+                }
+            }
         console.log(punkty234)
         if (!selectedSubject || !punkty234) {  // ten if nie działa bo coś popsulem XD
             alert('Please select both a subject and points');
@@ -168,17 +202,9 @@ function sprawdzstan(){
             points: punkty234,
             team:   selectedTeam,
         }
-
+        console.log("nr_druzyny_przed: " + nr_druzyny);
         nr_druzyny=nr_druzyny+1;
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_nr_druzyny.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText); // Log the response from the backend
-            }
-        };
-        xhr.send('nr_druzyny=' + nr_druzyny);
+        
         if(nr_druzyny<ilosc_druzyn+1){
         }else{
             nr_druzyny=1;
@@ -202,6 +228,126 @@ function sprawdzstan(){
         showSecondaryBtn();
 
     }
+    function backup(){
+        eventstatus = 1;
+        const backupData = {
+        action: 'backup',
+    };
+        // Connect to WebSocket and send form data
+        const socket = new WebSocket('ws://localhost:3000/ws');
+
+        // Wait for the WebSocket connection to open
+        socket.onopen = () => {
+            socket.send(JSON.stringify(backupData));
+            console.log('WebSocket connection opened. Form data sent.');
+        };
+
+        // Handle socket errors if needed
+        socket.onerror = (error) => {
+            console.error(`WebSocket Error: ${error}`);
+        };
+        var xhr2 = new XMLHttpRequest();
+        xhr2.onreadystatechange = function() {
+            if (xhr2.readyState == 4 && xhr2.status == 200) {
+                var data = JSON.parse(xhr2.responseText);
+                // Handle the received data here
+                data.forEach(function(row) {
+                    console.log("Kategoria: " + row.kategoria);
+                    console.log("Poziom: " + row.poziom);
+                    console.log("Ilosc druzyn: " + row.ilosc_druzyn); 
+                    console.log("Nr Druzyny: " + row.nr_druzyny);
+                    console.log("Img Odpowiedzi: " + row.img_odpowiedzi);
+                    console.log("Img Pytania: " + row.img_pytania);
+                    console.log("Media: " + row.media);
+                    console.log("Media Typ: " + row.media_typ);
+                    console.log("Stan: " + row.stan);
+                    console.log("\n");
+                    nr_druzyny = parseInt(row.nr_druzyny);
+                    points = parseInt(row.poziom);
+                    ilosc_druzyn = parseInt(row.ilosc_druzyn);
+                    selectedPoints = points;
+                    selectedSubject = row.kategoria;
+                    if (row.stan == "clear"){
+                        document.getElementById('correctBtn').disabled = true;
+                        document.getElementById('incorrectBtn').disabled = true;
+
+                        document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
+                        
+                        document.getElementById('mainBtn').disabled = false;
+                    }
+                    else if (row.stan == "pytanie"){
+                        backup_if = true;
+                        showSecondaryBtn();
+                    }
+                    else if (row.stan == "odpowiedz"){
+                        backup_if = true;
+                        document.getElementById('answerButtons').style.display = 'block';
+                        document.getElementById('secondaryBtn').style.display = 'none';
+
+                        // Enable buttons
+                        document.getElementById('correctBtn').disabled = false;
+                        document.getElementById('incorrectBtn').disabled = false;
+                    }
+                    else if (row.stan == "done"){
+                        document.getElementById('correctBtn').disabled = true;
+                        document.getElementById('incorrectBtn').disabled = true;
+
+                        document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
+                        
+                        document.getElementById('mainBtn').disabled = false;
+                    }
+                });
+            }
+        };
+        xhr2.open("GET", "http://localhost/projekty/poma_v2/poma_v2/pytania/get_data.php", true);
+        xhr2.send();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+
+                // Define the object containing all the variables
+                const nazwy_druzyn = {
+                    nazwa_teamA: data[0] ? (data[0].nazwa.trim() !== "" ? data[0].nazwa : undefined) : '-', // Check if data[0] exists
+                    nazwa_teamB: data[1] ? (data[1].nazwa.trim() !== "" ? data[1].nazwa : undefined) : '-', // Check if data[1] exists
+                    nazwa_teamC: data[2] ? (data[2].nazwa.trim() !== "" ? data[2].nazwa : undefined) : '-', // Check if data[2] exists
+                    nazwa_teamD: data[3] ? (data[3].nazwa.trim() !== "" ? data[3].nazwa : undefined) : '-'  // Check if data[3] exists
+                };
+
+
+                console.log('Form data:', nazwy_druzyn); // Log the data to the console
+
+                // Connect to WebSocket and send form data
+                const socket = new WebSocket('ws://localhost:3000/ws');
+
+                // Wait for the WebSocket connection to open
+                socket.onopen = () => {
+                    socket.send(JSON.stringify(nazwy_druzyn));
+                    console.log('WebSocket connection opened. Nazwy drużyn sent.');
+                };
+
+                // Handle socket errors if needed
+                socket.onerror = (error) => {
+                    console.error(`WebSocket Error: ${error}`);
+                };
+
+                teamA = parseInt(data[0].punkty);
+                teamB = parseInt(data[1].punkty);
+                teamC = parseInt(data[2].punkty);
+                teamD = parseInt(data[3].punkty);
+                flagaA3=0;
+                flagaB3=0;
+                flagaC3=0;
+                flagaD3=0;
+
+                wysylanie(0,0,0,0,flagaA3,flagaB3,flagaC3,flagaD3); 
+                wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3); }
+        };
+        xhr.open("GET", "http://localhost/projekty/poma_v2/poma_v2/admin/get_data2.php", true);
+        xhr.send();
+    }
+
     // console.log(nr_druzyny)
     function showAnswerButtons() {
     // Log that the secondary button is clicked
@@ -355,7 +501,7 @@ function playMedia() {
         }
 
         function handleAnswer(isCorrect) {
-            console.log(isCorrect)
+            console.log(isCorrect);
              // Log the answer to the console (you can send it to the server here)
     console.log('Answer:', isCorrect ? 'Correct' : 'Incorrect');
 
@@ -410,10 +556,10 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
     <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
-    
     <h1 id="tekscik">TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</h1>
     <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! TRZEBA DAĆ TO PRZED WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!! </button>
     <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!! TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</button>
+    <button type="button" class="btn btn-warning" onclick="backup()">BACKUP</button>
 
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
@@ -686,19 +832,44 @@ socket.onerror = (error) => {
 function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 {
 
-    var selectedPoints = document.querySelector('input[name="points"]:checked');
-    var selectedSubject = document.querySelector('input[name="subject"]:checked');
-
-  if(selectedSubject.value =='bonus'){
+if (backup_if == true){
+        console.log("backup, punkty i kategoria");
+        if(selectedSubject.value =='bonus'){
         points=3;
-
-    }else{
-        var points = Number(selectedPoints.value);
+        }else{
+            points = selectedPoints;
+        }
     }
+    else{
+        selectedSubject = document.querySelector('input[name="subject"]:checked');
+        selectedPoints = document.querySelector('input[name="points"]:checked');
+        if(selectedSubject.value =='bonus'){
+        points=3;
+        }else{
+            points = Number(selectedPoints.value);
+        }
+    }
+
     
     
-    console.log(points)
-  var numer_druzyny=nr_druzyny;
+    console.log(backup_if);
+    if(backup_if == true){
+        nr_druzyny=nr_druzyny+1;
+        if(nr_druzyny<ilosc_druzyn+1){
+        }else{
+            nr_druzyny=1;
+        }
+        numer_druzyny=nr_druzyny;
+        console.log("backup activated for nr_druzyny");
+        backup_if = false;
+    }
+    else{
+        numer_druzyny=nr_druzyny;
+        console.log("backup NOT activated for nr_druzyny");
+    }
+    console.log("Pooints:",points);
+  
+  
 if(ilosc_druzyn==2 && isCorrect==true)
   {
     if(numer_druzyny==2){
@@ -876,9 +1047,6 @@ socket.onerror = (error) => {
  
 
 }
-
-    </script>
-    <script>
 
     </script>
 </body>

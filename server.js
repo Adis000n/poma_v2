@@ -56,6 +56,9 @@ app.ws('/ws', (ws, req) => {
       }else if (data.action === 'playMedia'){
         broadcast(JSON.stringify({ action: 'playMedia' }));
       } 
+      else if(data.action === 'backup'){
+        broadcast(JSON.stringify({ action: 'backup' }));
+      }
       else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
         // Broadcast only the team information
         broadcast(JSON.stringify({

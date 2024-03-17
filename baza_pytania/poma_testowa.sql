@@ -21,6 +21,7 @@
     `id` int(11) PRIMARY KEY AUTO_INCREMENT,
     `kategoria` varchar(255),
     `poziom` int(11),
+    `ilosc_druzyn` int(11),
     `nr_druzyny` int(11),
     `img_odpowiedzi` varchar(255),
     `img_pytania` varchar(255)

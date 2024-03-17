@@ -33,9 +33,9 @@
         console.log('Received team data:', team1, team2, team3, team4);
         updateContent(team1, team2, team3, team4);
         pozycjonowanie1(team1);
-         pozycjonowanie2(team2)
-         pozycjonowanie3(team3)
-         pozycjonowanie4(team4)
+         pozycjonowanie2(team2);
+         pozycjonowanie3(team3);
+         pozycjonowanie4(team4);
          
         //  function wujekplay(team1,team2,team3,team4){
     if(team1 >= 11|| team2 >=11||team3 >=11||team4 >=11){
@@ -87,7 +87,7 @@ const interval = setInterval(function() {
 
 
   }
-});
+
 
   
 function updateNazwyDruzyn(nazwa_teamA,nazwa_teamB,nazwa_teamC,nazwa_teamD){
@@ -200,42 +200,42 @@ function updateContent(team1,team2,team3,team4) {
 
         
   var team1=0;
-      pozycjonowanie1(team1);
+      
   // Drużyna 1
       function pozycjonowanie1(team1){
-        if(team1 ===0){
+        if(team1 == 0){
           document.getElementById('pawn1').querySelector('img').removeAttribute('hidden');
           document.getElementById('pawn1').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
           setPosition('pawn1', 330, 330);
         }
-        else if(team1===1){
+        else if(team1==1){
         setPosition('pawn1',240, 328 );
       }
-        else  if(team1===2){
+        else  if(team1==2){
           setPosition('pawn1',163, 328 );
       }
-      else  if(team1===3){
+      else  if(team1==3){
         setPosition('pawn1',86, 328 );
       }
-      else  if(team1===4){
+      else  if(team1==4){
         setPosition('pawn1',86, 250 );
       }
-      else  if(team1===5){
+      else  if(team1==5){
         setPosition('pawn1',86, 172 );
       }
-      else  if(team1===6){
+      else  if(team1==6){
         setPosition('pawn1',164, 172 );
       }
-      else  if(team1===7){
+      else  if(team1==7){
         setPosition('pawn1',242, 172 );
       }
-      else  if(team1===8){
+      else  if(team1==8){
         setPosition('pawn1',242, 94 );
       }
-      else  if(team1===9){
+      else  if(team1==9){
         setPosition('pawn1',242, 20 );
       }
-      else  if(team1===10){
+      else  if(team1==10){
         setPosition('pawn1',164, 20 );
       }
       else  if(team1>=11){
@@ -244,80 +244,80 @@ function updateContent(team1,team2,team3,team4) {
     }
 //druzyna 2
  function pozycjonowanie2(team2){       
-      if(team2 ===0){
+      if(team2 ==0){
         document.getElementById('pawn2').querySelector('img').removeAttribute('hidden');
         document.getElementById('pawn2').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
         setPosition('pawn2',430,330);
       }
-      else if(team2===1){
+      else if(team2==1){
         setPosition('pawn2',520, 328 );
       }
-      else  if(team2===2){
+      else  if(team2==2){
         setPosition('pawn2',598, 328 );
       }
-      else  if(team2===3){
+      else  if(team2==3){
         setPosition('pawn2',675, 328 );
       }
-      else  if(team2===4){
+      else  if(team2==4){
         setPosition('pawn2',675, 250 );
       }
-      else  if(team2===5){
+      else  if(team2==5){
         setPosition('pawn2',675, 172 );
       }
-      else  if(team2===6){
+      else  if(team2==6){
         setPosition('pawn2',597, 172 );
       }
-      else  if(team2===7){
+      else  if(team2==7){
         setPosition('pawn2',519, 172 );
       }
-      else  if(team2===8){
+      else  if(team2==8){
         setPosition('pawn2',519, 94 );
       }
-      else  if(team2===9){
+      else  if(team2==9){
         setPosition('pawn2',520, 20 );
       }
-      else  if(team2===10){
+      else  if(team2==10){
         setPosition('pawn2', 598, 20);
       }
       else  if(team2>=11){
         setPosition('pawn2', 696, 20);
       }}
       function pozycjonowanie3(team3){
-        if(team3 ===0){
+        if(team3 ==0){
           if(tylko_dwie==false){
             document.getElementById('pawn3').querySelector('img').removeAttribute('hidden');
           document.getElementById('pawn3').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
           setPosition('pawn3',330, 430 );
           }
         }
-        else if(team3===1){
+        else if(team3==1){
           setPosition('pawn3',240, 432 );
       }
-        else  if(team3===2){
+        else  if(team3==2){
           setPosition('pawn3',163, 432 );
       }
-      else  if(team3===3){
+      else  if(team3==3){
         setPosition('pawn3',86, 432 );
       }
-      else  if(team3===4){
+      else  if(team3==4){
         setPosition('pawn3',86, 510 );
       }
-      else  if(team3===5){
+      else  if(team3==5){
         setPosition('pawn3',86, 588 );
       }
-      else  if(team3===6){
+      else  if(team3==6){
         setPosition('pawn3',164, 588 );
       }
-      else  if(team3===7){
+      else  if(team3==7){
         setPosition('pawn3',242, 588 );
       }
-      else  if(team3===8){
+      else  if(team3==8){
         setPosition('pawn3',242, 666 );
       }
-      else  if(team3===9){
+      else  if(team3==9){
         setPosition('pawn3',242, 740 );
       }
-      else  if(team3===10){
+      else  if(team3==10){
         setPosition('pawn3',164, 740 );
       }
       else  if(team3>=11){
@@ -325,41 +325,41 @@ function updateContent(team1,team2,team3,team4) {
       }
       }
       function pozycjonowanie4(team4){
-        if(team4===0){
+        if(team4==0){
           if( tylko_trzy==false){
             document.getElementById('pawn4').querySelector('img').removeAttribute('hidden');
           document.getElementById('pawn4').style.boxShadow = '0 0 10px 20px rgba(0, 0, 0, 0.363)';
           setPosition('pawn4',430, 430 );
           }
         }
-        else if(team4===1){
+        else if(team4==1){
           setPosition('pawn4',520, 432 );
       }
-        else if(team4===2){
+        else if(team4==2){
           setPosition('pawn4',597, 432 );
       }
-      else if(team4===3){
+      else if(team4==3){
         setPosition('pawn4',675, 432 );
       }
-      else if(team4===4){
+      else if(team4==4){
         setPosition('pawn4',675, 510 );
       }
-      else if(team4===5){
+      else if(team4==5){
         setPosition('pawn4',675, 588 );
       }
-      else if(team4===6){
+      else if(team4==6){
         setPosition('pawn4',597, 588 );
       }
-      else if(team4===7){
+      else if(team4==7){
         setPosition('pawn4',519, 588 );
       }
-      else if(team4===8){
+      else if(team4==8){
         setPosition('pawn4',519, 664 );
       }
-      else if(team4===9){
+      else if(team4==9){
         setPosition('pawn4',519, 740 );
       }
-      else if(team4===10){
+      else if(team4==10){
         setPosition('pawn4',598, 740 );
       }
       else if(team4>=11){
@@ -367,6 +367,7 @@ function updateContent(team1,team2,team3,team4) {
       }
  
       }
+    });
         </script>
         
     <body>
