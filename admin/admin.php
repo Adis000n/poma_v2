@@ -11,6 +11,7 @@
     <script>
     let flaga=0;
     nr_druzyny = 1;
+    flaga69 = 2;
     backup_if = false;
     var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
@@ -34,7 +35,7 @@ else{
 // alert("TWOJA DUPA W HANNOWERZE OPIERDALA 4 WIERZE"); //taki żarcik 😊
     ilosc_druzyn=Number(prompt("Podaj liczbe druzyn min 2 max 4)",4)) // PROMPT do podania liczby druzyn
     var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/admin/update_ilosc_druzyn.php', true);
+        xhr.open('POST', 'http://localhost/projekty/poma_v2/admin/update_ilosc_druzyn.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -48,7 +49,7 @@ else{
 console.log(druzyny);
 team = nr_druzyny;
 var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/pytania/update_nr_druzyny.php', true);
+    xhr.open('POST', 'http://localhost/projekty/poma_v2/pytania/update_nr_druzyny.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -209,6 +210,7 @@ function sprawdzstan(){
         }else{
             nr_druzyny=1;
         }
+        console.log("nr_druzyny_po: " + nr_druzyny);
         console.log('Form data:', formData); // Log the data to the console
 
         // Connect to WebSocket and send form data
@@ -299,7 +301,7 @@ function sprawdzstan(){
                 });
             }
         };
-        xhr2.open("GET", "http://localhost/projekty/poma_v2/poma_v2/pytania/get_data.php", true);
+        xhr2.open("GET", "http://localhost/projekty/poma_v2/pytania/get_data.php", true);
         xhr2.send();
 
         var xhr = new XMLHttpRequest();
@@ -309,11 +311,12 @@ function sprawdzstan(){
 
                 // Define the object containing all the variables
                 const nazwy_druzyn = {
-                    nazwa_teamA: data[0] ? (data[0].nazwa.trim() !== "" ? data[0].nazwa : undefined) : '-', // Check if data[0] exists
-                    nazwa_teamB: data[1] ? (data[1].nazwa.trim() !== "" ? data[1].nazwa : undefined) : '-', // Check if data[1] exists
-                    nazwa_teamC: data[2] ? (data[2].nazwa.trim() !== "" ? data[2].nazwa : undefined) : '-', // Check if data[2] exists
-                    nazwa_teamD: data[3] ? (data[3].nazwa.trim() !== "" ? data[3].nazwa : undefined) : '-'  // Check if data[3] exists
+                    nazwa_teamA: data[0] ? (data[0].nazwa !== null && data[0].nazwa.trim() !== "" ? data[0].nazwa : undefined) : '-', // Check if data[0] exists
+                    nazwa_teamB: data[1] ? (data[1].nazwa !== null && data[1].nazwa.trim() !== "" ? data[1].nazwa : undefined) : '-', // Check if data[1] exists
+                    nazwa_teamC: data[2] ? (data[2].nazwa !== null && data[2].nazwa.trim() !== "" ? data[2].nazwa : undefined) : '-', // Check if data[2] exists
+                    nazwa_teamD: data[3] ? (data[3].nazwa !== null && data[3].nazwa.trim() !== "" ? data[3].nazwa : undefined) : '-'  // Check if data[3] exists
                 };
+
 
 
                 console.log('Form data:', nazwy_druzyn); // Log the data to the console
@@ -344,7 +347,7 @@ function sprawdzstan(){
                 wysylanie(0,0,0,0,flagaA3,flagaB3,flagaC3,flagaD3); 
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3); }
         };
-        xhr.open("GET", "http://localhost/projekty/poma_v2/poma_v2/admin/get_data2.php", true);
+        xhr.open("GET", "http://localhost/projekty/poma_v2/admin/get_data2.php", true);
         xhr.send();
     }
 
@@ -555,10 +558,9 @@ function sendAnswer(isCorrect) {
     <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
     <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
     <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
-    <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
-    <h1 id="tekscik">TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</h1>
+    <button type="button" class="btn btn-danger" onclick="punktyOT()">overtime go punkty</button> <br>
     <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! TRZEBA DAĆ TO PRZED WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!! </button>
-    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!! TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</button>
+    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!! TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</button><br>
     <button type="button" class="btn btn-warning" onclick="backup()">BACKUP</button>
 
 <!-- Dwa moje przyciski - zbędne -->
@@ -579,54 +581,13 @@ flaga69=0
 </script>
 <script>
  function  wysputot(){ // overtajm drużyny go
-    var dropdown1 = document.getElementById("team");
-  // Pobierz wybraną wartość
-  var wybor1doot = dropdown1.value;
-  var dropdown2 = document.getElementById("team2");
-  // Pobierz wybraną wartość
-  var wybor2doot = dropdown2.value;
-    if(wybor1doot==1&&wybor2doot==2){
-        ApunktyOT=teamA
-        BpunktyOT=teamB
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==1&&wybor2doot==3){
-        ApunktyOT=teamA
-        BpunktyOT=teamC
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==1&&wybor2doot==4){
-        ApunktyOT=teamA
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==2&&wybor2doot==3){
-        ApunktyOT=teamB
-        BpunktyOT=teamC
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==2&&wybor2doot==4){
-        ApunktyOT=teamB
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==3&&wybor2doot==4){
-        ApunktyOT=teamC
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
+
  }
- function punktyOT(ApunkyOT,BpunkyOT){
+ function punktyOT(){
     const pozdrowWuja = {
 
-punktyA: ApunkyOT,
-punktyB: BpunkyOT,
+punktyA: teamA,
+punktyB: teamB,
 
                     };
   
@@ -938,7 +899,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
                 
             }
 
-            
+            punktyOT()
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
 
 
@@ -983,6 +944,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
             }
        
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                
             
 //             console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
 //   console.log("DRUŻYNA 1:"+teamA)
