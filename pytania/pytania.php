@@ -1,3 +1,9 @@
+<?php
+$con = mysqli_connect("localhost", "root", "", "poma");
+if (!$con) {
+    die("Nie działa: " . mysqli_connect_error());
+}
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -275,7 +281,7 @@
        var flaga=0;
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
-        const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+        const ws = new WebSocket('ws://192.168.19.90:3000/ws');
 
 
         ws.onmessage = (event) => {
@@ -348,7 +354,7 @@
     </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+    const ws = new WebSocket('ws://192.168.19.90:3000/ws');
     var tickSound = new Audio('../audio/clock-tick-long.mp3');
     tickSound.muted = false;
     tickSound.volume = 0.3;
@@ -386,17 +392,195 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (data.action === 'playMedia') {
             playMedia();
         } 
+        else if (data.action === 'backup') {
+            backup();
+        } 
         else if (data.isCorrect !== undefined) {
             handleAnswer(data.isCorrect);
         } 
         else if (data.flaga !==0){
             flaga=data.flaga
-        console.log(flaga)
+            console.log(flaga)
             if(flaga==1) { 
-        komunikat();
+                komunikat();
                 flaga=0; }
             }
     };
+    function backup() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var data = JSON.parse(xhr.responseText);
+            // Handle the received data here
+            data.forEach(function(row) {
+                console.log("Kategoria: " + row.kategoria);
+                console.log("Poziom: " + row.poziom);
+                console.log("Nr Druzyny: " + row.nr_druzyny);
+                console.log("Img Odpowiedzi: " + row.img_odpowiedzi);
+                console.log("Img Pytania: " + row.img_pytania);
+                console.log("Media: " + row.media);
+                console.log("Media Typ: " + row.media_typ);
+                console.log("Stan: " + row.stan);
+                console.log("\n");
+                subject = row.kategoria;
+                points = parseInt(row.poziom);
+                team   = parseInt(row.nr_druzyny);
+                if (row.stan == "clear"){
+                    clearAllContent();
+                }
+                else if (row.stan == "pytanie"){
+                    const contentDiv = document.getElementById('kategoria-data');
+                    contentDiv.innerHTML = subject;
+                    const contentDiv2 = document.getElementById('poziom-data');
+                    if (points == 1){
+                        contentDiv2.innerHTML = "Jeden punkt";
+                    } 
+                    else if (points == 2){
+                        contentDiv2.innerHTML = "Dwa punkty";
+                    }
+                    else if (points == 3){
+                        contentDiv2.innerHTML = "Trzy punkty";
+                    }
+                    const contentDiv3 = document.getElementById('druzyna-data');
+                    contentDiv3.innerHTML = team;
+                const image2Element = document.getElementById('pytanie-img');
+                    image2Element.src = row.img_pytania;
+                    if(row.media_typ == "wideo"){
+                        const imageElement = document.getElementById('film_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isVideo =  row.media !== '';
+                        const videoElement = document.getElementById('film');
+                        videoElement.hidden = !isVideo; 
+                        if (isVideo) {
+                            videoElement.src = row.media;
+                        }
+                    }
+                    else if(row.media_typ == "audio"){
+                        const imageElement = document.getElementById('dzwiek_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isAudio =  row.media !== '';
+                        const audioElement = document.getElementById('dzwiek');
+                        audioElement.hidden = !isAudio; 
+                        if (isAudio) {
+                            audioElement.src = row.media;
+                        }
+                    }
+                }
+                else if (row.stan == "odpowiedz"){
+                    const contentDiv = document.getElementById('kategoria-data');
+                    contentDiv.innerHTML = subject;
+                    const contentDiv2 = document.getElementById('poziom-data');
+                    if (points == 1){
+                        contentDiv2.innerHTML = "Jeden punkt";
+                    } 
+                    else if (points == 2){
+                        contentDiv2.innerHTML = "Dwa punkty";
+                    }
+                    else if (points == 3){
+                        contentDiv2.innerHTML = "Trzy punkty";
+                    }
+                    const contentDiv3 = document.getElementById('druzyna-data');
+                    contentDiv3.innerHTML = team;
+                const image4Element = document.getElementById('pytanie-img');
+                    image4Element.src = row.img_pytania;
+                    if(row.media_typ == "wideo"){
+                        const imageElement = document.getElementById('film_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isVideo =  row.media !== '';
+                        const videoElement = document.getElementById('film');
+                        videoElement.hidden = !isVideo; 
+                        if (isVideo) {
+                            videoElement.src = row.media;
+                        }
+                    }
+                    else if(row.media_typ == "audio"){
+                        const imageElement = document.getElementById('dzwiek_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isAudio =  row.media !== '';
+                        const audioElement = document.getElementById('dzwiek');
+                        audioElement.hidden = !isAudio; 
+                        if (isAudio) {
+                            audioElement.src = row.media;
+                        }
+                    }
+                const image2Element = document.getElementById('odpowiedz-img');
+                image2Element.src = row.img_odpowiedzi;
+                const odpText = document.getElementById('odp-text')
+                odpText.innerHTML = "Poprawna odpowiedź:";
+                }
+                else if (row.stan == "done"){
+                    const contentDiv = document.getElementById('kategoria-data');
+                    contentDiv.innerHTML = subject;
+                    const contentDiv2 = document.getElementById('poziom-data');
+                    if (points == 1){
+                        contentDiv2.innerHTML = "Jeden punkt";
+                    } 
+                    else if (points == 2){
+                        contentDiv2.innerHTML = "Dwa punkty";
+                    }
+                    else if (points == 3){
+                        contentDiv2.innerHTML = "Trzy punkty";
+                    }
+                    const contentDiv3 = document.getElementById('druzyna-data');
+                    contentDiv3.innerHTML = team;
+                const image3Element = document.getElementById('pytanie-img');
+                    image3Element.src = row.img_pytania;
+                    if(row.media_typ == "wideo"){
+                        const imageElement = document.getElementById('film_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isVideo =  row.media !== '';
+                        const videoElement = document.getElementById('film');
+                        videoElement.hidden = !isVideo; 
+                        if (isVideo) {
+                            videoElement.src = row.media;
+                        }
+                    }
+                    else if(row.media_typ == "audio"){
+                        const imageElement = document.getElementById('dzwiek_src');
+                        imageElement.src = row.media;
+                        console.log(row.media);
+
+                        const isAudio =  row.media !== '';
+                        const audioElement = document.getElementById('dzwiek');
+                        audioElement.hidden = !isAudio; 
+                        if (isAudio) {
+                            audioElement.src = row.media;
+                        }
+                    }
+                const imageElement = document.getElementById('odpowiedz-img');
+                imageElement.src = row.img_odpowiedzi;
+                const odpText = document.getElementById('odp-text')
+                odpText.innerHTML = "Poprawna odpowiedź:";
+                }
+            });
+        }
+    };
+    xhr.open("GET", "get_data.php", true);
+    xhr.send();
+}
+
+
+    function handleAnswer(isCorrect) {
+        var xhr = new XMLHttpRequest();
+    xhr.open("GET", "done.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
+    }
+
 
     function clearAllContent() {
     const pyt = document.getElementById('pytanie-img');
@@ -421,7 +605,16 @@ document.addEventListener('DOMContentLoaded', () => {
     videoElement.hidden = true;
     audioElement.hidden = true;
     audioElement.src = " ";
-    videopElement.src = " ";
+    videoElement.src = " ";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "clear_content.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send();
 }
     function playMedia() {
         const videoElement = document.getElementById('film');
@@ -479,12 +672,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const contentDiv3 = document.getElementById('druzyna-data');
         contentDiv3.innerHTML = team;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_nr_druzyny.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Log the response from the backend
+            }
+        };
+        xhr.send('team=' + team); // Send the team value as POST data
         const videoElement = document.getElementById('film');
         const audioElement = document.getElementById('dzwiek');
         videoElement.hidden = true;
         audioElement.hidden = true;
         audioElement.src = " ";
-        videopElement.src = " ";
+        videoElement.src = " ";
     }
 
     function showEndOfTimeOverlay() {
@@ -554,13 +756,14 @@ document.addEventListener('DOMContentLoaded', () => {
     wujekSound.volume = 1;
       
     document.addEventListener('DOMContentLoaded', () => {
-    const ws = new WebSocket('ws://192.168.55.104:3000/ws');
+    const ws = new WebSocket('ws://192.168.19.90:3000/ws');
 
     ws.onmessage = (event) => {
         console.log('Received message:', event.data);
         const data = JSON.parse(event.data);
         if(data.flaga69!== undefined){
-            flaga69=data.flaga69
+            flaga69=data.flaga69 
+            // console.log("DZIAJJJJJ URWA")
             console.log(flaga69)
         }
     else if (data.team1 !== undefined || data.team2 !== undefined || data.team3 !== undefined || data.team4 !== undefined) {
@@ -668,7 +871,7 @@ const interval = setInterval(function() {
             if(team1 == 6&& flagaA2==0){
             
             powerup.play();
-            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTANIE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
     }, 5000);
@@ -676,7 +879,7 @@ const interval = setInterval(function() {
 }
     else if(team2==6&&flagaB2==0){
         powerup.play();
-             showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
+             showFullscreenMessage("OTRZYMANO BONUS:<br> PYTANIE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
     }, 5000);
@@ -685,7 +888,7 @@ const interval = setInterval(function() {
     }
     else if(team3==6&&flagaC2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTANIE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
     }, 5000);
@@ -694,7 +897,7 @@ const interval = setInterval(function() {
     }
     else if(team4==6&&flagaD2==0){
         powerup.play();
-            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTAINE BONUSOWE");
+            showFullscreenMessage("OTRZYMANO BONUS:<br> PYTANIE BONUSOWE");
             setTimeout(function() {
         hideFullscreenMessage();
     }, 5000);

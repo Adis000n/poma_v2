@@ -10,7 +10,9 @@
     <!-- <script src="panets.js"></script> -->
     <script>
     let flaga=0;
-    let nr_druzyny = 1;
+    nr_druzyny = 1;
+    flaga69 = 2;
+    backup_if = false;
     var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.7.1.min.js'; // Check https://jquery.com/ for the current version
 document.getElementsByTagName('head')[0].appendChild(script);
@@ -32,10 +34,29 @@ else{
  // console.log(eventstatus)  
 // alert("TWOJA DUPA W HANNOWERZE OPIERDALA 4 WIERZE"); //taki żarcik 😊
     ilosc_druzyn=Number(prompt("Podaj liczbe druzyn min 2 max 4)",4)) // PROMPT do podania liczby druzyn
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost/projekty/poma_v2/admin/update_ilosc_druzyn.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Log the response from the backend
+            }
+        };
+        xhr.send('ilosc_druzyn=' + ilosc_druzyn); // Send the team value as POST data
     for(let i=1;i<=ilosc_druzyn;i++){                                 //Pentla od nazw drużyn
     druzyny.push(prompt("Podaj nazwę drużyny "+ i, "Drużyna " +i))    //wprowadza dane do tablicy
 }   
-console.log(druzyny)
+console.log(druzyny);
+team = nr_druzyny;
+var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost/projekty/poma_v2/pytania/update_nr_druzyny.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText); // Log the response from the backend
+        }
+    };
+    xhr.send('team=' + team); // Send the team value as POST data
 
 if(confirm("Czy na pewno chcesz kontynuować?") == true ){
   eventstatus=1                 //przypisywanie do eventstatus jeden że konkurs aktywny
@@ -47,7 +68,8 @@ if(confirm("Czy na pewno chcesz kontynuować?") == true ){
       nazwa_teamA: naz_druz1,
       nazwa_teamB: naz_druz2,
       nazwa_teamC: naz_druz3,
-      nazwa_teamD: naz_druz4,}
+      nazwa_teamD: naz_druz4,
+      flaga69:flaga69,}
      
       console.log('Form data:', nazwy_druzyn); // Log the data to the console
 
@@ -68,7 +90,7 @@ socket.onerror = (error) => {
 };
 				};
 if(eventstatus==1){
-  alert("Konkurs się rozpoczą")
+  alert("Konkurs się rozpoczął")
 }}
 };
 	
@@ -133,9 +155,16 @@ function sprawdzstan(){
         timerValue = 30;
         sendTimerData(timerValue);
         // Perform basic form validation
-        var selectedSubject = document.querySelector('input[name="subject"]:checked');
-        var selectedPoints = document.querySelector('input[name="points"]:checked');
-        var selectedTeam  = nr_druzyny;
+        if (backup_if == true){
+            console.log("backup, punkty i kategoria");
+            backup_if = false;
+        }
+        else{
+            selectedSubject = document.querySelector('input[name="subject"]:checked');
+            selectedPoints = document.querySelector('input[name="points"]:checked');
+        }
+
+        selectedTeam  = nr_druzyny;
             
         var punkty234=0;
             
@@ -149,12 +178,19 @@ function sprawdzstan(){
             else{
                 nr_druzyny=nr_druzyny-1;
             }   
-            selectedTeam  = nr_druzyny
+            selectedTeam  = nr_druzyny;
           
- 
+            console.log(punkty234)
         }
         if(selectedSubject.value !== 'bonus'){
-            var punkty234=selectedPoints.value;}
+                if (backup_if == true){
+                    punkty234=selectedPoints;
+                    backup_if = false;
+                }
+                else{
+                    punkty234=selectedPoints.value;
+                }
+            }
         console.log(punkty234)
         if (!selectedSubject || !punkty234) {  // ten if nie działa bo coś popsulem XD
             alert('Please select both a subject and points');
@@ -167,12 +203,14 @@ function sprawdzstan(){
             points: punkty234,
             team:   selectedTeam,
         }
-
+        console.log("nr_druzyny_przed: " + nr_druzyny);
         nr_druzyny=nr_druzyny+1;
+        
         if(nr_druzyny<ilosc_druzyn+1){
         }else{
             nr_druzyny=1;
         }
+        console.log("nr_druzyny_po: " + nr_druzyny);
         console.log('Form data:', formData); // Log the data to the console
 
         // Connect to WebSocket and send form data
@@ -192,6 +230,127 @@ function sprawdzstan(){
         showSecondaryBtn();
 
     }
+    function backup(){
+        eventstatus = 1;
+        const backupData = {
+        action: 'backup',
+    };
+        // Connect to WebSocket and send form data
+        const socket = new WebSocket('ws://localhost:3000/ws');
+
+        // Wait for the WebSocket connection to open
+        socket.onopen = () => {
+            socket.send(JSON.stringify(backupData));
+            console.log('WebSocket connection opened. Form data sent.');
+        };
+
+        // Handle socket errors if needed
+        socket.onerror = (error) => {
+            console.error(`WebSocket Error: ${error}`);
+        };
+        var xhr2 = new XMLHttpRequest();
+        xhr2.onreadystatechange = function() {
+            if (xhr2.readyState == 4 && xhr2.status == 200) {
+                var data = JSON.parse(xhr2.responseText);
+                // Handle the received data here
+                data.forEach(function(row) {
+                    console.log("Kategoria: " + row.kategoria);
+                    console.log("Poziom: " + row.poziom);
+                    console.log("Ilosc druzyn: " + row.ilosc_druzyn); 
+                    console.log("Nr Druzyny: " + row.nr_druzyny);
+                    console.log("Img Odpowiedzi: " + row.img_odpowiedzi);
+                    console.log("Img Pytania: " + row.img_pytania);
+                    console.log("Media: " + row.media);
+                    console.log("Media Typ: " + row.media_typ);
+                    console.log("Stan: " + row.stan);
+                    console.log("\n");
+                    nr_druzyny = parseInt(row.nr_druzyny);
+                    points = parseInt(row.poziom);
+                    ilosc_druzyn = parseInt(row.ilosc_druzyn);
+                    selectedPoints = points;
+                    selectedSubject = row.kategoria;
+                    if (row.stan == "clear"){
+                        document.getElementById('correctBtn').disabled = true;
+                        document.getElementById('incorrectBtn').disabled = true;
+
+                        document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
+                        
+                        document.getElementById('mainBtn').disabled = false;
+                    }
+                    else if (row.stan == "pytanie"){
+                        backup_if = true;
+                        showSecondaryBtn();
+                    }
+                    else if (row.stan == "odpowiedz"){
+                        backup_if = true;
+                        document.getElementById('answerButtons').style.display = 'block';
+                        document.getElementById('secondaryBtn').style.display = 'none';
+
+                        // Enable buttons
+                        document.getElementById('correctBtn').disabled = false;
+                        document.getElementById('incorrectBtn').disabled = false;
+                    }
+                    else if (row.stan == "done"){
+                        document.getElementById('correctBtn').disabled = true;
+                        document.getElementById('incorrectBtn').disabled = true;
+
+                        document.getElementById('answerButtons').style.display = 'none'; // Hide the buttons
+                        
+                        document.getElementById('mainBtn').disabled = false;
+                    }
+                });
+            }
+        };
+        xhr2.open("GET", "http://localhost/projekty/poma_v2/pytania/get_data.php", true);
+        xhr2.send();
+
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var data = JSON.parse(xhr.responseText);
+
+                // Define the object containing all the variables
+                const nazwy_druzyn = {
+                    nazwa_teamA: data[0] ? (data[0].nazwa !== null && data[0].nazwa.trim() !== "" ? data[0].nazwa : undefined) : '-', // Check if data[0] exists
+                    nazwa_teamB: data[1] ? (data[1].nazwa !== null && data[1].nazwa.trim() !== "" ? data[1].nazwa : undefined) : '-', // Check if data[1] exists
+                    nazwa_teamC: data[2] ? (data[2].nazwa !== null && data[2].nazwa.trim() !== "" ? data[2].nazwa : undefined) : '-', // Check if data[2] exists
+                    nazwa_teamD: data[3] ? (data[3].nazwa !== null && data[3].nazwa.trim() !== "" ? data[3].nazwa : undefined) : '-'  // Check if data[3] exists
+                };
+
+
+
+                console.log('Form data:', nazwy_druzyn); // Log the data to the console
+
+                // Connect to WebSocket and send form data
+                const socket = new WebSocket('ws://localhost:3000/ws');
+
+                // Wait for the WebSocket connection to open
+                socket.onopen = () => {
+                    socket.send(JSON.stringify(nazwy_druzyn));
+                    console.log('WebSocket connection opened. Nazwy drużyn sent.');
+                };
+
+                // Handle socket errors if needed
+                socket.onerror = (error) => {
+                    console.error(`WebSocket Error: ${error}`);
+                };
+
+                teamA = parseInt(data[0].punkty);
+                teamB = parseInt(data[1].punkty);
+                teamC = parseInt(data[2].punkty);
+                teamD = parseInt(data[3].punkty);
+                flagaA3=0;
+                flagaB3=0;
+                flagaC3=0;
+                flagaD3=0;
+
+                wysylanie(0,0,0,0,flagaA3,flagaB3,flagaC3,flagaD3); 
+                wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3); }
+        };
+        xhr.open("GET", "http://localhost/projekty/poma_v2/admin/get_data2.php", true);
+        xhr.send();
+    }
+
     // console.log(nr_druzyny)
     function showAnswerButtons() {
     // Log that the secondary button is clicked
@@ -345,7 +504,7 @@ function playMedia() {
         }
 
         function handleAnswer(isCorrect) {
-            console.log(isCorrect)
+            console.log(isCorrect);
              // Log the answer to the console (you can send it to the server here)
     console.log('Answer:', isCorrect ? 'Correct' : 'Incorrect');
 
@@ -429,15 +588,24 @@ function sendAnswer(isCorrect) {
         }
     </style>
 <body>
+    <style>
+        #tekscik{
+            font-size: 100px;
+            color: #C44B6C;
+            font-weight: bold;
+
+        }
+    </style>
 <div id=panets>
 <!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
-    <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
-    <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
-    <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> <!-- Przycisk test stanu eventstatus -->
-    <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> 
-    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button> 
-    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
-<!-- PSIK - oznaczenie zebym mogl szybko znalezc te przyciski w kodzie pod ctrl f -->
+<button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
+    <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
+    <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
+    <button type="button" class="btn btn-danger" onclick="punktyOT()">overtime go punkty</button> <br>
+    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! TRZEBA DAĆ TO PRZED WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!! </button>
+    <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!! TRZEBA DAĆ TO PRZEDDDD WYSŁANIEM DRUŻYN !!!!!!!!!!!!!!!</button><br>
+    <button type="button" class="btn btn-warning" onclick="backup()">BACKUP</button>
+
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
     <!-- <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button> -->
@@ -446,109 +614,23 @@ function sendAnswer(isCorrect) {
 <script>
 function chcetoskonczyc(){ //mental 100 fikoł
 //projekt nie życie 😎😎😥😥🤣💀❤️😊😁😁😁😢😢👍👍👍😍😥😢😢🤣(^///^)☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆):☆*: .｡. o(≧▽≦)o .｡.:*☆☆*: .｡. o(≧▽≦)o .｡.:*☆^_^^_^:-()
-
-const pozdroOVERTAJMIK = {
-
-flaga69:0,// flaga od bonusów na pytankach 
-
-
-                    };
-  
-  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
-
-// Connect to WebSocket and send form data
-const socket = new WebSocket('ws://localhost:3000/ws');
-
-// Wait for the WebSocket connection to open
-socket.onopen = () => {
-socket.send(JSON.stringify(pozdroOVERTAJMIK));
-console.log('ROBUUUUR W FERARI'); //Robert Kubica największy polak
-};
-
-// Handle socket errors if needed
-socket.onerror = (error) => {
-console.error(`WebSocket Error: ${error}`);
-};
-
-
+flaga69=0
 }</script>
 <script>
+
     function jaktonazwac(){
-        const pozdroOVERTAJMIK = {
-
-flaga69:1,
-
-
-                    };
-  
-  console.log('pynadia do OT:', pozdroOVERTAJMIK,"PISZE to na pbd"); // Log the data to the console
-
-// Connect to WebSocket and send form data
-const socket = new WebSocket('ws://localhost:3000/ws');
-
-// Wait for the WebSocket connection to open
-socket.onopen = () => {
-socket.send(JSON.stringify(pozdroOVERTAJMIK));
-console.log('ROBUUUUR W FERARI');
-};
-
-// Handle socket errors if needed
-socket.onerror = (error) => {
-console.error(`WebSocket Error: ${error}`);
-};
-
+        flaga69=1
     }
 </script>
 <script>
  function  wysputot(){ // overtajm drużyny go
-    var dropdown1 = document.getElementById("team");
-  // Pobierz wybraną wartość
-  var wybor1doot = dropdown1.value;
-  var dropdown2 = document.getElementById("team2");
-  // Pobierz wybraną wartość
-  var wybor2doot = dropdown2.value;
-    if(wybor1doot==1&&wybor2doot==2){
-        ApunktyOT=teamA
-        BpunktyOT=teamB
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==1&&wybor2doot==3){
-        ApunktyOT=teamA
-        BpunktyOT=teamC
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==1&&wybor2doot==4){
-        ApunktyOT=teamA
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==2&&wybor2doot==3){
-        ApunktyOT=teamB
-        BpunktyOT=teamC
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==2&&wybor2doot==4){
-        ApunktyOT=teamB
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
-    if(wybor1doot==3&&wybor2doot==4){
-        ApunktyOT=teamC
-        BpunktyOT=teamD
-        console.log(ApunktyOT,BpunktyOT)
-        punktyOT(ApunktyOT,BpunktyOT)
-    }
+
  }
- function punktyOT(ApunkyOT,BpunkyOT){
+ function punktyOT(){
     const pozdrowWuja = {
 
-punktyA: ApunkyOT,
-punktyB: BpunkyOT,
+punktyA: teamA,
+punktyB: teamB,
 
                     };
   
@@ -637,7 +719,7 @@ console.error(`WebSocket Error: ${error}`);
 <hr>
 <div>
     
-    <p>JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
+    <!-- <p>JEŚLI CHCESZ WYSŁAĆ DOBRZE TO MUSISZ DAĆ TEAM KOLEJNOŚCIĄ ROSNĄCĄ!!!!! np. Team 2,Team 4<p>
 </div>
 <label for="cars">Wybierz team 1 do dogrywki:</label>
   <select name="cars" id="team">
@@ -656,8 +738,8 @@ console.error(`WebSocket Error: ${error}`);
     <option value="3"> TEAM 3 </option>
     <option value="4"> TEAM 4 </option>
 
-  </select>
-  <br><br>
+  </select> -->
+  <!-- <br><br> -->
         
 <button type="button" class="btn btn-light" onclick="pozdrowkustosza()">Rozpocznij dogrywkę </button>
 <hr>
@@ -696,17 +778,9 @@ console.error(`WebSocket Error: ${error}`);
 //     punktyplansza(ilosc_druzyn,nr_druzyny)
 // }
 function pozdrowkustosza(){
-  
-    var dropdown1 = document.getElementById("team");
-  // Pobierz wybraną wartość
-  var wybor1doot = dropdown1.value;
 
-   var dropdown2 = document.getElementById("team2");
-  // Pobierz wybraną wartość
-  var wybor2doot = dropdown2.value;
-  console.log(wybor1doot,wybor2doot)
-    nazwaA=druzyny[wybor1doot-1]
-    nazwaB=druzyny[wybor2doot-1]
+    nazwaA=druzyny[0]
+    nazwaB=druzyny[1]
     console.log(nazwaA,nazwaB)
     wysylawieovertime(nazwaA,nazwaB)
 }
@@ -743,19 +817,44 @@ socket.onerror = (error) => {
 function punktyplansza(ilosc_druzyn,nr_druzyny,isCorrect)
 {
 
-    var selectedPoints = document.querySelector('input[name="points"]:checked');
-    var selectedSubject = document.querySelector('input[name="subject"]:checked');
-
-  if(selectedSubject.value =='bonus'){
+if (backup_if == true){
+        console.log("backup, punkty i kategoria");
+        if(selectedSubject.value =='bonus'){
         points=3;
-
-    }else{
-        var points = Number(selectedPoints.value);
+        }else{
+            points = selectedPoints;
+        }
     }
+    else{
+        selectedSubject = document.querySelector('input[name="subject"]:checked');
+        selectedPoints = document.querySelector('input[name="points"]:checked');
+        if(selectedSubject.value =='bonus'){
+        points=3;
+        }else{
+            points = Number(selectedPoints.value);
+        }
+    }
+
     
     
-    console.log(points)
-  var numer_druzyny=nr_druzyny;
+    console.log(backup_if);
+    if(backup_if == true){
+        nr_druzyny=nr_druzyny+1;
+        if(nr_druzyny<ilosc_druzyn+1){
+        }else{
+            nr_druzyny=1;
+        }
+        numer_druzyny=nr_druzyny;
+        console.log("backup activated for nr_druzyny");
+        backup_if = false;
+    }
+    else{
+        numer_druzyny=nr_druzyny;
+        console.log("backup NOT activated for nr_druzyny");
+    }
+    console.log("Pooints:",points);
+  
+  
 if(ilosc_druzyn==2 && isCorrect==true)
   {
     if(numer_druzyny==2){
@@ -788,14 +887,6 @@ if(ilosc_druzyn==2 && isCorrect==true)
       teamC=teamC+points;}
         if(numer_druzyny==1){
       teamD=teamD+points}}
-      if(isCorrect==true && ilosc_druzyn==3){
-        if(numer_druzyny==2){
-      teamA=teamA+points}
-        if(numer_druzyny==3){
-      teamB=teamB+points;}
-        if(numer_druzyny==1){
-      teamC=teamC+points}
-      }
 
             if(teamA==8 ){
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3) 
@@ -832,7 +923,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
                 
             }
 
-            
+            punktyOT()
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
 
 
@@ -877,6 +968,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
             }
        
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3)
+                
             
 //             console.log("ILOŚĆ PUNKTÓW KAŻDY TEAM")
 //   console.log("DRUŻYNA 1:"+teamA)
@@ -897,6 +989,7 @@ if(ilosc_druzyn==2 && isCorrect==true)
     flagaB3:flagaB3,
     flagaC3:flagaC3,
     flagaD3:flagaD3,
+
                         };
       
       console.log('Punkty:', punkty); // Log the data to the console
@@ -940,9 +1033,6 @@ socket.onerror = (error) => {
  
 
 }
-
-    </script>
-    <script>
 
     </script>
 </body>
