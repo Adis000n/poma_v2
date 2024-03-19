@@ -385,16 +385,59 @@ function sendAnswer(isCorrect) {
     let teamD=0;
     </script>
 </head>
+<!-- Styls -->
+<style>
+        body {
+            height: 100%;
+            /* background-color: black; */
+            background-image: url("../grafika/spikes.jpg");
+            /* color: white; Set the default text color to white */
+            overflow: hidden;
+            /* font-family: jah; */
+            /* font-size: 16pt; */
+            display: flex;
+        }
+        #panets {
+            display: flex;
+            width: 40%;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 30vh;
+        }
+        #panets button {
+            margin-top: 1vh;
+        }
+        form {
+            margin-top: 2%;
+            margin-bottom: 2%;
+            padding: 2%;
+            background-color: whitesmoke;
+            height: 96vh;
+            width: 50%;
+            margin: 1%;
+            border: 1.5px solid lightgray;
+            border-radius: 10px;
+        }
+
+        .alsoradio {
+            margin-top: 10px;
+        }
+        
+        .delblur {
+            filter: blur(0px);
+            -webkit-filter: blur(0px);
+        }
+    </style>
 <body>
 <div id=panets>
 <!-- DIV OD PANELU OD STARTU KONKUSU i KOŃCA KONKUSU -->
-    <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><br><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
-    <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <br><!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
-    <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> </br><!-- Przycisk test stanu eventstatus -->
-    <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> <br>
-    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button>
+    <button type="button" class="btn btn-success" onclick="startevent()">Start konkursu</button><!-- Start konkursu możesz wpierdolić do panel sterowania JS tworzenie drużyn + zmiana eventstatus na 1 -->
+    <button type="button" class="btn btn-danger" onclick="stopevent()">Stop konkurs (II tura,III tura,Restart Konkursu)</button> <!-- Stop,Restart JS ZEROWANIE DRUŻYN i evantstatus 0 -->
+    <button type="button" class="btn btn-info" onclick="sprawdzstan()">Szybki teśki jaki stan konkursu</button> <!-- Przycisk test stanu eventstatus -->
+    <button type="button" class="btn btn-danger" onclick="wysputot()">overtime go punkty</button> 
+    <button type="button" class="btn btn-warning" onclick="jaktonazwac()">USTAWIANIE OVERTIMAJM NA PYTANIACH !!!!!!!!!!!! </button> 
     <button type="button" class="btn btn-info" onclick="chcetoskonczyc()" >ZEROWANIE TEGO SYFIKU(CENZURA BO TAK NIE WOLNO) (BONUSY DZIAŁAJĄ)!!!!!!!!!!!!!</button>
-
+<!-- PSIK - oznaczenie zebym mogl szybko znalezc te przyciski w kodzie pod ctrl f -->
 <!-- Dwa moje przyciski - zbędne -->
     <!-- <button type="button" class="btn btn-dark" onclick="status1()">Ustawianie stutsu na włączony (gdyby jakiś debil nie wyłączył konkurs)</button> </br> -->
     <!-- <button type="button" class="btn btn-dark" onclick="status0()">Przycik ustawiający status na wyłączony</button> -->
@@ -528,6 +571,7 @@ console.error(`WebSocket Error: ${error}`);
 
  }
 </script>
+<!-- frms -->
     <form id="quizForm" method="post" action="/submitForm">
         <div class="form-group">
             <label for="subject"><b>Kategoria:</b></label>
@@ -641,26 +685,6 @@ console.error(`WebSocket Error: ${error}`);
 
     <div id="response"></div>
 
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: black;
-        }
-
-        form {
-            margin-top: 2%;
-            padding: 2%;
-            width: 90%;
-            border: 1.5px solid lightgray;
-            border-radius: 10px;
-        }
-
-        .alsoradio {
-            margin-top: 10px;
-        }
-    </style>
     <script>
 
 // var myButton = document.getElementById('correctBtn');
