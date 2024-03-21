@@ -20,7 +20,7 @@
   tylko_dwie = false;
   tylko_trzy = false;
       document.addEventListener('DOMContentLoaded', () => {
-      const ws = new WebSocket('ws://192.168.19.90:3000/ws');
+      const ws = new WebSocket('ws://192.168.55.104:3000/ws');
 
     ws.onmessage = (event) => {
     const data = JSON.parse(event.data);

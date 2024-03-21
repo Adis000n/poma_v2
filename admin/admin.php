@@ -35,7 +35,7 @@ else{
 // alert("TWOJA DUPA W HANNOWERZE OPIERDALA 4 WIERZE"); //taki żarcik 😊
     ilosc_druzyn=Number(prompt("Podaj liczbe druzyn min 2 max 4)",4)) // PROMPT do podania liczby druzyn
     var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://localhost/projekty/poma_v2/admin/update_ilosc_druzyn.php', true);
+        xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/admin/update_ilosc_druzyn.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
@@ -49,7 +49,7 @@ else{
 console.log(druzyny);
 team = nr_druzyny;
 var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost/projekty/poma_v2/pytania/update_nr_druzyny.php', true);
+    xhr.open('POST', 'http://localhost/projekty/poma_v2/poma_v2/pytania/update_nr_druzyny.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -270,6 +270,11 @@ function sprawdzstan(){
                     selectedPoints = points;
                     selectedSubject = row.kategoria;
                     if (row.stan == "clear"){
+                        nr_druzyny ++;
+                        if(nr_druzyny<ilosc_druzyn+1){
+                        }else{
+                            nr_druzyny=1;
+                        }
                         document.getElementById('correctBtn').disabled = true;
                         document.getElementById('incorrectBtn').disabled = true;
 
@@ -291,6 +296,11 @@ function sprawdzstan(){
                         document.getElementById('incorrectBtn').disabled = false;
                     }
                     else if (row.stan == "done"){
+                        nr_druzyny ++;
+                        if(nr_druzyny<ilosc_druzyn+1){
+                        }else{
+                            nr_druzyny=1;
+                        }
                         document.getElementById('correctBtn').disabled = true;
                         document.getElementById('incorrectBtn').disabled = true;
 
@@ -301,7 +311,7 @@ function sprawdzstan(){
                 });
             }
         };
-        xhr2.open("GET", "http://localhost/projekty/poma_v2/pytania/get_data.php", true);
+        xhr2.open("GET", "http://localhost/projekty/poma_v2/poma_v2/pytania/get_data.php", true);
         xhr2.send();
 
         var xhr = new XMLHttpRequest();
@@ -347,7 +357,7 @@ function sprawdzstan(){
                 wysylanie(0,0,0,0,flagaA3,flagaB3,flagaC3,flagaD3); 
                 wysylanie(teamA,teamB,teamC,teamD,flagaA3,flagaB3,flagaC3,flagaD3); }
         };
-        xhr.open("GET", "http://localhost/projekty/poma_v2/admin/get_data2.php", true);
+        xhr.open("GET", "http://localhost/projekty/poma_v2/poma_v2/admin/get_data2.php", true);
         xhr.send();
     }
 
