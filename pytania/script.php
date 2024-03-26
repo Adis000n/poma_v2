@@ -49,15 +49,13 @@ function getRandomImage($subject, $points) {
     $con = mysqli_connect("localhost", "root", "");
     mysqli_select_db($con, "poma");
     // Select a random, unused image from the database
-    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND (YEAR(CURDATE())-rok_uzycia)>=5 LIMIT 1;
-    ");
-
+    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND (YEAR(CURDATE())-rok_uzycia)>=5 ORDER BY RAND() LIMIT 1;");
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $id = $row['id'];
         $imagePath = $row['img_pytania'];
 
-        return "../$imagePath";
+        return "$imagePath";
     }
 
     // If no image is found, you can return a default image path or handle it accordingly.

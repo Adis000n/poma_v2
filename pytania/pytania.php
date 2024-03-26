@@ -282,15 +282,18 @@ if (!$con) {
        wystartowane = false; 
        document.addEventListener('DOMContentLoaded', () => {
         const ws = new WebSocket('ws://192.168.55.104:3000/ws');
-
+        var pytanie_path;
 
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
 
             if (data.subject && data.points) {
                 updateImage(data.subject, data.points);
-                updateExtra(data.subject, data.points);
-                updateExtra2(data.subject, data.points);
+            }
+            else if (data.action === 'secondaryBtnClicked') {
+            console.log(subject, points);
+            console.log("numero uno");
+            updateImage2(subject,points, pytanie_path);
             } 
         };
 
@@ -301,15 +304,38 @@ if (!$con) {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         const imagePath = xhr.responseText;
                         const imageElement = document.getElementById('pytanie-img');
-                        imageElement.src = imagePath;
+                        imageElement.src = "../"+imagePath;
+                        pytanie_path = imagePath;
                         console.log(imagePath);
+                        console.log("to jest droga"+pytanie_path);
+                        updateExtra(subject, points, pytanie_path);
+                        updateExtra2(subject, points, pytanie_path);
                     }
                 };
                 xhr.open('GET', `script.php?subject=${subject}&points=${points}`, true);
                 xhr.send();
             }
-            function updateExtra(subject, points) {
+                    function updateImage2(subject, points, pytanie_path) {
+                console.log("to jest droga2"+pytanie_path);
                 // Make an AJAX request to fetch the new image
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        const imagePath = xhr.responseText;
+                        const imageElement = document.getElementById('odpowiedz-img');
+                        imageElement.src = imagePath;
+                        const odpText = document.getElementById('odp-text')
+                        odpText.innerHTML = "Poprawna odpowiedź:";
+                        console.log(imagePath);
+                        console.log("numero dos");
+                    }
+                };
+                xhr.open('GET', `script2.php?subject=${subject}&points=${points}&pytanie_path=${pytanie_path}`, true);
+                xhr.send();
+            }
+            function updateExtra(subject, points, pytanie_path) {
+                // Make an AJAX request to fetch the new image
+                console.log("to jest droga aha"+pytanie_path);
                 const xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -326,11 +352,12 @@ if (!$con) {
                         }
                     }
                 };
-                xhr.open('GET', `script_extra.php?subject=${subject}&points=${points}`, true);
+                xhr.open('GET', `script_extra.php?subject=${subject}&points=${points}&pytanie_path=${pytanie_path}`, true);
                 xhr.send();
             }
-            function updateExtra2(subject, points) {
+            function updateExtra2(subject, points, pytanie_path) {
                 // Make an AJAX request to fetch the new image
+                console.log("to jest droga aha2"+pytanie_path);
                 const xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -347,7 +374,7 @@ if (!$con) {
                         }
                     }
                 };
-                xhr.open('GET', `script_extra2.php?subject=${subject}&points=${points}`, true);
+                xhr.open('GET', `script_extra2.php?subject=${subject}&points=${points}&pytanie_path=${pytanie_path}`, true);
                 xhr.send();
             }
         });
@@ -383,10 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateContent(data.subject, data.points, data.team);
         } else if (data.timer !== undefined) {
             updateTimer(data.timer);
-        } else if (data.action === 'secondaryBtnClicked') {
-            console.log(subject, points);
-            console.log("numero uno");
-            updateImage2(subject, points);
         } else if (data.action === 'clearAll') {
             clearAllContent();
         } else if (data.action === 'playMedia') {
@@ -444,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const contentDiv3 = document.getElementById('druzyna-data');
                     contentDiv3.innerHTML = team;
                 const image2Element = document.getElementById('pytanie-img');
-                    image2Element.src = row.img_pytania;
+                    image2Element.src = "../"+row.img_pytania;
                     if(row.media_typ == "wideo"){
                         const imageElement = document.getElementById('film_src');
                         imageElement.src = row.media;
@@ -486,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const contentDiv3 = document.getElementById('druzyna-data');
                     contentDiv3.innerHTML = team;
                 const image4Element = document.getElementById('pytanie-img');
-                    image4Element.src = row.img_pytania;
+                    image4Element.src = "../"+row.img_pytania;
                     if(row.media_typ == "wideo"){
                         const imageElement = document.getElementById('film_src');
                         imageElement.src = row.media;
@@ -532,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const contentDiv3 = document.getElementById('druzyna-data');
                     contentDiv3.innerHTML = team;
                 const image3Element = document.getElementById('pytanie-img');
-                    image3Element.src = row.img_pytania;
+                    image3Element.src = "../"+row.img_pytania;
                     if(row.media_typ == "wideo"){
                         const imageElement = document.getElementById('film_src');
                         imageElement.src = row.media;
@@ -630,25 +653,6 @@ document.addEventListener('DOMContentLoaded', () => {
             wystartowane = false;
         }
     }
-
-    function updateImage2(subject, points) {
-        // Make an AJAX request to fetch the new image
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const imagePath = xhr.responseText;
-                const imageElement = document.getElementById('odpowiedz-img');
-                imageElement.src = imagePath;
-                const odpText = document.getElementById('odp-text')
-                odpText.innerHTML = "Poprawna odpowiedź:";
-                console.log(imagePath);
-                console.log("numero dos");
-            }
-        };
-        xhr.open('GET', `script2.php?subject=${subject}&points=${points}`, true);
-        xhr.send();
-    }
-
 
     function updateContent(subject, points,team) {
         const bgText = document.getElementById('bg-text');

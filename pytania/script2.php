@@ -1,12 +1,13 @@
 <?php
-// script.php
+// scrip2.php
 
 if (isset($_GET['subject']) && isset($_GET['points'])) {
     $subject = $_GET['subject'];
     $points = $_GET['points'];
+    $pytanie_path = $_GET['pytanie_path'];
 
     // Construct the path to the image based on the provided subject and points
-    $imagePath = getRandomImage($subject, $points);
+    $imagePath = getRandomImage($subject, $points, $pytanie_path);
 
     // Database connection
     $con = mysqli_connect("localhost", "root", "", "poma");
@@ -41,7 +42,7 @@ if (isset($_GET['subject']) && isset($_GET['points'])) {
     echo "Invalid parameters";
 }
 
-function getRandomImage($subject, $points) {
+function getRandomImage($subject, $points, $pytanie_path) {
     // Modify this function to retrieve a random image path from your database
     // based on the subject, points, and unused status.
 
@@ -49,9 +50,7 @@ function getRandomImage($subject, $points) {
     $con = mysqli_connect("localhost", "root", "");
     mysqli_select_db($con, "poma");
     // Select a random, unused image from the database
-    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND (YEAR(CURDATE())-rok_uzycia)>=5 LIMIT 1;
-    ");
-
+    $result = mysqli_query($con, "SELECT * FROM mvc_konkurs_pytania WHERE kategoria='$subject' AND poziom=$points AND img_pytania='$pytanie_path' AND (YEAR(CURDATE())-rok_uzycia)>=5 LIMIT 1;");
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $id = $row['id'];
